@@ -34,7 +34,7 @@ module.exports = Object.keys(languages).map((language) => {
     name: language,
     entry: path.join(__dirname, '/lib/app.jsx'),
     output: {
-      publicPath: 'http://127.0.0.1:8081/build/',
+      publicPath: '/build/',
       path: path.join(__dirname, '/build/'),
       filename: language + '.app.js',
     },
@@ -51,6 +51,7 @@ module.exports = Object.keys(languages).map((language) => {
         },
         { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url?limit=10000&minetype=application/font-woff&name=[name].[ext]' },
         { test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url?limit=10000&minetype=application/font-woff&name=[name].[ext]' },
+        // { test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' },
         { test: /\.svg\?v=[0-9]\.[0-9]\.[0-9]$/, loader: 'url?limit=10000&minetype=application/font-woff&name=[name].[ext]' },
         { test: /\.(svg|png|jpg|jpeg)$/, loaders: ['url?limit=10000&name=[name].[ext]'] },
         { test: /\.json$/, loaders: ['json'] },
@@ -70,7 +71,7 @@ module.exports = Object.keys(languages).map((language) => {
 });
 
 module.exports.output = {
-  publicPath: 'http://127.0.0.1:8081/build/',
+  publicPath: '/build/',
 };
 
 module.exports.devServer = {};
