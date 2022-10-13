@@ -3,6 +3,7 @@ import Radium from 'radium';
 import mui from 'material-ui';
 import Sysinfo from './sysinfo.jsx';
 import Network from './network.jsx';
+import Fsk from './fsk.jsx';
 import AppActions from '../actions/appActions';
 
 const { Tabs, Tab } = mui;
@@ -108,10 +109,10 @@ export default class contentComponent extends React.Component {
           }}
           style={ styles.content }>
           <Tab
-            label={ 'FSK' }
+            label={ __('FSK') }
             value="fsk"
             onClick={ ::this._handleTabsChangeFsk }>
-            <Network boardInfo={ this.props.boardInfo } />
+            <Fsk boardInfo={ this.props.boardInfo } />
           </Tab>
           <Tab
             label={ __('System information') }
