@@ -49,65 +49,10 @@ export default class networkComponent extends React.Component {
       errorMsg: null,
     };
 
-    this.state.wifiList = [{
-      payload: 0,
-      text: __('Choose the Wi-Fi network.'),
-    }];
-
-    if (this.props.boardInfo.wifi.ap.encryption === 'none') {
-      this.state.apContent = {
-        ssid: this.props.boardInfo.wifi.ap.ssid || '',
-        key: '',
-        encryption: false,
-      };
-    } else {
-      this.state.apContent = {
-        ssid: this.props.boardInfo.wifi.ap.ssid || '',
-        key: this.props.boardInfo.wifi.ap.key || '',
-        encryption: true,
-      };
-    }
-
-    this.state.showPassword = false;
-    this.state.showRepeaterPassword = false;
-    this.state.notPassPassword = false;
-    this.state.notPassRepeaterPassword = false;
-    this.state.selectValue = 0;
-    this.state.staContent = {
-      ssid: this.props.boardInfo.wifi.sta.ssid || '',
-      key: this.props.boardInfo.wifi.sta.key || '',
-      encryption: this.props.boardInfo.wifi.sta.encryption.enabled || false,
+    this.state.beacon = {
+      freq: 902000,
     };
-
-    this.state.apstaContent = {
-      ssid: this.props.boardInfo.wifi.sta.ssid || '',
-      key: this.props.boardInfo.wifi.sta.key || '',
-      encryption: this.props.boardInfo.wifi.sta.encryption.enabled || false,
-      repeaterSsid: this.props.boardInfo.wifi.ap.ssid || '',
-      repeaterKey: this.props.boardInfo.wifi.ap.key || '',
-    };
-
-    this.state.mode = this.props.boardInfo.wifi.radio0.linkit_mode;
-
-    switch (this.state.mode) {
-    case 'ap':
-      if (this.state.apContent.key.length > 0 && this.state.apContent.key.length < 8 ) {
-        this.state.notPassPassword = true;
-      }
-      break;
-    case 'sta':
-      break;
-    case 'apsta':
-      if (this.state.apstaContent.key.length > 0 && this.state.apstaContent.key.length < 8 ) {
-        this.state.notPassPassword = true;
-      }
-      if (this.state.apstaContent.repeaterKey.length > 0 && this.state.apstaContent.repeaterKey.length < 8 ) {
-        this.state.notPassRepeaterPassword = true;
-      }
-      break;
-    default:
-      break;
-    }
+    
   }
 
   componentWillMount() {
@@ -152,16 +97,16 @@ export default class networkComponent extends React.Component {
     elem = (
         <div>
           <TextField
-          hintText={__('Input your SSID')}
+          hintText={__('in KHZ, 902000 for 902Mhz')}
           type="text"
-          value={ this.state.apContent.ssid }
+          value={ this.state.beacon.freq }
           style={{ width: '100%' }}
           onChange={
             (e) => {
               this.setState({
-                apContent: {
-                  ssid: e.target.value,
-                  key: this.state.apContent.key,
+                beacon: {
+                  freq: e.target.value,
+                  interval: this.state.beacon.interval,
                 },
               });
             }
@@ -170,65 +115,31 @@ export default class networkComponent extends React.Component {
           floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
           floatingLabelText={
             <div>
-              { __('Network name') } <b style={{ color: 'red' }}>*</b>
+              { __('Beacon Channel Frequency(in kHZ)') } <b style={{ color: 'red' }}>*</b>
             </div>
           } />
           <TextField
-            hintText={__('Please enter your password')}
-            errorStyle={{ borderColor: Colors.amber700 }}
-            errorText={ errorText }
-            type={ textType }
-            underlineFocusStyle={{ borderColor: Colors.amber700 }}
-            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            value={ this.state.apContent.key }
-            onChange={
-              (e) => {
-                if ( e.target.value.length > 0 && e.target.value.length < 8) {
-                  this.setState({
-                    apContent: {
-                      ssid: this.state.apContent.ssid,
-                      key: e.target.value,
-                    },
-                    notPassPassword: true,
-                  });
-                } else if (e.target.value.length === 0) {
-                  this.setState({
-                    apContent: {
-                      ssid: this.state.apContent.ssid,
-                      key: e.target.value,
-                    },
-                    notPassPassword: false,
-                  });
-                } else {
-                  this.setState({
-                    apContent: {
-                      ssid: this.state.apContent.ssid,
-                      key: e.target.value,
-                    },
-                    notPassPassword: false,
-                  });
-                }
-              }
+          hintText={__("in ms, 50ms, 100ms or 200ms")}
+          type="text"
+          value={ this.state.beacon.interval }
+          style={{ width: '100%' }}
+          onChange={
+            (e) => {
+              this.setState({
+                beacon: {
+                  freq: this.state.beacon.freq,
+                  interval: e.target.value,
+                },
+              });
             }
-            style={{ width: '100%' }}
-            floatingLabelText={__('Password')} />
-            <div style={ showPasswordStyle }>
-            <a
-              onTouchTap={
-                () => {
-                  this.setState({
-                    showPassword: !this.state.showPassword,
-                  });
-                }
-              }
-              style={{
-                textAlign: 'left',
-                color: Colors.amber700,
-                textDecoration: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-              }}>{ __('SHOW PASSWORD') }</a>
-          </div>
+          }
+          underlineFocusStyle={{ borderColor: Colors.amber700 }}
+          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+          floatingLabelText={
+            <div>
+              { __("Beacon TX Interval(in ms)") } <b style={{ color: 'red' }}>*</b>
+            </div>
+          } />
         </div>
       );
     return (
