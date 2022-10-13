@@ -108,6 +108,12 @@ export default class contentComponent extends React.Component {
           }}
           style={ styles.content }>
           <Tab
+            label={ 'FSK' }
+            value="fsk"
+            onClick={ ::this._handleTabsChangeFsk }>
+            <Network boardInfo={ this.props.boardInfo } />
+          </Tab>
+          <Tab
             label={ __('System information') }
             value="sysinfo"
             onClick={ ::this._handleTabsChangeSYS }>
@@ -130,6 +136,10 @@ export default class contentComponent extends React.Component {
 
   _handleTabsChangeSYS() {
     this.setState({ tabsValue: 'sysinfo' });
+  }
+
+  _handleTabsChangeFsk() {
+    this.setState({ tabsValue: 'fsk' });
   }
 }
 
