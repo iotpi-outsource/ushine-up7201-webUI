@@ -68,7 +68,7 @@ export default class contentComponent extends React.Component {
     this._handleTabsChangeNetWork = ::this._handleTabsChangeNetWork;
     this._handleTabsChangeSYS = ::this._handleTabsChangeSYS;
     this.state = {
-      tabsValue: 'sysinfo',
+      tabsValue: 'fsk',
       boardModel: '',
     };
   }
