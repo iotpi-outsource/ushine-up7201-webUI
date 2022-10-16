@@ -51,6 +51,9 @@ export default class networkComponent extends React.Component {
 
     this.state.beacon = {
       freq: 902000,
+      interval: null,
+      ch1_uplink_freq: null,
+      ch2_uplink_freq: null,
     };
     
   }
@@ -140,6 +143,50 @@ export default class networkComponent extends React.Component {
               { __("Beacon TX Interval(in ms)") } <b style={{ color: 'red' }}>*</b>
             </div>
           } />
+          <TextField
+            hintText={__("in KHZ, 902000 for 902Mhz")}
+            type="text"
+            value={ this.state.beacon.ch1_uplink_freq }
+            style={{ width: '100%' }}
+            onChange={
+              (e) => {
+                this.setState({
+                  beacon: {
+                    freq: this.state.beacon.freq,
+                    interval: e.target.value,
+                  },
+                });
+              }
+            }
+            underlineFocusStyle={{ borderColor: Colors.amber700 }}
+            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+            floatingLabelText={
+              <div>
+                { __("Beacon uplink channel #1 frequency)") } <b style={{ color: 'red' }}>*</b>
+              </div>
+            } />
+          <TextField
+            hintText={__("in KHZ, 902000 for 902Mhz")}
+            type="text"
+            value={ this.state.beacon.ch2_uplink_freq }
+            style={{ width: '100%' }}
+            onChange={
+              (e) => {
+                this.setState({
+                  beacon: {
+                    freq: this.state.beacon.freq,
+                    interval: e.target.value,
+                  },
+                });
+              }
+            }
+            underlineFocusStyle={{ borderColor: Colors.amber700 }}
+            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+            floatingLabelText={
+              <div>
+                { __("Beacon uplink channel #2 frequency)") } <b style={{ color: 'red' }}>*</b>
+              </div>
+            } />
         </div>
       );
     return (

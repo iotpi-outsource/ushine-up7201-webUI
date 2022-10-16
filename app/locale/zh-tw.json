@@ -48,6 +48,8 @@
   "Beacon Channel Frequency(in kHZ)": "Beacon Channel Frequency(in kHZ)",
   "in ms, 50ms, 100ms or 200ms": "in ms, 50ms, 100ms or 200ms",
   "Beacon TX Interval(in ms)": "Beacon TX Interval(in ms)",
+  "Beacon uplink channel #1 frequency)": "Beacon uplink channel #1 frequency)",
+  "Beacon uplink channel #2 frequency)": "Beacon uplink channel #2 frequency)",
   "Network name": "網路名稱",
   "Network setting": "網路設定",
   "Network mode": "網路模式",
