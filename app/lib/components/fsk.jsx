@@ -5,6 +5,7 @@ import AppActions from '../actions/appActions';
 import AppDispatcher from '../dispatcher/appDispatcher';
 import icon7688 from '../../img/7688.png';
 import icon7688Duo from '../../img/7688_duo.png';
+import FskDevice from './fsk_device.jsx';
 
 const {
   TextField,
@@ -228,6 +229,7 @@ export default class networkComponent extends React.Component {
                   marginLeft: '10px',
                 }} />
             </div>
+            <FskDevice />
           </div>
         </Card>
       </div>
