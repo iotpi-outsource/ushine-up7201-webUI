@@ -50,7 +50,7 @@ export default class networkComponent extends React.Component {
     };
 
     this.state.beacon = {
-      freq: 902000,
+      freq: null,
       interval: null,
       ch1_uplink_freq: null,
       ch2_uplink_freq: null,
