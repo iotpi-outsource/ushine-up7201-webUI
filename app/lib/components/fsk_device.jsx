@@ -70,8 +70,8 @@ export default class networkComponent extends React.Component {
     });
     AppActions.loadFsk(window.session)
       .then((data) => {
-        let r = data.body.result[1].values;
-        console.log(r);
+        // let r = data.body.result[1].values;
+        // console.log(r);
         return this$.setState({ devices: {
           sampling_rate: r.sensor.sampling_rate,
           sleep_time: r.sensor.sleep_time,

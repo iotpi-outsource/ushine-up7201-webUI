@@ -76,8 +76,8 @@ export default class networkComponent extends React.Component {
     });
     AppActions.loadFsk(window.session)
       .then((data) => {
-        let r = data.body.result[1].values;
-        console.log(r);
+        // let r = data.body.result[1].values;
+        // console.log(r);
         return this$.setState({ beacon: {
           freq: r.beacon.freq,
           interval: r.beacon.interval,
