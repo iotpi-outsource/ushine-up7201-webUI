@@ -26,10 +26,12 @@ const rpcAPI = {
         }
 
         if (res.body && res.body.error) {
+          console.log(res.body.error.message);
           return reject(res.body.error.message);
         }
 
         if (!res.body.result || res.body.result[0] !== 0) {
+          console.log(ubusStatus[res.body.result[0]]);
           return reject(ubusStatus[res.body.result[0]]);
         }
         return resolve(res);
@@ -444,22 +446,18 @@ const rpcAPI = {
     };
     return this.request(config);
   },
-  setFskSensor: function(sampling_rate, sleep_time, session) {
+  loadFskMqtt: function(subpath, session) {
     const config = {
       jsonrpc: '2.0',
       id: id++,
       method: 'call',
       params: [
         session,
-        'uci',
-        'set',
+        'file',
+        'read',
         {
-          config: 'fsk',
-          section: 'sensor',
-          values: {
-            sampling_rate: sampling_rate,
-            sleep_time: sleep_time,
-          },
+          path: '/IoT/etc/mqtt_user',
+          base64: false,
         },
       ],
     };

@@ -199,6 +199,9 @@ const appActions = {
       return rpc.uciCommit('fsk', session);
     });
   },
+  loadFskMqtt: (subpath, session) => {
+    return rpc.loadFskMqtt(subpath, session);
+  },
   getQuery: (name) => {
     let match;
     const pl = /\+/g; /* Regex for replacing addition symbol with a space */
