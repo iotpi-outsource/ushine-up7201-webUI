@@ -444,6 +444,27 @@ const rpcAPI = {
     };
     return this.request(config);
   },
+  setFskSensor: function(sampling_rate, sleep_time, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'set',
+        {
+          config: 'fsk',
+          section: 'sensor',
+          values: {
+            sampling_rate: sampling_rate,
+            sleep_time: sleep_time,
+          },
+        },
+      ],
+    };
+    return this.request(config);
+  },
 };
 
 export default rpcAPI;

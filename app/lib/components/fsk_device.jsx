@@ -50,7 +50,7 @@ export default class networkComponent extends React.Component {
       sampling_rate: null,
       sleep_time: null,
     };
-    
+    this._handleSettingDevices = ::this._handleSettingDevices;
   }
 
   componentWillMount() {
@@ -87,6 +87,24 @@ export default class networkComponent extends React.Component {
     return {
       muiTheme: ThemeManager.getCurrentTheme(),
     };
+  }
+
+  _handleSettingDevices() {
+    const this$ = this;
+    return AppActions.setFskSensor(
+      this.state.devices.sampling_rate,
+      this.state.devices.sleep_time,
+      window.session)
+    .catch((err) => {
+      if (err === 'Access denied') {
+        this$.setState({
+          errorMsgTitle: __('Access denied'),
+          errorMsg: __('Your token was expired, please sign in again.'),
+        });
+        return this$.refs.errorMsg.show();
+      }
+      alert('[' + err + '] Please try again!');
+    });
   }
 
   render() {
@@ -174,7 +192,7 @@ export default class networkComponent extends React.Component {
               secondary
               label={__('Configure & Restart')}
               backgroundColor={ Colors.amber700 }
-              onTouchTap={ this._handleSettingMode }
+              onTouchTap={ this._handleSettingDevices }
               style={{
                 width: '236px',
                 flexGrow: 1,

@@ -193,6 +193,12 @@ const appActions = {
       return rpc.uciCommit('fsk', session);
     });
   },
+  setFskSensor: (sampling_rate, sleep_time, session) => {
+    return rpc.setFskSensor(sampling_rate, sleep_time, session)
+    .then(() => {
+      return rpc.uciCommit('fsk', session);
+    });
+  },
   getQuery: (name) => {
     let match;
     const pl = /\+/g; /* Regex for replacing addition symbol with a space */
