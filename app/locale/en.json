@@ -1,5 +1,6 @@
 {
   "username":"username",
+  "Username":"Username",
   "SHOW PASSWORD":"SHOW PASSWORD",
   "Connection failed...": "Connection failed...",
   "Please refresh. If problem persists, please ensure your board is not in the process of rebooting, or updating new firmware, or check Wi-Fi connectivity settings.": "Please refresh. If problem persists, please ensure your board is not in the process of rebooting, or updating new firmware, or check Wi-Fi connectivity settings.",
@@ -55,6 +56,10 @@
   "Sensor sampling rate": "Sensor sampling rate",
   "Select 0, 1, 2, 4(min)": "Select 0, 1, 2, 4(min)",
   "Sensor sleep time": "Sensor sleep time",
+  "Beacon": "Beacon",
+  "MQTT": "MQTT",
+  "tx topic": "tx topic",
+  "rx topic": "rx topic",
   "Network name": "Network name",
   "Network setting": "Network setting",
   "Network mode": "Network mode",

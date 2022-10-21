@@ -1,5 +1,6 @@
 {
   "username":"使用者名稱",
+  "Username":"使用者名稱",
   "SHOW PASSWORD":"顯示密碼",
   "Connection failed...": "連線失敗...",
   "Please refresh. If problem persists, please ensure your board is not in the process of rebooting, or updating new firmware, or check Wi-Fi connectivity settings.": "請刷新。如果問題仍然存在，請確保您的設備是不是在重新啟動，或更新新固件的過程中，或檢查無線網絡連接設置。",
@@ -55,6 +56,10 @@
   "Sensor sampling rate": "Sensor sampling rate",
   "Select 0, 1, 2, 4(min)": "Select 0, 1, 2, 4(min)",
   "Sensor sleep time": "Sensor sleep time",
+  "Beacon": "Beacon",
+  "MQTT": "MQTT",
+  "tx topic": "tx topic",
+  "rx topic": "rx topic",
   "Network name": "網路名稱",
   "Network setting": "網路設定",
   "Network mode": "網路模式",
