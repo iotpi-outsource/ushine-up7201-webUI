@@ -5,7 +5,7 @@ import AppActions from '../actions/appActions';
 import AppDispatcher from '../dispatcher/appDispatcher';
 import icon7688 from '../../img/7688.png';
 import icon7688Duo from '../../img/7688_duo.png';
-import FskDevice from './fsk_device.jsx';
+import FskSensor from './fsk_sensor.jsx';
 import FskMqtt from './fsk_mqtt.jsx';
 
 const {
@@ -267,7 +267,7 @@ export default class networkComponent extends React.Component {
             </div>
           </div>
         </Card>
-        <FskDevice />
+        <FskSensor />
         <FskMqtt />
       </div>
     );
