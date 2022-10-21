@@ -187,8 +187,8 @@ const appActions = {
   loadFsk: (session) => {
     return rpc.loadFsk(session);
   },
-  setFskBeacon: (freq, interval, session) => {
-    return rpc.setFskBeacon(freq, interval, session)
+  setFskBeacon: (freq, interval, ch1, ch2, session) => {
+    return rpc.setFskBeacon(freq, interval, ch1, ch2, session)
     .then(() => {
       return rpc.uciCommit('fsk', session);
     });

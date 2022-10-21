@@ -56,7 +56,8 @@ export default class networkComponent extends React.Component {
       ch1_uplink_freq: null,
       ch2_uplink_freq: null,
     };
-    
+
+    this._handleSettingBeacon = ::this._handleSettingBeacon;
   }
 
   componentWillMount() {
@@ -76,7 +77,7 @@ export default class networkComponent extends React.Component {
     });
     AppActions.loadFsk(window.session)
       .then((data) => {
-        // let r = data.body.result[1].values;
+        let r = data.body.result[1].values;
         // console.log(r);
         return this$.setState({ beacon: {
           freq: r.beacon.freq,
@@ -95,6 +96,25 @@ export default class networkComponent extends React.Component {
     return {
       muiTheme: ThemeManager.getCurrentTheme(),
     };
+  }
+  _handleSettingBeacon() {
+    const this$ = this;
+    return AppActions.setFskBeacon(
+      this.state.beacon.freq,
+      this.state.beacon.interval,
+      this.state.beacon.ch1_uplink_freq,
+      this.state.beacon.ch2_uplink_freq,
+      window.session)
+    .catch((err) => {
+      if (err === 'Access denied') {
+        this$.setState({
+          errorMsgTitle: __('Access denied'),
+          errorMsg: __('Your token was expired, please sign in again.'),
+        });
+        return this$.refs.errorMsg.show();
+      }
+      alert('[' + err + '] Please try again!');
+    });
   }
 
   render() {
@@ -118,6 +138,8 @@ export default class networkComponent extends React.Component {
                 beacon: {
                   freq: e.target.value,
                   interval: this.state.beacon.interval,
+                  ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
+                  ch2_uplink_freq: this.state.beacon.ch2_uplink_freq,
                 },
               });
             }
@@ -140,6 +162,8 @@ export default class networkComponent extends React.Component {
                 beacon: {
                   freq: this.state.beacon.freq,
                   interval: e.target.value,
+                  ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
+                  ch2_uplink_freq: this.state.beacon.ch2_uplink_freq,
                 },
               });
             }
@@ -161,7 +185,9 @@ export default class networkComponent extends React.Component {
                 this.setState({
                   beacon: {
                     freq: this.state.beacon.freq,
-                    interval: e.target.value,
+                    interval: this.state.beacon.interval,
+                    ch1_uplink_freq: e.target.value,
+                    ch2_uplink_freq: this.state.beacon.ch2_uplink_freq,
                   },
                 });
               }
@@ -183,7 +209,9 @@ export default class networkComponent extends React.Component {
                 this.setState({
                   beacon: {
                     freq: this.state.beacon.freq,
-                    interval: e.target.value,
+                    interval: this.state.beacon.interval,
+                    ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
+                    ch2_uplink_freq: e.target.value,
                   },
                 });
               }
@@ -226,7 +254,7 @@ export default class networkComponent extends React.Component {
                 secondary
                 label={__('Configure & Restart')}
                 backgroundColor={ Colors.amber700 }
-                onTouchTap={ this._handleSettingMode }
+                onTouchTap={ this._handleSettingBeacon }
                 style={{
                   width: '236px',
                   flexGrow: 1,
