@@ -236,9 +236,9 @@ export default class networkComponent extends React.Component {
                   marginLeft: '10px',
                 }} />
             </div>
-            <FskDevice />
           </div>
         </Card>
+        <FskDevice />
       </div>
     );
   }

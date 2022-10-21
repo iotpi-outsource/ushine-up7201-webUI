@@ -68,9 +68,14 @@ export default class networkComponent extends React.Component {
         checkedColor: '#00a1de',
       },
     });
-    AppActions.loadModel(window.session)
-    .then((data) => {
-      return this$.setState({ boardModel: data.body.result[1].model });
+    AppActions.loadFsk(window.session)
+      .then((data) => {
+        let r = data.body.result[1].values;
+        console.log(r);
+        return this$.setState({ devices: {
+          sampling_rate: r.sensor.sampling_rate,
+          sleep_time: r.sensor.sleep_time,
+        }});
     });
   }
 
@@ -142,6 +147,7 @@ export default class networkComponent extends React.Component {
       );
     return (
       <div>
+        <Card>
         <div style={ styles.content }>
           <h3>{__("Devices")}</h3>
           { elem }
@@ -179,6 +185,7 @@ export default class networkComponent extends React.Component {
               }} />
           </div>
         </div>
+        </Card>
       </div>
     );
   }
