@@ -199,8 +199,33 @@ const appActions = {
       return rpc.uciCommit('fsk', session);
     });
   },
-  loadFskMqtt: (subpath, session) => {
-    return rpc.loadFskMqtt(subpath, session);
+  loadFskMqtt: (session) => {
+    return promise.all([
+        rpc.loadFskMqtt('user', session),
+        rpc.loadFskMqtt('passwd', session),
+        rpc.loadFskMqtt('txpk', session),
+        rpc.loadFskMqtt('rxpk', session),
+    ]).spread((user, pass, tx, rx) => {
+      console.log(user, pass, tx, rx);
+      const mqtt = {};
+      mqtt.username = user.body.result[1].data.trim();
+      mqtt.password = pass.body.result[1].data.trim();
+      mqtt.txtopic = tx.body.result[1].data.trim();
+      mqtt.rxtopic = rx.body.result[1].data.trim();
+      return mqtt;
+    });
+  },
+  setFskMqtt: (user, pass, txtopic, rxtopic, session) => {
+    return rpc.setFskMqtt('user', user, session)
+      .then(() => {
+        return rpc.setFskMqtt('passwd', pass, session);
+      })
+      .then(() => {
+        return rpc.setFskMqtt('txpk', txtopic, session);
+      })
+      .then(() => {
+        return rpc.setFskMqtt('rxpk', rxtopic, session);
+      });
   },
   getQuery: (name) => {
     let match;

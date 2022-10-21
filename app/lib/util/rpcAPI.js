@@ -456,8 +456,28 @@ const rpcAPI = {
         'file',
         'read',
         {
-          path: '/IoT/etc/mqtt_user',
+          path: '/IoT/etc/mqtt_' + subpath,
           base64: false,
+        },
+      ],
+    };
+    return this.request(config);
+  },
+  setFskMqtt: function(subpath, value, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'file',
+        'write',
+        {
+          path: '/IoT/etc/mqtt_' + subpath,
+          data: value + '\n',
+          append: false,
+          base64: false,
+          mode: 0o644,
         },
       ],
     };

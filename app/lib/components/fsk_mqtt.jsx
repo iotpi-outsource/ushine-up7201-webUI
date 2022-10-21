@@ -70,15 +70,14 @@ export default class networkComponent extends React.Component {
         checkedColor: '#00a1de',
       },
     });
-    AppActions.loadFskMqtt('user', window.session)
-      .then((data) => {
-        // let r = data;
-        // console.log(r);
-        // return this$.setState({ mqtt: {
-        //   username: '',
-        //   password: '',
-        // }});
-        console.log('h');
+    AppActions.loadFskMqtt(window.session)
+      .then((mqtt) => {
+        return this$.setState({ mqtt: {
+          username: mqtt.username,
+          password: mqtt.password,
+          tx_topic: mqtt.txtopic,
+          rx_topic: mqtt.rxtopic,
+        }});
     });
   }
 
@@ -94,9 +93,11 @@ export default class networkComponent extends React.Component {
 
   _handleSettingMqtt() {
     const this$ = this;
-    return AppActions.setMqtt(
+    return AppActions.setFskMqtt(
       this.state.mqtt.username,
       this.state.mqtt.password,
+      this.state.mqtt.tx_topic,
+      this.state.mqtt.rx_topic,
       window.session)
     .catch((err) => {
       if (err === 'Access denied') {
@@ -130,6 +131,8 @@ export default class networkComponent extends React.Component {
                   mqtt: {
                     username: e.target.value,
                     password: this.state.mqtt.password,
+                    tx_topic: this.state.mqtt.tx_topic,
+                    rx_topic: this.state.mqtt.rx_topic,
                   }
                 });
               }
@@ -142,7 +145,7 @@ export default class networkComponent extends React.Component {
               </div>
             } />
           <TextField
-            type="text"
+            type="password"
             value={ this.state.mqtt.password }
             style={{ width: '100%' }}
             onChange={
@@ -151,6 +154,8 @@ export default class networkComponent extends React.Component {
                   mqtt: {
                     username: this.state.mqtt.username,
                     password: e.target.value,
+                    tx_topic: this.state.mqtt.tx_topic,
+                    rx_topic: this.state.mqtt.rx_topic,
                   }
                 });
               }
@@ -159,7 +164,53 @@ export default class networkComponent extends React.Component {
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
             floatingLabelText={
               <div>
-                { __("password") } <b style={{ color: 'red' }}>*</b>
+                { __("Password") } <b style={{ color: 'red' }}>*</b>
+              </div>
+            } />
+          <TextField
+            type="text"
+            value={ this.state.mqtt.tx_topic }
+            style={{ width: '100%' }}
+            onChange={
+              (e) => {
+                this.setState({
+                  mqtt: {
+                    username: this.state.mqtt.username,
+                    password: this.state.mqtt.password,
+                    tx_topic: e.target.value,
+                    rx_topic: this.state.mqtt.rx_topic,
+                  }
+                });
+              }
+            }
+            underlineFocusStyle={{ borderColor: Colors.amber700 }}
+            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+            floatingLabelText={
+              <div>
+                { __("tx topic") } <b style={{ color: 'red' }}>*</b>
+              </div>
+            } />
+          <TextField
+            type="text"
+            value={ this.state.mqtt.rx_topic }
+            style={{ width: '100%' }}
+            onChange={
+              (e) => {
+                this.setState({
+                  mqtt: {
+                    username: this.state.mqtt.username,
+                    password: this.state.mqtt.password,
+                    tx_topic: this.state.mqtt.tx_topic,
+                    rx_topic: e.target.value,
+                  }
+                });
+              }
+            }
+            underlineFocusStyle={{ borderColor: Colors.amber700 }}
+            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+            floatingLabelText={
+              <div>
+                { __("rx topic") } <b style={{ color: 'red' }}>*</b>
               </div>
             } />
         </div>
