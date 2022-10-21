@@ -409,6 +409,39 @@ const rpcAPI = {
 
     return this.request(config);
   },
+  loadFsk: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [session, 'uci', 'get', {
+        config: 'fsk',
+      }],
+    };
+
+    return this.request(config);
+  },
+  setFskBeacon: function(freq, interval, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'set',
+        {
+          config: 'fsk',
+          section: 'beacon',
+          values: {
+            freq: freq,
+            interval: interval,
+          },
+        },
+      ],
+    };
+    return this.request(config);
+  },
 };
 
 export default rpcAPI;

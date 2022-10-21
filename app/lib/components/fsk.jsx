@@ -74,9 +74,16 @@ export default class networkComponent extends React.Component {
         checkedColor: '#00a1de',
       },
     });
-    AppActions.loadModel(window.session)
-    .then((data) => {
-      return this$.setState({ boardModel: data.body.result[1].model });
+    AppActions.loadFsk(window.session)
+      .then((data) => {
+        let r = data.body.result[1].values;
+        console.log(r);
+        return this$.setState({ beacon: {
+          freq: r.beacon.freq,
+          interval: r.beacon.interval,
+          ch1_uplink_freq: r.beacon.channel1,
+          ch2_uplink_freq: r.beacon.channel2,
+        }});
     });
   }
 

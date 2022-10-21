@@ -184,7 +184,15 @@ const appActions = {
   uploadFirmware: (file, session) => {
     return rpc.uploadFirmware(file, session);
   },
-
+  loadFsk: (session) => {
+    return rpc.loadFsk(session);
+  },
+  setFskBeacon: (freq, interval, session) => {
+    return rpc.setFskBeacon(freq, interval, session)
+    .then(() => {
+      return rpc.uciCommit('fsk', session);
+    });
+  },
   getQuery: (name) => {
     let match;
     const pl = /\+/g; /* Regex for replacing addition symbol with a space */
