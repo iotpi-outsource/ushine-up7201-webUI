@@ -7,6 +7,7 @@ import icon7688 from '../../img/7688.png';
 import icon7688Duo from '../../img/7688_duo.png';
 import FskSensor from './fsk_sensor.jsx';
 import FskMqtt from './fsk_mqtt.jsx';
+import FskDevices from './fsk_devices.jsx';
 
 const {
   TextField,
@@ -268,6 +269,7 @@ export default class networkComponent extends React.Component {
           </div>
         </Card>
         <FskSensor />
+        <FskDevices />
         <FskMqtt />
       </div>
     );

@@ -78,3 +78,9 @@ Hint: Please follow `airbnb` coding style guideline: https://github.com/airbnb/j
 
 1. Test case
 2. Add Makefile config
+
+## Addition
+
+```shell
+scp fsk-file.json root@openwrt:/usr/share/rpcd/acl.d/
+```

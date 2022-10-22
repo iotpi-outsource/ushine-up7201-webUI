@@ -483,6 +483,23 @@ const rpcAPI = {
     };
     return this.request(config);
   },
+  loadFskDevices: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'file',
+        'read',
+        {
+          path: '/IoT/etc/devices.txt',
+          base64: false,
+        },
+      ],
+    };
+    return this.request(config);
+  },
 };
 
 export default rpcAPI;

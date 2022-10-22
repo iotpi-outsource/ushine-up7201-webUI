@@ -227,6 +227,9 @@ const appActions = {
         return rpc.setFskMqtt('rxpk', rxtopic, session);
       });
   },
+  loadFskDevices: (session) => {
+    return rpc.loadFskDevices(session);
+  },
   getQuery: (name) => {
     let match;
     const pl = /\+/g; /* Regex for replacing addition symbol with a space */
