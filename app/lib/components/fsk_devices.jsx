@@ -61,6 +61,7 @@ export default class networkComponent extends React.Component {
     };
     this.state.devices = [];
     this._handleAddDevice = ::this._handleAddDevice;
+    this._handleDeleteDevice = ::this._handleDeleteDevice;
     this._handleSaveDevices = ::this._handleSaveDevices;
   }
 
@@ -117,6 +118,8 @@ export default class networkComponent extends React.Component {
     this.setState({
       devices: devices,
     });
+  }
+  _handleDeleteDevice() {
   }
 
   _handleSaveDevices() {
@@ -239,6 +242,29 @@ export default class networkComponent extends React.Component {
               )
             }
           </List>
+            <div style={{
+                   display: 'flex',
+                   flexDirection: 'row',
+                   justifyContent: 'space-between',
+                 }}>
+              <RaisedButton
+                linkButton
+                secondary
+                label={__('Delete Selected')}
+                backgroundColor={ Colors.amber700 }
+                onTouchTap={ this._handleDeleteDevice }
+                style={{
+                  width: '236px',
+                  flexGrow: 1,
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                  marginLeft: '10px',
+                }} />
+            </div>
+          </div>
+        </Card>
+        <Card>
           <div style={{
                  display: 'flex',
                  flexDirection: 'row',
@@ -247,7 +273,7 @@ export default class networkComponent extends React.Component {
             <RaisedButton
               linkButton
               secondary
-              label={__('Save')}
+              label={__('Save Devices to file')}
               backgroundColor={ Colors.amber700 }
               onTouchTap={ this._handleSaveDevices }
               style={{
@@ -259,7 +285,6 @@ export default class networkComponent extends React.Component {
                 marginLeft: '10px',
               }} />
           </div>
-        </div>
         </Card>
       </div>
     );
