@@ -176,21 +176,8 @@ export default class networkComponent extends React.Component {
                }}>
             <RaisedButton
               linkButton
-              label={__('Cancel')}
-              style={{
-                width: '236px',
-                flexGrow: 1,
-                textAlign: 'center',
-                marginTop: '20px',
-                marginBottom: '20px',
-                marginRight: '10px',
-              }}
-              backgroundColor="#EDEDED"
-              labelColor="#999A94" />
-            <RaisedButton
-              linkButton
               secondary
-              label={__('Configure & Restart')}
+              label={__('Save')}
               backgroundColor={ Colors.amber700 }
               onTouchTap={ this._handleSettingDevices }
               style={{
