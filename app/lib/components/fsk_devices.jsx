@@ -206,6 +206,11 @@ export default class networkComponent extends React.Component {
                   { __("Device Freq.") } <b style={{ color: 'red' }}>*</b>
                 </div>
               } />
+          <div style={{
+                 display: 'flex',
+                 flexDirection: 'row',
+                 justifyContent: 'space-between',
+               }}>
             <RaisedButton
               linkButton
               secondary
@@ -220,6 +225,7 @@ export default class networkComponent extends React.Component {
                 marginBottom: '20px',
                 marginLeft: '10px',
               }} />
+          </div>
           <div style={{
                  display: 'flex',
                  flexDirection: 'row',
@@ -233,6 +239,11 @@ export default class networkComponent extends React.Component {
               )
             }
           </List>
+          <div style={{
+                 display: 'flex',
+                 flexDirection: 'row',
+                 justifyContent: 'space-between',
+               }}>
             <RaisedButton
               linkButton
               secondary
@@ -247,6 +258,7 @@ export default class networkComponent extends React.Component {
                 marginBottom: '20px',
                 marginLeft: '10px',
               }} />
+          </div>
         </div>
         </Card>
       </div>
