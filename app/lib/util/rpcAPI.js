@@ -516,7 +516,7 @@ const rpcAPI = {
         'write',
         {
           path: '/IoT/etc/devices.txt',
-          data: data,
+          data: data + "\n",
           mode: 0o644,
           base64: false,
           append: false,
