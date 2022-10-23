@@ -60,6 +60,7 @@ export default class networkComponent extends React.Component {
     };
 
     this._handleSettingBeacon = ::this._handleSettingBeacon;
+    this._handleReboot = ::this._handleReboot;
   }
 
   componentWillMount() {
@@ -117,6 +118,9 @@ export default class networkComponent extends React.Component {
       }
       alert('[' + err + '] Please try again!');
     });
+  }
+  _handleReboot() {
+    return AppActions.reboot();
   }
 
   render() {
@@ -258,6 +262,28 @@ export default class networkComponent extends React.Component {
         <FskSensor />
         <FskDevices />
         <FskMqtt />
+        <Card>
+          <div style={{
+                 display: 'flex',
+                 flexDirection: 'row',
+                 justifyContent: 'space-between',
+               }}>
+            <RaisedButton
+              linkButton
+              secondary
+              label={__('Reboot')}
+              backgroundColor={ Colors.amber700 }
+              onTouchTap={ this._handleReboot }
+              style={{
+                width: '236px',
+                flexGrow: 1,
+                textAlign: 'center',
+                marginTop: '20px',
+                marginBottom: '20px',
+                marginLeft: '10px',
+              }} />
+          </div>
+        </Card>
       </div>
     );
   }
