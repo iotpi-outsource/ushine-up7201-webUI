@@ -76,10 +76,24 @@ export default class networkComponent extends React.Component {
     AppActions.loadFskDevices(window.session)
       .then((data) => {
         let r = data.body.result[1].data;
-        console.log(r);
         let d = r.split(/\r?\n/);
-        console.log(d);
-        return this$.setState({ devices: d });
+        let devices = d.filter((value) => {
+          if(value.trim().length == 0) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        devices = devices.map((value) => {
+            let i = value.split(/,/);
+            return {
+              addr: i[0],
+              no: i[1],
+              freq: i[2],
+            }
+        });
+        console.log(devices);
+        return this$.setState({ devices: devices });
     });
   }
 
@@ -134,7 +148,7 @@ export default class networkComponent extends React.Component {
           <List>
             {
               this.state.devices.map(
-                (value) => <ListItem primaryText={value}></ListItem>
+                (device) => <ListItem primaryText={`${device.addr}, ${device.no}, ${device.freq}`}></ListItem>
               )
             }
           </List>
