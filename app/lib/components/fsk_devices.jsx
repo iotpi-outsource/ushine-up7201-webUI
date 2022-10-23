@@ -19,6 +19,8 @@ const {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
+  List,
+  ListItem,
 } = mui;
 
 const ThemeManager = new mui.Styles.ThemeManager();
@@ -52,8 +54,7 @@ export default class networkComponent extends React.Component {
       errorMsg: null,
     };
 
-    this.state.devices = {
-    };
+    this.state.devices = [];
     // this._handleSettingDevices = ::this._handleSettingDevices;
   }
 
@@ -72,12 +73,14 @@ export default class networkComponent extends React.Component {
         checkedColor: '#00a1de',
       },
     });
-    /*AppActions.loadFskDevices(window.session)
+    AppActions.loadFskDevices(window.session)
       .then((data) => {
         let r = data.body.result[1].data;
         console.log(r);
-        return this$.setState({ });
-    });*/
+        let d = r.split(/\r?\n/);
+        console.log(d);
+        return this$.setState({ devices: d });
+    });
   }
 
   componentDidMount() {
@@ -91,55 +94,11 @@ export default class networkComponent extends React.Component {
   }
 
   render() {
-    let textType = 'password';
-    let errorText = 'hello';
-    let showPasswordStyle = {
-      width: '100%',
-      marginBottom: '44px',
-    };
-    let elem;
-    elem = (
-        <div>
-          <TextField
-            hintText={__("Select 1, 5, 10(Hz)")}
-            type="text"
-            value="x"
-            style={{ width: '100%' }}
-            onChange={
-              (e) => {
-              }
-            }
-            underlineFocusStyle={{ borderColor: Colors.amber700 }}
-            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            floatingLabelText={
-              <div>
-                { __("Sensor sampling rate") } <b style={{ color: 'red' }}>*</b>
-              </div>
-            } />
-          <TextField
-            hintText={__("Select 0, 1, 2, 4(min)")}
-            type="text"
-            value="y"
-            style={{ width: '100%' }}
-            onChange={
-              (e) => {
-              }
-            }
-            underlineFocusStyle={{ borderColor: Colors.amber700 }}
-            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            floatingLabelText={
-              <div>
-                { __("Sensor sleep time") } <b style={{ color: 'red' }}>*</b>
-              </div>
-            } />
-        </div>
-      );
     return (
       <div>
         <Card>
         <div style={ styles.content }>
           <h3>{__("Devices")}</h3>
-          { elem }
           <div style={{
                  display: 'flex',
                  flexDirection: 'row',
@@ -171,18 +130,14 @@ export default class networkComponent extends React.Component {
                 marginBottom: '20px',
                 marginLeft: '10px',
               }} />
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHeaderColumn>DevAddr</TableHeaderColumn>
-                  <TableHeaderColumn>Timeslot No</TableHeaderColumn>
-                  <TableHeaderColumn>Uplink Frequency</TableHeaderColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-              </TableBody>
-            </Table>
           </div>
+          <List>
+            {
+              this.state.devices.map(
+                (value) => <ListItem primaryText={value}></ListItem>
+              )
+            }
+          </List>
         </div>
         </Card>
       </div>
