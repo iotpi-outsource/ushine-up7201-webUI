@@ -29,6 +29,8 @@ const styles = {
   },
 };
 
+const sampling_rates = [{text: "1 Hz", payload: 1}, {text: "5 Hz", payload: 5}, {text: "10 Hz", payload: 10}];
+const sleep_times = [{text: "0 min", payload: 0}, {text: "1 min", payload: 1}, {text: "2 min", payload: 2}, {text: "4 min", payload: 4}];
 
 @Radium
 export default class networkComponent extends React.Component {
@@ -117,10 +119,9 @@ export default class networkComponent extends React.Component {
     let elem;
     elem = (
         <div>
-          <TextField
-            hintText={__("Select 1, 5, 10(Hz)")}
-            type="text"
+          <SelectField
             value={ this.state.devices.sampling_rate }
+            menuItems={ sampling_rates }
             style={{ width: '100%' }}
             onChange={
               (e) => {
@@ -134,15 +135,11 @@ export default class networkComponent extends React.Component {
             }
             underlineFocusStyle={{ borderColor: Colors.amber700 }}
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            floatingLabelText={
-              <div>
-                { __("Sensor sampling rate") } <b style={{ color: 'red' }}>*</b>
-              </div>
-            } />
-          <TextField
-            hintText={__("Select 0, 1, 2, 4(min)")}
-            type="text"
+            floatingLabelText={ __("Sensor sampling rate") }
+          />
+          <SelectField
             value={ this.state.devices.sleep_time }
+            menuItems={ sleep_times }
             style={{ width: '100%' }}
             onChange={
               (e) => {
@@ -156,11 +153,8 @@ export default class networkComponent extends React.Component {
             }
             underlineFocusStyle={{ borderColor: Colors.amber700 }}
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            floatingLabelText={
-              <div>
-                { __("Sensor sleep time") } <b style={{ color: 'red' }}>*</b>
-              </div>
-            } />
+            floatingLabelText={ __("Sensor sleep time") }
+          />
         </div>
       );
     return (

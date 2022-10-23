@@ -33,7 +33,7 @@ const styles = {
 
 };
 
-const intervals = [{text: "50", payload: 50}, {text: "100", payload: 100}, {text: "200", payload: 200}];
+const intervals = [{text: "50 ms", payload: 50}, {text: "100 ms", payload: 100}, {text: "200 ms", payload: 200}];
 
 @Radium
 export default class networkComponent extends React.Component {
