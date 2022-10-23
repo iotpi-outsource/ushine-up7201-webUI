@@ -61,7 +61,6 @@ export default class networkComponent extends React.Component {
       freq: null,
     };
     this.state.devices = [];
-    this.selectedDevices = {};
     
     this._handleAddDevice = ::this._handleAddDevice;
     this._handleDeleteDevice = ::this._handleDeleteDevice;
@@ -113,7 +112,9 @@ export default class networkComponent extends React.Component {
     for(let index in devices) {
       devices[index].checked = false;
     }
-    this.selectedDevices = {};
+    this.setState({
+      devices: devices,
+    });
     return devices;
   }
   
@@ -131,20 +132,16 @@ export default class networkComponent extends React.Component {
     });
 
     devices = this.resetSelectedDevices(devices);
-    this.setState({
-      devices: devices,
-    });
   }
   _handleDeleteDevice() {
-    let keys = Object.keys(this.selectedDevices);
     let devices = this.state.devices;
-    for(let index in keys) {
-      delete devices[index];
+    for(let index in devices) {
+      if(devices[index].checked == true) {
+        console.log("index: ", index);
+        delete devices[index];
+      }
     }
-    this.selectedDevices = {};
-    this.setState({
-      devices: devices,
-    });
+    this.resetSelectedDevices(devices);
   }
 
   _handleSaveDevices() {
@@ -154,17 +151,9 @@ export default class networkComponent extends React.Component {
   }
 
   _handleOnCheck(checked, index) {
-    // console.log("onCheck: ", index, " checked:", checked, " d: ", this.state.devices[index].checked);
+    console.log("onCheck: ", index, " checked:", checked, " d: ", this.state.devices[index].checked);
     let devices = this.state.devices;
-    if(checked) {
-      this.selectedDevices[index] = '';
-      devices[index].checked = true;
-    } else {
-      if(index in this.selectedDevices) {
-        devices[index].checked = false;
-        delete this.selectedDevices[index];
-      }
-    }
+    devices[index].checked = checked;
     this.setState({
       devices: devices,
     });
