@@ -30,7 +30,7 @@ const styles = {
 };
 
 const sampling_rates = [{text: "1 Hz", payload: 1}, {text: "5 Hz", payload: 5}, {text: "10 Hz", payload: 10}];
-const sleep_times = [{text: "0 min", payload: 0}, {text: "1 min", payload: 1}, {text: "2 min", payload: 2}, {text: "4 min", payload: 4}];
+const sleep_times = [{text: "0 min", payload: '0'}, {text: "1 min", payload: 1}, {text: "2 min", payload: 2}, {text: "4 min", payload: 4}];
 
 @Radium
 export default class networkComponent extends React.Component {
