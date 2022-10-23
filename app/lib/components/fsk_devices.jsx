@@ -61,7 +61,7 @@ export default class networkComponent extends React.Component {
       freq: null,
     };
     this.state.devices = [];
-    this.state.selectedDevices = {};
+    this.selectedDevices = {};
     
     this._handleAddDevice = ::this._handleAddDevice;
     this._handleDeleteDevice = ::this._handleDeleteDevice;
@@ -101,6 +101,7 @@ export default class networkComponent extends React.Component {
               addr: i[0],
               no: i[1],
               freq: i[2],
+              checked: false,
             }
         });
         console.log(devices);
@@ -108,53 +109,65 @@ export default class networkComponent extends React.Component {
     });
   }
 
+  resetSelectedDevices(devices) {
+    for(let index in devices) {
+      devices[index].checked = false;
+    }
+    this.selectedDevices = {};
+    return devices;
+  }
+  
   _handleAddDevice() {
     let device = {
       addr: this.state.input.addr,
       no: this.state.input.no,
       freq: this.state.input.freq,
+      checked: false,
     };
     let devices = this.state.devices;
     devices.push(device);
     devices.sort((d1, d2) => {
       return d1.no > d2.no;
     });
+
+    devices = this.resetSelectedDevices(devices);
     this.setState({
       devices: devices,
-      selectedDevices: {},
     });
   }
   _handleDeleteDevice() {
-    let keys = Object.keys(this.state.selectedDevices);
+    let keys = Object.keys(this.selectedDevices);
     let devices = this.state.devices;
     for(let index in keys) {
       delete devices[index];
     }
+    this.selectedDevices = {};
     this.setState({
       devices: devices,
-      selectedDevices: {},
     });
   }
 
   _handleSaveDevices() {
     let devices = this.state.devices;
     AppActions.setFskDevices(devices, window.session);
-    this.setState({
-      selectedDevices: {},
-    });
+    this.resetSelectedDevices(devices);
   }
 
   _handleOnCheck(checked, index) {
-    console.log("onCheck: ", index, " checked:", checked);
+    // console.log("onCheck: ", index, " checked:", checked, " d: ", this.state.devices[index].checked);
+    let devices = this.state.devices;
     if(checked) {
-      this.state.selectedDevices[index] = '';
+      this.selectedDevices[index] = '';
+      devices[index].checked = true;
     } else {
-      if(index in this.state.selectedDevices) {
-        delete this.state.selectedDevices[index];
+      if(index in this.selectedDevices) {
+        devices[index].checked = false;
+        delete this.selectedDevices[index];
       }
     }
-
-    console.log(this.state.selectedDevices);
+    this.setState({
+      devices: devices,
+    });
   }
 
   componentDidMount() {
@@ -270,7 +283,9 @@ export default class networkComponent extends React.Component {
               this.state.devices.map(
                 (device, index) => <ListItem
                                      leftCheckbox={
-                                       <Checkbox onCheck={ (e, checked) => { this._handleOnCheck(checked, index) }} />
+                                       <Checkbox
+                                         onCheck={ (e, checked) => { this._handleOnCheck(checked, index) }}
+                                         checked = { device.checked }/>
                                      }
                                      primaryText={`${device.addr}, ${device.no}, ${device.freq}`}></ListItem>
               )
