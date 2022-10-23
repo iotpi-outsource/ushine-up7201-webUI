@@ -13,11 +13,9 @@ const {
   TextField,
   Card,
   FlatButton,
-  RadioButtonGroup,
-  RadioButton,
   RaisedButton,
   SelectField,
-  Dialog,
+  MenuItem,
 } = mui;
 
 const ThemeManager = new mui.Styles.ThemeManager();
@@ -35,6 +33,7 @@ const styles = {
 
 };
 
+const intervals = [{text: "50", payload: 50}, {text: "100", payload: 100}, {text: "200", payload: 200}];
 
 @Radium
 export default class networkComponent extends React.Component {
@@ -43,6 +42,8 @@ export default class networkComponent extends React.Component {
     successMsg: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     boardInfo: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   }
+
+  
   constructor(props) {
     super(props);
 
@@ -157,30 +158,26 @@ export default class networkComponent extends React.Component {
               { __('Beacon Channel Frequency(in kHZ)') } <b style={{ color: 'red' }}>*</b>
             </div>
           } />
-          <TextField
-          hintText={__("in ms, 50ms, 100ms or 200ms")}
-          type="text"
-          value={ this.state.beacon.interval }
-          style={{ width: '100%' }}
-          onChange={
-            (e) => {
-              this.setState({
-                beacon: {
-                  freq: this.state.beacon.freq,
-                  interval: e.target.value,
-                  ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
-                  ch2_uplink_freq: this.state.beacon.ch2_uplink_freq,
-                },
-              });
+          <SelectField
+            value={ this.state.beacon.interval }
+            menuItems={ intervals }
+            style={{ width: '100%' }}
+            onChange={
+              (e) => {
+                this.setState({
+                  beacon: {
+                    freq: this.state.beacon.freq,
+                    interval: e.target.value,
+                    ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
+                    ch2_uplink_freq: this.state.beacon.ch2_uplink_freq,
+                  },
+                });
+              }
             }
-          }
-          underlineFocusStyle={{ borderColor: Colors.amber700 }}
-          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-          floatingLabelText={
-            <div>
-              { __("Beacon TX Interval(in ms)") } <b style={{ color: 'red' }}>*</b>
-            </div>
-          } />
+            underlineFocusStyle={{ borderColor: Colors.amber700 }}
+            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+            floatingLabelText={ __("Beacon TX Interval(in ms)") }
+          />
           <TextField
             hintText={__("in KHZ, 902000 for 902Mhz")}
             type="text"
