@@ -134,18 +134,13 @@ export default class networkComponent extends React.Component {
     devices = this.resetSelectedDevices(devices);
   }
   _handleDeleteDevice() {
-    let devices = this.state.devices;
-    for(let index in devices) {
-      if(devices[index].checked == true) {
-        console.log("index: ", index);
-        delete devices[index];
-      }
-    }
+    let devices = this.state.devices.filter((e) => e.checked == false) ;
     this.resetSelectedDevices(devices);
   }
 
   _handleSaveDevices() {
     let devices = this.state.devices;
+    console.log(devices);
     AppActions.setFskDevices(devices, window.session);
     this.resetSelectedDevices(devices);
   }
