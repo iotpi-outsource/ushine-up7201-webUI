@@ -5,6 +5,7 @@ import AppActions from '../actions/appActions';
 import AppDispatcher from '../dispatcher/appDispatcher';
 
 const {
+  Checkbox,
   TextField,
   Card,
   FlatButton,
@@ -60,9 +61,12 @@ export default class networkComponent extends React.Component {
       freq: null,
     };
     this.state.devices = [];
+    this.state.selectedDevices = {};
+    
     this._handleAddDevice = ::this._handleAddDevice;
     this._handleDeleteDevice = ::this._handleDeleteDevice;
     this._handleSaveDevices = ::this._handleSaveDevices;
+    this._handleOnCheck = ::this._handleOnCheck;
   }
 
   componentWillMount() {
@@ -117,14 +121,40 @@ export default class networkComponent extends React.Component {
     });
     this.setState({
       devices: devices,
+      selectedDevices: {},
     });
   }
   _handleDeleteDevice() {
+    let keys = Object.keys(this.state.selectedDevices);
+    let devices = this.state.devices;
+    for(let index in keys) {
+      delete devices[index];
+    }
+    this.setState({
+      devices: devices,
+      selectedDevices: {},
+    });
   }
 
   _handleSaveDevices() {
     let devices = this.state.devices;
-    return AppActions.setFskDevices(devices, window.session);
+    AppActions.setFskDevices(devices, window.session);
+    this.setState({
+      selectedDevices: {},
+    });
+  }
+
+  _handleOnCheck(checked, index) {
+    console.log("onCheck: ", index, " checked:", checked);
+    if(checked) {
+      this.state.selectedDevices[index] = '';
+    } else {
+      if(index in this.state.selectedDevices) {
+        delete this.state.selectedDevices[index];
+      }
+    }
+
+    console.log(this.state.selectedDevices);
   }
 
   componentDidMount() {
@@ -235,10 +265,14 @@ export default class networkComponent extends React.Component {
                  justifyContent: 'space-between',
                }}>
           </div>
-          <List>
+            <List>
             {
               this.state.devices.map(
-                (device) => <ListItem primaryText={`${device.addr}, ${device.no}, ${device.freq}`}></ListItem>
+                (device, index) => <ListItem
+                                     leftCheckbox={
+                                       <Checkbox onCheck={ (e, checked) => { this._handleOnCheck(checked, index) }} />
+                                     }
+                                     primaryText={`${device.addr}, ${device.no}, ${device.freq}`}></ListItem>
               )
             }
           </List>
