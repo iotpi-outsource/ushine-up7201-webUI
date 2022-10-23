@@ -230,6 +230,9 @@ const appActions = {
   loadFskDevices: (session) => {
     return rpc.loadFskDevices(session);
   },
+  setFskDevices: (devices, session) => {
+    return rpc.setFskDevices(devices, session);
+  },
   getQuery: (name) => {
     let match;
     const pl = /\+/g; /* Regex for replacing addition symbol with a space */

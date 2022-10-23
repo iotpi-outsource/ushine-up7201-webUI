@@ -61,6 +61,7 @@ export default class networkComponent extends React.Component {
     };
     this.state.devices = [];
     this._handleAddDevice = ::this._handleAddDevice;
+    this._handleSaveDevices = ::this._handleSaveDevices;
   }
 
   componentWillMount() {
@@ -108,9 +109,19 @@ export default class networkComponent extends React.Component {
       no: this.state.input.no,
       freq: this.state.input.freq,
     };
-    this.setState((state) => ({
-      devices: [...state.devices, device],
-    }));
+    let devices = this.state.devices;
+    devices.push(device);
+    devices.sort((d1, d2) => {
+      return d1.no > d2.no;
+    });
+    this.setState({
+      devices: devices,
+    });
+  }
+
+  _handleSaveDevices() {
+    let devices = this.state.devices;
+    return AppActions.setFskDevices(devices, window.session);
   }
 
   componentDidMount() {
@@ -222,6 +233,20 @@ export default class networkComponent extends React.Component {
               )
             }
           </List>
+            <RaisedButton
+              linkButton
+              secondary
+              label={__('Save')}
+              backgroundColor={ Colors.amber700 }
+              onTouchTap={ this._handleSaveDevices }
+              style={{
+                width: '236px',
+                flexGrow: 1,
+                textAlign: 'center',
+                marginTop: '20px',
+                marginBottom: '20px',
+                marginLeft: '10px',
+              }} />
         </div>
         </Card>
       </div>

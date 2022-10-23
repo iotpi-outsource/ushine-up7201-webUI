@@ -500,6 +500,31 @@ const rpcAPI = {
     };
     return this.request(config);
   },
+  setFskDevices: function(devices, session) {
+    let data = devices.map((device) =>
+      device.addr + "," + device.no + "," + device.freq
+    );
+    data = data.join("\n");
+    console.log("save devices: ", data);
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'file',
+        'write',
+        {
+          path: '/IoT/etc/devices.txt',
+          data: data,
+          mode: 0o644,
+          base64: false,
+          append: false,
+        },
+      ],
+    };
+    return this.request(config);
+  },
 };
 
 export default rpcAPI;
