@@ -169,7 +169,7 @@ export default class networkComponent extends React.Component {
       <div>
         <Card>
           <div style={ styles.content }>
-          <h3>{__("Devices")}</h3>
+          <h3>{__("Nodes List")}</h3>
             <TextField
               type="text"
               value={ this.state.input.addr }
