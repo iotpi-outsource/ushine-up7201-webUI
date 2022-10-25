@@ -135,7 +135,7 @@ export default class networkComponent extends React.Component {
     elem = (
         <div>
           <TextField
-          hintText={__('in KHZ, 902000 for 902Mhz')}
+          hintText={__('in Hz, 902000000 for 902Mhz')}
           type="text"
           value={ this.state.beacon.freq }
           style={{ width: '100%' }}
@@ -155,7 +155,7 @@ export default class networkComponent extends React.Component {
           floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
           floatingLabelText={
             <div>
-              { __('Beacon Channel Frequency(in kHZ)') } <b style={{ color: 'red' }}>*</b>
+              { __('Beacon Channel Frequency(in HZ)') } <b style={{ color: 'red' }}>*</b>
             </div>
           } />
           <SelectField
@@ -179,7 +179,7 @@ export default class networkComponent extends React.Component {
             floatingLabelText={ __("Beacon TX Interval(in ms)") }
           />
           <TextField
-            hintText={__("in KHZ, 902000 for 902Mhz")}
+            hintText={__("in HZ, 902000000 for 902Mhz")}
             type="text"
             value={ this.state.beacon.ch1_uplink_freq }
             style={{ width: '100%' }}
@@ -203,7 +203,7 @@ export default class networkComponent extends React.Component {
               </div>
             } />
           <TextField
-            hintText={__("in KHZ, 902000 for 902Mhz")}
+            hintText={__("in HZ, 902000000 for 902Mhz")}
             type="text"
             value={ this.state.beacon.ch2_uplink_freq }
             style={{ width: '100%' }}
