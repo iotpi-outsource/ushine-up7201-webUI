@@ -96,7 +96,6 @@ export default class loginComponent extends React.Component {
       <div>
         <header style={ styles.header }>
           <div style={ styles.container }>
-            <img style={ styles.img } src={ Logo } />
             <div style={{ display: 'flex' }}>
               <DropDownMenu
                 menuItems={ menuItems }
