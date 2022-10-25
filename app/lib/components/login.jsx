@@ -68,6 +68,7 @@ export default class loginComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      account: '',
       password: '',
       showPassword: false,
       autoHideDuration: 3000,
@@ -161,7 +162,25 @@ export default class loginComponent extends React.Component {
               fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif',
             }}><span style={{fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif'}}>{__('Welcome to')}</span> <b style={{ fontFamily: 'RionaSansMedium,Arial,Helvetica,sans-serif' }}>LinkIt Smart 7688</b>.</p>
             <h3 style={ styles.panelTitle }>{__('Account')}</h3>
-            <p style={ styles.panelContent }>root(default)</p>
+            <TextField
+              hintText={ __('Please enter your account') }
+              type={ textType }
+              floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+              underlineFocusStyle={{ borderColor: Colors.amber700 }}
+              style={{ marginTop: '-10px', ...styles.basicWidth}}
+              onChange={
+                (e)=> {
+                  this.setState({
+                    account: e.target.value,
+                  });
+                }
+              }
+              floatingLabelText=
+                {
+                  <div>
+                    {__('Account')} <b style={{ color: 'red' }}>*</b>
+                  </div>
+                } />
             <TextField
               hintText={ __('Please enter your password') }
               type={ textType }
