@@ -91,7 +91,7 @@ export default class contentComponent extends React.Component {
     return (
       <div key="mainBlock" style={ styles.block }>
         <header style={ styles.header }>
-          <p style={ styles.welcomeTitle } key="welcome">{ __('Welcome to') } <b>{ this.state.boardModel }</b></p>
+          <p style={ styles.welcomeTitle } key="welcome">{ __('Welcome to') } <b>Ushine UP7201</b></p>
           <p style={[ styles.welcomeTitle, styles.welcomeTitleLine ]} key="advanced">
             {
               __('For advanced network configuration, go to ')
