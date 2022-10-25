@@ -121,7 +121,7 @@ export default class networkComponent extends React.Component {
     });
   }
   _handleReboot() {
-    return AppActions.reboot();
+    return AppActions.reboot(window.session);
   }
 
   render() {
