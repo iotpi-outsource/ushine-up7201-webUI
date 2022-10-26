@@ -160,7 +160,7 @@ export default class loginComponent extends React.Component {
               lineHeight: '22px',
               marginTop: '40px',
               fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif',
-            }}><span style={{fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif'}}>{__('Welcome to')}</span> <b style={{ fontFamily: 'RionaSansMedium,Arial,Helvetica,sans-serif' }}>LinkIt Smart 7688</b>.</p>
+            }}><span style={{fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif'}}>{__('Welcome to')}</span> <b style={{ fontFamily: 'RionaSansMedium,Arial,Helvetica,sans-serif' }}>Ushine UP7201</b>.</p>
             <TextField
               hintText={ __('Please enter your account') }
               type="text"
