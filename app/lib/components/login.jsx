@@ -155,7 +155,6 @@ export default class loginComponent extends React.Component {
             flexDirection: 'column',
             alignItems: 'center',
           }}>
-            <img src={ Logo } style={ styles.img } />
             <p style={{
               lineHeight: '22px',
               marginTop: '40px',
