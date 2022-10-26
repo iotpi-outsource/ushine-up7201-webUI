@@ -155,7 +155,7 @@ export default class networkComponent extends React.Component {
           floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
           floatingLabelText={
             <div>
-              { __('Beacon Channel Frequency(in HZ)') } <b style={{ color: 'red' }}>*</b>
+              { __('Channel Frequency(in HZ)') } <b style={{ color: 'red' }}>*</b>
             </div>
           } />
           <SelectField
@@ -176,7 +176,7 @@ export default class networkComponent extends React.Component {
             }
             underlineFocusStyle={{ borderColor: Colors.amber700 }}
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            floatingLabelText={ __("Beacon TX Interval(in ms)") }
+            floatingLabelText={ __("TX Interval(in ms)") }
           />
           <TextField
             hintText={__("in HZ, 902000000 for 902Mhz")}
