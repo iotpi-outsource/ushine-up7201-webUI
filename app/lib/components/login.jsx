@@ -161,10 +161,9 @@ export default class loginComponent extends React.Component {
               marginTop: '40px',
               fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif',
             }}><span style={{fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif'}}>{__('Welcome to')}</span> <b style={{ fontFamily: 'RionaSansMedium,Arial,Helvetica,sans-serif' }}>LinkIt Smart 7688</b>.</p>
-            <h3 style={ styles.panelTitle }>{__('Account')}</h3>
             <TextField
               hintText={ __('Please enter your account') }
-              type={ textType }
+              type="text"
               floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
               underlineFocusStyle={{ borderColor: Colors.amber700 }}
               style={{ marginTop: '-10px', ...styles.basicWidth}}
