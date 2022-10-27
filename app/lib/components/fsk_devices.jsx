@@ -38,6 +38,7 @@ const styles = {
   },
 };
 
+const channels = [{text: "Ch 1", payload: '1'}, {text: "Ch 2", payload: '2'}];
 
 @Radium
 export default class networkComponent extends React.Component {
@@ -58,7 +59,7 @@ export default class networkComponent extends React.Component {
     this.state.input = {
       addr: null,
       no: null,
-      freq: null,
+      chan: null,
     };
     this.state.devices = [];
     
@@ -99,7 +100,7 @@ export default class networkComponent extends React.Component {
             return {
               addr: i[0],
               no: i[1],
-              freq: i[2],
+              chan: i[2],
               checked: false,
             }
         });
@@ -122,7 +123,7 @@ export default class networkComponent extends React.Component {
     let device = {
       addr: this.state.input.addr,
       no: this.state.input.no,
-      freq: this.state.input.freq,
+      chan: this.state.input.chan,
       checked: false,
     };
     let devices = this.state.devices;
@@ -180,7 +181,7 @@ export default class networkComponent extends React.Component {
                     input: {
                       addr: e.target.value,
                       no: this.state.input.no,
-                      freq: this.state.input.freq,
+                      chan: this.state.input.chan,
                     }
                   });
                 }
@@ -202,7 +203,7 @@ export default class networkComponent extends React.Component {
                     input: {
                       addr: this.state.input.addr,
                       no: e.target.value,
-                      freq: this.state.input.freq,
+                      chan: this.state.input.chan,
                     }
                   });
                 }
@@ -214,28 +215,25 @@ export default class networkComponent extends React.Component {
                   { __("Device No.") } <b style={{ color: 'red' }}>*</b>
                 </div>
               } />
-            <TextField
-              type="text"
-              value={ this.state.input.freq }
-              style={{ width: '100%' }}
-              onChange={
-                (e) => {
+          <SelectField
+            value={ this.state.input.chan }
+            menuItems={ channels }
+            style={{ width: '100%' }}
+            onChange={
+              (e) => {
                   this.setState({
                     input: {
                       addr: this.state.input.addr,
                       no: this.state.input.no,
-                      freq: e.target.value,
+                      chan: e.target.value,
                     }
                   });
-                }
               }
-              underlineFocusStyle={{ borderColor: Colors.amber700 }}
-              floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-              floatingLabelText={
-                <div>
-                  { __("Device Freq.") } <b style={{ color: 'red' }}>*</b>
-                </div>
-              } />
+            }
+            underlineFocusStyle={{ borderColor: Colors.amber700 }}
+            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+            floatingLabelText={ __("Device Channel") }
+          />
           <div style={{
                  display: 'flex',
                  flexDirection: 'row',
@@ -271,7 +269,7 @@ export default class networkComponent extends React.Component {
                                          onCheck={ (e, checked) => { this._handleOnCheck(checked, index) }}
                                          checked = { device.checked }/>
                                      }
-                                     primaryText={`${device.addr}, ${device.no}, ${device.freq}`}></ListItem>
+                                     primaryText={`${device.addr}, ${device.no}, ${device.chan}`}></ListItem>
               )
             }
           </List>
