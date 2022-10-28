@@ -130,8 +130,11 @@ export default class networkComponent extends React.Component {
     };
 
     if(null == device.addr || device.addr.length == 0) {
-      alert(__("Device Addr is empty"));
-      return;
+        this.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Device Addr is empty"),
+        });
+        return this$.refs.errorDialog.show();
     } else {
       if(!/[0-9a-fA-F]{1,8}/g.test(device.addr)) {
         this.setState({
@@ -149,19 +152,37 @@ export default class networkComponent extends React.Component {
     }
     
     if(null == device.no || device.no.length == 0) {
-      alert(__("Device No. is empty"));
-      return;
+        this.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Device No. is empty"),
+        });
+        return this.refs.errorDialog.show();
     } else {
       if(!/[0-9]+/g.test(device.no)) {
-        alert(__("Device No. is not number"));
-        return;
+        this.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Device No. is not number"),
+        });
+        return this.refs.errorDialog.show();
       }
 
       if(parseInt(device.no) >= 150) {
-        alert(__("Device No. can not be greater than 150"));
-        return;
+        this.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Device No. can not be greater than 150"),
+        });
+        return this.refs.errorDialog.show();
       }
     }
+
+    if(null == device.chan) {
+        this.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Please choose device channel"),
+        });
+        return this.refs.errorDialog.show();
+    }      
+    
     let devices = this.state.devices;
     let found = devices.find(d => d.addr == device.addr || d.no == device.no);
     if(found != undefined) {
