@@ -16,6 +16,7 @@ const {
   RaisedButton,
   SelectField,
   MenuItem,
+  Dialog
 } = mui;
 
 const ThemeManager = new mui.Styles.ThemeManager();
@@ -54,6 +55,7 @@ export default class networkComponent extends React.Component {
     };
 
     this.state.beacon = {
+      addr: null,
       freq: null,
       interval: null,
       ch1_uplink_freq: null,
@@ -62,6 +64,7 @@ export default class networkComponent extends React.Component {
 
     this._handleSettingBeacon = ::this._handleSettingBeacon;
     this._handleReboot = ::this._handleReboot;
+    this._cancelErrorMsgDialog = ::this._cancelErrorMsgDialog;
   }
 
   componentWillMount() {
@@ -84,6 +87,7 @@ export default class networkComponent extends React.Component {
         let r = data.body.result[1].values;
         // console.log(r);
         return this$.setState({ beacon: {
+          addr: r.beacon.addr,
           freq: r.beacon.freq,
           interval: r.beacon.interval,
           ch1_uplink_freq: r.beacon.channel1,
@@ -103,7 +107,24 @@ export default class networkComponent extends React.Component {
   }
   _handleSettingBeacon() {
     const this$ = this;
+    if(null == this.state.beacon.addr || this.state.beacon.addr.length == 0) {
+      this$.setState({
+        errorMsgTitle: __('Error'),
+        errorMsg: __("Gateway Addr is empty"),
+      });
+      return this$.refs.errorMsg.show();
+    } else {
+      if(!/[0-9a-fA-F]+/g.test(this.state.beacon.addr)) {
+        this$.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Gateway Addr is not hex"),
+        });
+        return this$.refs.errorMsg.show();
+      }
+    }
+
     return AppActions.setFskBeacon(
+      this.state.beacon.addr,
       this.state.beacon.freq,
       this.state.beacon.interval,
       this.state.beacon.ch1_uplink_freq,
@@ -124,6 +145,10 @@ export default class networkComponent extends React.Component {
     return AppActions.reboot(window.session);
   }
 
+  _cancelErrorMsgDialog() {
+    this.refs.errorDialog.dismiss();
+  }
+
   render() {
     let textType = 'password';
     let errorText = 'hello';
@@ -131,9 +156,50 @@ export default class networkComponent extends React.Component {
       width: '100%',
       marginBottom: '44px',
     };
+    const errMsgActions = [
+      <FlatButton
+        label={__('SIGN IN')}
+        labelStyle={{ color: Colors.amber700 }}
+        onTouchTap={ this._cancelErrorMsgDialog }
+        hoverColor="none" />,
+    ];
+
     let elem;
     elem = (
         <div>
+          <Dialog
+            title={ this.state.errorMsgTitle }
+            actions={ errMsgActions }
+            actionFocus="submit"
+            ref="errorDialog"
+            modal={ this.state.modal }>
+            <p style={{ color: '#999A94', marginTop: '-20px' }}>{ this.state.errorMsg }</p>
+          </Dialog>
+          <TextField
+          hintText={ __('in hex format, eg, fe18') }
+          type="text"
+          value={ this.state.beacon.addr }
+          style={{ width: '100%' }}
+          onChange={
+            (e) => {
+              this.setState({
+                beacon: {
+                  addr: e.target.value,
+                  freq: this.state.beacon.freq,
+                  interval: this.state.beacon.interval,
+                  ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
+                  ch2_uplink_freq: this.state.beacon.ch2_uplink_freq,
+                },
+              });
+            }
+          }
+          underlineFocusStyle={{ borderColor: Colors.amber700 }}
+          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+          floatingLabelText={
+            <div>
+              { __('Gateway Addr') } <b style={{ color: 'red' }}>*</b>
+            </div>
+          } />
           <TextField
           hintText={__('in Hz, 902000000 for 902Mhz')}
           type="text"
@@ -143,6 +209,7 @@ export default class networkComponent extends React.Component {
             (e) => {
               this.setState({
                 beacon: {
+                  addr: this.state.beacon.addr,
                   freq: e.target.value,
                   interval: this.state.beacon.interval,
                   ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
@@ -166,6 +233,7 @@ export default class networkComponent extends React.Component {
               (e) => {
                 this.setState({
                   beacon: {
+                    addr: this.state.beacon.addr,
                     freq: this.state.beacon.freq,
                     interval: e.target.value,
                     ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
@@ -187,6 +255,7 @@ export default class networkComponent extends React.Component {
               (e) => {
                 this.setState({
                   beacon: {
+                    addr: this.state.beacon.addr,
                     freq: this.state.beacon.freq,
                     interval: this.state.beacon.interval,
                     ch1_uplink_freq: e.target.value,
@@ -211,6 +280,7 @@ export default class networkComponent extends React.Component {
               (e) => {
                 this.setState({
                   beacon: {
+                    addr: this.state.beacon.addr,
                     freq: this.state.beacon.freq,
                     interval: this.state.beacon.interval,
                     ch1_uplink_freq: this.state.beacon.ch1_uplink_freq,
