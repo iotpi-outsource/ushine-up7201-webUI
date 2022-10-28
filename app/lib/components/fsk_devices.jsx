@@ -120,12 +120,38 @@ export default class networkComponent extends React.Component {
   }
   
   _handleAddDevice() {
+
     let device = {
       addr: this.state.input.addr,
       no: this.state.input.no,
       chan: this.state.input.chan,
       checked: false,
     };
+
+    if(null == device.addr || device.addr.length == 0) {
+      alert(__("Device Addr is empty"));
+      return;
+    } else {
+      if(!/[0-9a-fA-F]+/g.test(device.addr)) {
+        alert(__("Device Addr is not hex"));
+        return;
+      }
+    }
+    
+    if(null == device.no || device.no.length == 0) {
+      alert(__("Device No. is empty"));
+      return;
+    } else {
+      if(!/[0-9]+/g.test(device.no)) {
+        alert(__("Device No. is not number"));
+        return;
+      }
+
+      if(parseInt(device.no) >= 150) {
+        alert(__("Device No. can not be greater than 150"));
+        return;
+      }
+    }
     let devices = this.state.devices;
     devices.push(device);
     devices.sort((d1, d2) => {
