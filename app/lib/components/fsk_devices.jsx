@@ -153,6 +153,11 @@ export default class networkComponent extends React.Component {
       }
     }
     let devices = this.state.devices;
+    let found = devices.find(d => d.addr == device.addr || d.no == device.no);
+    if(found != undefined) {
+        alert(__("Device Addr or No. should be unique"));
+        return;
+    }
     devices.push(device);
     devices.sort((d1, d2) => {
       return d1.no > d2.no;
