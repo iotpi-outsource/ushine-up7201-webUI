@@ -99,12 +99,11 @@ export default class resetPasswordComponent extends React.Component {
     return (
       <div style={ styles.frame }>
         <div style={ styles.block }>
-          <img src={ Logo } style={ styles.img }/>
           <p style={{
             lineHeight: '22px',
             marginTop: '40px',
             fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif',
-          }}>{__('Welcome to')} <b>LinkIt Smart 7688</b></p>
+          }}>{__('Welcome to')} <b>Ushine UP7201</b></p>
           <p style={{ color: '#69BE28', marginTop: '-10px' }}>{__('Please set a password.')}</p>
           <TextField
             hintText={ __('Input your Account') }
