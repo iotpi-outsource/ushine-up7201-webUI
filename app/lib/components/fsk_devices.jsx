@@ -67,6 +67,7 @@ export default class networkComponent extends React.Component {
     this._handleDeleteDevice = ::this._handleDeleteDevice;
     this._handleSaveDevices = ::this._handleSaveDevices;
     this._handleOnCheck = ::this._handleOnCheck;
+    this._cancelErrorMsgDialog = ::this._cancelErrorMsgDialog;
   }
 
   componentWillMount() {
@@ -132,9 +133,18 @@ export default class networkComponent extends React.Component {
       alert(__("Device Addr is empty"));
       return;
     } else {
-      if(!/[0-9a-fA-F]+/g.test(device.addr)) {
-        alert(__("Device Addr is not hex"));
-        return;
+      if(!/[0-9a-fA-F]{1,8}/g.test(device.addr)) {
+        this.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Device Addr is not hex"),
+        });
+        return this$.refs.errorDialog.show();
+      } else if(/[0-9a-fA-F]{9,}/g.test(device.addr)) {
+        this.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Device Addr is too large, should be 4 bytes, or 8 hex digits"),
+        });
+        return this.refs.errorDialog.show();
       }
     }
     
@@ -196,9 +206,29 @@ export default class networkComponent extends React.Component {
     };
   }
 
+  _cancelErrorMsgDialog() {
+    this.refs.errorDialog.dismiss();
+  }
+
   render() {
+    const errMsgActions = [
+      <FlatButton
+        label={__('Dismiss')}
+        labelStyle={{ color: Colors.amber700 }}
+        onTouchTap={ this._cancelErrorMsgDialog }
+        hoverColor="none" />,
+    ];
+
     return (
       <div>
+        <Dialog
+          title={ this.state.errorMsgTitle }
+          actions={ errMsgActions }
+          actionFocus="submit"
+          ref="errorDialog"
+          modal={ this.state.modal }>
+          <p style={{ color: '#999A94', marginTop: '-20px' }}>{ this.state.errorMsg }</p>
+        </Dialog>
         <Card>
           <div style={ styles.content }>
           <h3>{__("Nodes List")}</h3>
