@@ -112,15 +112,22 @@ export default class networkComponent extends React.Component {
         errorMsgTitle: __('Error'),
         errorMsg: __("Gateway Addr is empty"),
       });
-      return this$.refs.errorMsg.show();
+      return this$.refs.errorDialog.show();
     } else {
-      if(!/[0-9a-fA-F]+/g.test(this.state.beacon.addr)) {
+      if(!/[0-9a-fA-F]{1,8}/g.test(this.state.beacon.addr)) {
         this$.setState({
           errorMsgTitle: __('Error'),
           errorMsg: __("Gateway Addr is not hex"),
         });
-        return this$.refs.errorMsg.show();
+        return this$.refs.errorDialog.show();
+      } else if(/[0-9a-fA-F]{9,}/g.test(this.state.beacon.addr)) {
+        this$.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Gateway Addr is too large, should be 4 bytes, or 8 hex digits"),
+        });
+        return this$.refs.errorDialog.show();
       }
+
     }
 
     return AppActions.setFskBeacon(
@@ -136,7 +143,7 @@ export default class networkComponent extends React.Component {
           errorMsgTitle: __('Access denied'),
           errorMsg: __('Your token was expired, please sign in again.'),
         });
-        return this$.refs.errorMsg.show();
+        return this$.refs.errorDialog.show();
       }
       alert('[' + err + '] Please try again!');
     });
@@ -158,7 +165,7 @@ export default class networkComponent extends React.Component {
     };
     const errMsgActions = [
       <FlatButton
-        label={__('SIGN IN')}
+        label={__('Dismiss')}
         labelStyle={{ color: Colors.amber700 }}
         onTouchTap={ this._cancelErrorMsgDialog }
         hoverColor="none" />,
@@ -176,7 +183,7 @@ export default class networkComponent extends React.Component {
             <p style={{ color: '#999A94', marginTop: '-20px' }}>{ this.state.errorMsg }</p>
           </Dialog>
           <TextField
-          hintText={ __('in hex format, eg, fe18') }
+          hintText={ __('in hex format, eg, fe18, max 4 bytes / 8 hex digits') }
           type="text"
           value={ this.state.beacon.addr }
           style={{ width: '100%' }}
