@@ -87,13 +87,30 @@ export default class networkComponent extends React.Component {
         let r = data.body.result[1].values;
         // console.log(r);
         return this$.setState({ beacon: {
-          addr: r.beacon.addr,
+          addr: this$.state.beacon.addr,
           freq: r.beacon.freq,
           interval: r.beacon.interval,
           ch1_uplink_freq: r.beacon.channel1,
           ch2_uplink_freq: r.beacon.channel2,
         }});
-    });
+      });
+
+    AppActions.loadNetInterfaceAddress("eth0", window.session)
+      .then((data) => {
+        let d = data.body.result[1].data.trim();
+        console.log("net interface: " + d);
+        return this$.setState({ beacon: {
+          addr: d.slice(6),
+          freq: this$.state.beacon.freq,
+          interval: this$.state.beacon.interval,
+          ch1_uplink_freq: this$.state.beacon.channel1,
+          ch2_uplink_freq: this$.state.beacon.channel2,
+        }});
+      })
+      .catch(err => {
+        console.log("load net interface: error: ", err);
+      });
+    
   }
 
   componentDidMount() {
@@ -131,7 +148,6 @@ export default class networkComponent extends React.Component {
     }
 
     return AppActions.setFskBeacon(
-      this.state.beacon.addr,
       this.state.beacon.freq,
       this.state.beacon.interval,
       this.state.beacon.ch1_uplink_freq,
@@ -186,6 +202,7 @@ export default class networkComponent extends React.Component {
           hintText={ __('in hex format, eg, fe18, max 4 bytes / 8 hex digits') }
           type="text"
           value={ this.state.beacon.addr }
+          disabled
           style={{ width: '100%' }}
           onChange={
             (e) => {

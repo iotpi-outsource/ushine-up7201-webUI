@@ -236,6 +236,9 @@ const appActions = {
   reboot: (session) => {
     return rpc.reboot(session);
   },
+  loadNetInterfaceAddress: (name, session) => {
+    return rpc.loadNetInterfaceAddress(name, session);
+  },
   getQuery: (name) => {
     let match;
     const pl = /\+/g; /* Regex for replacing addition symbol with a space */

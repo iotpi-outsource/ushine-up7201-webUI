@@ -18,10 +18,12 @@ const rpcAPI = {
       .end((err, res) => {
         // return res.ok ? resolve(res) : reject(err);
         if (!res) {
+          console.log("reject connection failed: ", res, "err:", err);
           return reject('Connection failed');
         }
 
         if (!res.ok) {
+          console.log("reject connection failed: ", res, "err:", err);
           return reject('Connection failed');
         }
 
@@ -541,6 +543,24 @@ const rpcAPI = {
           mode: 0o644,
           base64: false,
           append: false,
+        },
+      ],
+    };
+    return this.request(config);
+  },
+  loadNetInterfaceAddress: function(name, session) {
+    const path = '/sys/class/net/' + name + '/address';
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'file',
+        'read',
+        {
+          path: path,
+          base64: false,
         },
       ],
     };
