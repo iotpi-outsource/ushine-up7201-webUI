@@ -134,14 +134,14 @@ export default class networkComponent extends React.Component {
           errorMsgTitle: __('Error'),
           errorMsg: __("Device Addr is empty"),
         });
-        return this$.refs.errorDialog.show();
+        return this.refs.errorDialog.show();
     } else {
       if(!/\b[0-9a-fA-F]{1,8}\b/g.test(device.addr)) {
         this.setState({
           errorMsgTitle: __('Error'),
-          errorMsg: __("Device Addr should be 8 hex digits"),
+          errorMsg: __("Device Addr should be max 8 hex digits"),
         });
-        return this$.refs.errorDialog.show();
+        return this.refs.errorDialog.show();
       }
     }
     
