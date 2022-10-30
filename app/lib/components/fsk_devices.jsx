@@ -136,18 +136,12 @@ export default class networkComponent extends React.Component {
         });
         return this$.refs.errorDialog.show();
     } else {
-      if(!/[0-9a-fA-F]{1,8}/g.test(device.addr)) {
+      if(!/\b[0-9a-fA-F]{1,8}\b/g.test(device.addr)) {
         this.setState({
           errorMsgTitle: __('Error'),
-          errorMsg: __("Device Addr is not hex"),
+          errorMsg: __("Device Addr should be 8 hex digits"),
         });
         return this$.refs.errorDialog.show();
-      } else if(/[0-9a-fA-F]{9,}/g.test(device.addr)) {
-        this.setState({
-          errorMsgTitle: __('Error'),
-          errorMsg: __("Device Addr is too large, should be 4 bytes, or 8 hex digits"),
-        });
-        return this.refs.errorDialog.show();
       }
     }
     
