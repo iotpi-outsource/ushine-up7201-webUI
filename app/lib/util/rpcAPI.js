@@ -423,7 +423,7 @@ const rpcAPI = {
 
     return this.request(config);
   },
-  setFskBeacon: function(addr, freq, interval, ch1, ch2, session) {
+  setFskBeacon: function(freq, interval, ch1, ch2, session) {
     const config = {
       jsonrpc: '2.0',
       id: id++,
@@ -436,7 +436,6 @@ const rpcAPI = {
           config: 'fsk',
           section: 'beacon',
           values: {
-            addr: addr,
             freq: freq,
             interval: interval,
             channel1: ch1,
