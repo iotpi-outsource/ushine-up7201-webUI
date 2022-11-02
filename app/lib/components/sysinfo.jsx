@@ -294,12 +294,9 @@ export default class sysinfoComponent extends React.Component {
         <p style={ styles.panelContent }>{ this.state.beacon_addr }</p>
         <h3 style={ styles.panelTitle }>{ __('WiFi IP address') }</h3>
         <p style={ styles.panelContent }>{ this.state.wifiIp }</p>
+        <h3 style={ styles.panelTitle }>{ __('LAN IP address') }</h3>
+        <p style={ styles.panelContent }>{ this.state.currentIp }</p>
 
-        <h3 style={ [styles.h3Top, { marginTop: '-15px' }] }>{ __('Account information') }</h3>
-        <h3 style={ styles.panelTitle }>{ __('Account') }</h3>
-        <p style={ styles.panelContent }>root(default)</p>
-        <h3 style={ styles.panelTitle }>{ __('Password') } <b style={{ color: 'red' }}>*</b></h3>
-        <p style={ styles.panelContent }><input type="password" disable style={{ border: '0px', fontSize: '18px', letterSpacing: '3px' }}value={this.state.password} /></p>
         <RaisedButton
           linkButton
           secondary
