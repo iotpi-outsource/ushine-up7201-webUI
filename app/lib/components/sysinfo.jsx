@@ -107,8 +107,7 @@ export default class sysinfoComponent extends React.Component {
     const info = JSON.parse(localStorage.getItem('info'));
 
     if (this.props.boardInfo) {
-      // this.state.deviceName = this.props.boardInfo.system[Object.keys(this.props.boardInfo.system)[0]].hostname;
-      this.state.deviceName = "UP7201";
+      this.state.deviceName = this.props.boardInfo.system[Object.keys(this.props.boardInfo.system)[0]].hostname;
       this.state.user = info.user;
       this.state.password = info.password;
       this.state.bootLoaderVersion = this.props.boardInfo.system[Object.keys(this.props.boardInfo.system)[0]].loader_version;
