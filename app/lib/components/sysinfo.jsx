@@ -116,6 +116,8 @@ export default class sysinfoComponent extends React.Component {
       this.state.wifiMACName = this.props.boardInfo.network.lan.macaddr.split(':')[3] + this.props.boardInfo.network.lan.macaddr.split(':')[4] + this.props.boardInfo.network.lan.macaddr.split(':')[5];
       this.state.mode = this.props.boardInfo.wifi.radio0.linkit_mode;
 
+      this.state.beacon_addr = this.state.macaddr.slice(6);
+
       switch (this.state.mode) {
       case 'ap':
         this.state.currentIp = this.props.boardInfo.lan['ipv4-address'][0].address;
@@ -287,6 +289,8 @@ export default class sysinfoComponent extends React.Component {
         <h3 style={ styles.h3 }>{ __('Platform information') }</h3>
         <h3 style={ styles.panelTitle }>{ __('Device name') }</h3>
         <p style={ styles.panelContent }>{ this.state.deviceName }</p>
+        <h3 style={ styles.panelTitle }>{ __('Gateway Addr') }</h3>
+        <p style={ styles.panelContent }>{ this.state.beacon_addr }</p>
         <h3 style={ styles.panelTitle }>{ __('Current IP address') }</h3>
         <p style={ styles.panelContent }>{ this.state.currentIp }</p>
 
