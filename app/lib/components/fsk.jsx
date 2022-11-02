@@ -103,8 +103,8 @@ export default class networkComponent extends React.Component {
           addr: d.slice(6),
           freq: this$.state.beacon.freq,
           interval: this$.state.beacon.interval,
-          ch1_uplink_freq: this$.state.beacon.channel1,
-          ch2_uplink_freq: this$.state.beacon.channel2,
+          ch1_uplink_freq: this$.state.beacon.ch1_uplink_freq,
+          ch2_uplink_freq: this$.state.beacon.ch2_uplink_freq,
         }});
       })
       .catch(err => {
@@ -273,7 +273,7 @@ export default class networkComponent extends React.Component {
           <TextField
             hintText={__("in HZ, 902000000 for 902Mhz")}
             type="text"
-            {/*value={ this.state.beacon.ch1_uplink_freq } */}
+            value={ this.state.beacon.ch1_uplink_freq }
             style={{ width: '100%' }}
             onChange={
               (e) => {
@@ -298,7 +298,7 @@ export default class networkComponent extends React.Component {
           <TextField
             hintText={__("in HZ, 902000000 for 902Mhz")}
             type="text"
-            {/*value={ this.state.beacon.ch2_uplink_freq } */}
+            value={ this.state.beacon.ch2_uplink_freq }
             style={{ width: '100%' }}
             onChange={
               (e) => {
