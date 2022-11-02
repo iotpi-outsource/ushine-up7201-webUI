@@ -586,7 +586,7 @@ export default class networkComponent extends React.Component {
                   marginBottom: 16,
                   width: '170px',
                 }}/>
-              <RadioButton
+              {/*<RadioButton
                 value="apsta"
                 label={__('Repeater mode')}
                 onTouchTap={() => this._onRadioButtonClick('apsta')}
@@ -595,6 +595,7 @@ export default class networkComponent extends React.Component {
                   marginBottom: 16,
                   width: '200px',
                 }}/>
+               */}
             </RadioButtonGroup>
             { elem }
             <div style={{
