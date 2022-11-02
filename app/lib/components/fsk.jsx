@@ -131,19 +131,19 @@ export default class networkComponent extends React.Component {
       });
       return this$.refs.errorDialog.show();
     } else {
-      if(!/[0-9a-fA-F]{1,8}/g.test(this.state.beacon.addr)) {
+      if(!/^[0-9a-fA-F]{1,8}$/g.test(this.state.beacon.addr)) {
         this$.setState({
           errorMsgTitle: __('Error'),
-          errorMsg: __("Gateway Addr is not hex"),
+          errorMsg: __("Gateway Addr should be 8 hex digits"),
         });
         return this$.refs.errorDialog.show();
-      } else if(/[0-9a-fA-F]{9,}/g.test(this.state.beacon.addr)) {
+      }/* else if(/[0-9a-fA-F]{9,}/g.test(this.state.beacon.addr)) {
         this$.setState({
           errorMsgTitle: __('Error'),
           errorMsg: __("Gateway Addr is too large, should be 4 bytes, or 8 hex digits"),
         });
         return this$.refs.errorDialog.show();
-      }
+      }*/
 
     }
 
