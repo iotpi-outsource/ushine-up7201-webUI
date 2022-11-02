@@ -273,6 +273,7 @@ export default class networkComponent extends React.Component {
           <TextField
             hintText={__("in HZ, 902000000 for 902Mhz")}
             type="text"
+            {/*value={ this.state.beacon.ch1_uplink_freq } */}
             style={{ width: '100%' }}
             onChange={
               (e) => {
@@ -297,6 +298,7 @@ export default class networkComponent extends React.Component {
           <TextField
             hintText={__("in HZ, 902000000 for 902Mhz")}
             type="text"
+            {/*value={ this.state.beacon.ch2_uplink_freq } */}
             style={{ width: '100%' }}
             onChange={
               (e) => {
