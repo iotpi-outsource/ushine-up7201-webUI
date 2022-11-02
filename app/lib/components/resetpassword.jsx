@@ -50,6 +50,7 @@ export default class resetPasswordComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      account: '',
       password: '',
       againPassword: '',
       showPassword: false,
@@ -108,8 +109,14 @@ export default class resetPasswordComponent extends React.Component {
           <TextField
             hintText={ __('Input your Account') }
             ref="password"
-            value="root (default)"
-            disabled
+            value={ this.state.account }
+            onChange={
+              (e)=> {
+                this.setState({
+                  account: e.target.value,
+                });
+              }
+            }
             underlineFocusStyle={{ borderColor: Colors.amber700 }}
             style={ styles.basicWidth }
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
@@ -172,12 +179,17 @@ export default class resetPasswordComponent extends React.Component {
 
   _handleResetPassword() {
     const password = this.state.password;
-
+    const account = this.state.account;
+    
     if (password.length < 6) {
       return false;
     }
 
-    return appAction.resetPassword('root', password, window.session)
+    if (account.length < 0) {
+      return false;
+    }
+
+    return appAction.resetPassword(account, password, window.session)
     .then(() => {
       return AppDispatcher.dispatch({
         APP_PAGE: 'LOGIN',
