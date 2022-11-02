@@ -198,7 +198,7 @@ export default class networkComponent extends React.Component {
             modal={ this.state.modal }>
             <p style={{ color: '#999A94', marginTop: '-20px' }}>{ this.state.errorMsg }</p>
           </Dialog>
-          <TextField
+          {/*<TextField
           hintText={ __('in hex format, eg, fe18, max 4 bytes / 8 hex digits') }
           type="text"
           value={ this.state.beacon.addr }
@@ -223,7 +223,7 @@ export default class networkComponent extends React.Component {
             <div>
               { __('Gateway Addr') } <b style={{ color: 'red' }}>*</b>
             </div>
-          } />
+            } />*/}
           <TextField
           hintText={__('in Hz, 902000000 for 902Mhz')}
           type="text"
