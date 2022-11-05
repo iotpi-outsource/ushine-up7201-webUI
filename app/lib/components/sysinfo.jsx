@@ -103,6 +103,7 @@ export default class sysinfoComponent extends React.Component {
     this.state.showPassword = false;
     this.state.notPassPassword = false;
     this.state.boardModel = '';
+    this.state.beacon_addr = '';
 
     const info = JSON.parse(localStorage.getItem('info'));
 
@@ -116,7 +117,6 @@ export default class sysinfoComponent extends React.Component {
       this.state.wifiMACName = this.props.boardInfo.network.lan.macaddr.split(':')[3] + this.props.boardInfo.network.lan.macaddr.split(':')[4] + this.props.boardInfo.network.lan.macaddr.split(':')[5];
       this.state.mode = this.props.boardInfo.wifi.radio0.linkit_mode;
 
-      this.state.beacon_addr = this.state.macaddr.slice(6);
       this.state.wifiIp = this.state.currentIp = this.props.boardInfo.lan['ipv4-address'][0].address;
       switch (this.state.mode) {
       case 'ap':
@@ -149,6 +149,22 @@ export default class sysinfoComponent extends React.Component {
     this._cancelUpgradeFirmwareFailedDialog = ::this._cancelUpgradeFirmwareFailedDialog;
     this._cancelUpgradeFirmwareSuccessedDialog = ::this._cancelUpgradeFirmwareSuccessedDialog;
     this._cancelBoardMsgDialog = ::this._cancelBoardMsgDialog;
+
+
+    const this$ = this;
+    AppActions.loadNetInterfaceAddress("eth0", window.session)
+      .then((data) => {
+        let d = data.body.result[1].data.trim();
+        console.log("sysinfo: net interface: " + d);
+        this.state.beacon_addr = this.state.macaddr.slice(6);
+
+        return this$.setState({ beacon_addr: d.slice(6),
+        });
+      })
+      .catch(err => {
+        console.log("load net interface: error: ", err);
+      });
+
   }
 
   componentWillMount() {
