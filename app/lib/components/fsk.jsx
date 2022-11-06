@@ -87,7 +87,7 @@ export default class networkComponent extends React.Component {
         let r = data.body.result[1].values;
         // console.log(r);
         return this$.setState({ beacon: {
-          addr: this$.state.beacon.addr,
+          // addr: this$.state.beacon.addr,
           freq: r.beacon.freq,
           interval: r.beacon.interval,
           ch1_uplink_freq: r.beacon.channel1,
@@ -100,7 +100,7 @@ export default class networkComponent extends React.Component {
         let d = data.body.result[1].data.trim();
         console.log("net interface: " + d);
         return this$.setState({ beacon: {
-          addr: d.slice(6),
+          // addr: d.slice(6),
           freq: this$.state.beacon.freq,
           interval: this$.state.beacon.interval,
           ch1_uplink_freq: this$.state.beacon.ch1_uplink_freq,
@@ -124,7 +124,7 @@ export default class networkComponent extends React.Component {
   }
   _handleSettingBeacon() {
     const this$ = this;
-    if(null == this.state.beacon.addr || this.state.beacon.addr.length == 0) {
+    /*if(null == this.state.beacon.addr || this.state.beacon.addr.length == 0) {
       this$.setState({
         errorMsgTitle: __('Error'),
         errorMsg: __("Gateway Addr is empty"),
@@ -137,15 +137,14 @@ export default class networkComponent extends React.Component {
           errorMsg: __("Gateway Addr should be 8 hex digits"),
         });
         return this$.refs.errorDialog.show();
-      }/* else if(/[0-9a-fA-F]{9,}/g.test(this.state.beacon.addr)) {
+      } else if(/[0-9a-fA-F]{9,}/g.test(this.state.beacon.addr)) {
         this$.setState({
           errorMsgTitle: __('Error'),
           errorMsg: __("Gateway Addr is too large, should be 4 bytes, or 8 hex digits"),
         });
         return this$.refs.errorDialog.show();
-      }*/
-
-    }
+      }
+    }*/
 
     return AppActions.setFskBeacon(
       this.state.beacon.freq,
