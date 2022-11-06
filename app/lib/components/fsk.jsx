@@ -146,6 +146,54 @@ export default class networkComponent extends React.Component {
       }
     }*/
 
+    if(null == this.state.beacon.freq || this.state.beacon.freq.length == 0) {
+      this$.setState({
+        errorMsgTitle: __('Error'),
+        errorMsg: __("Beacon Channel Frequency is empty"),
+      });
+      return this$.refs.errorDialog.show();
+    } else {
+      if(!/^[0-9]+$/g.test(this.state.beacon.freq)) {
+        this$.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Beacon Channel Frequency should be interger in Hz, like 902000000"),
+        });
+        return this$.refs.errorDialog.show();
+      }
+    }
+
+    if(null == this.state.beacon.ch1_uplink_freq || this.state.beacon.ch1_uplink_freq.length == 0) {
+      this$.setState({
+        errorMsgTitle: __('Error'),
+        errorMsg: __("Uplink Channel #1 Frequency is empty"),
+      });
+      return this$.refs.errorDialog.show();
+    } else {
+      if(!/^[0-9]+$/g.test(this.state.beacon.ch1_uplink_freq)) {
+        this$.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Uplink Channel #1 Frequency should be interger in Hz, like 902000000"),
+        });
+        return this$.refs.errorDialog.show();
+      }
+    }
+
+    if(null == this.state.beacon.ch2_uplink_freq || this.state.beacon.ch2_uplink_freq.length == 0) {
+      this$.setState({
+        errorMsgTitle: __('Error'),
+        errorMsg: __("Uplink Channel #2 Frequency is empty"),
+      });
+      return this$.refs.errorDialog.show();
+    } else {
+      if(!/^[0-9]+$/g.test(this.state.beacon.ch2_uplink_freq)) {
+        this$.setState({
+          errorMsgTitle: __('Error'),
+          errorMsg: __("Uplink Channel #2 Frequency should be interger in Hz, like 902000000"),
+        });
+        return this$.refs.errorDialog.show();
+      }
+    }
+
     return AppActions.setFskBeacon(
       this.state.beacon.freq,
       this.state.beacon.interval,
