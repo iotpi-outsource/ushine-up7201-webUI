@@ -104,9 +104,11 @@ export default class sysinfoComponent extends React.Component {
     this.state.notPassPassword = false;
     this.state.boardModel = '';
     this.state.beacon_addr = '';
+    this.state.wanIp = __("Cannot fetch IP Address");
 
     const info = JSON.parse(localStorage.getItem('info'));
 
+    console.log("boardInfo: ", this.props.boardInfo);
     if (this.props.boardInfo) {
       this.state.deviceName = this.props.boardInfo.system[Object.keys(this.props.boardInfo.system)[0]].hostname;
       this.state.user = info.user;
@@ -117,7 +119,16 @@ export default class sysinfoComponent extends React.Component {
       this.state.wifiMACName = this.props.boardInfo.network.lan.macaddr.split(':')[3] + this.props.boardInfo.network.lan.macaddr.split(':')[4] + this.props.boardInfo.network.lan.macaddr.split(':')[5];
       this.state.mode = this.props.boardInfo.wifi.radio0.linkit_mode;
 
-      this.state.wifiIp = this.state.currentIp = this.props.boardInfo.lan['ipv4-address'][0].address;
+      this.state.wifiIp  = this.props.boardInfo.lan['ipv4-address'][0].address;
+      const wan = this.props.boardInfo.wan;
+      if(wan) {
+        if(wan['ipv4-address'] && wan['ipv4-address'].length > 0) {
+          if(wan['ipv4-address'][0].address) {
+            this.state.wanIp = wan['ipv4-address'][0].address;
+          }
+        }
+      }
+
       switch (this.state.mode) {
       case 'ap':
         this.state.currentIp = this.props.boardInfo.lan['ipv4-address'][0].address;
@@ -310,7 +321,7 @@ export default class sysinfoComponent extends React.Component {
         <h3 style={ styles.panelTitle }>{ __('WiFi IP address') }</h3>
         <p style={ styles.panelContent }>{ this.state.wifiIp }</p>
         <h3 style={ styles.panelTitle }>{ __('LAN IP address') }</h3>
-        <p style={ styles.panelContent }>{ this.state.currentIp }</p>
+        <p style={ styles.panelContent }>{ this.state.wanIp }</p>
 
         <h3 style={ [styles.h3Top, { marginTop: '-15px' }] }>{ __('Account information') }</h3>
 
