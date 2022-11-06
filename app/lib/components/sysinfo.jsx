@@ -312,132 +312,217 @@ export default class sysinfoComponent extends React.Component {
         <h3 style={ styles.panelTitle }>{ __('LAN IP address') }</h3>
         <p style={ styles.panelContent }>{ this.state.currentIp }</p>
 
-        <RaisedButton
-          linkButton
-          secondary
-          label={ __('Configure') }
-          fullWidth
-          backgroundColor={ Colors.amber700 }
-          onTouchTap={() => { this._editPlatformBlock(true); } }
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            marginTop: '-20px',
-            marginBottom: '20px',
-          }} />
-      </div>
-    );
+        <h3 style={ [styles.h3Top, { marginTop: '-15px' }] }>{ __('Account information') }</h3>
 
-    if (this.state.PlatformBlockIsEdit) {
-      PlatformBlock = (
-        <div style={ styles.content } key="PlatformBlockIsEdit">
-          <h3 style={ styles.h3 }>{ __('Platform information') }</h3>
-          <TextField
-            hintText={ __('Device name') }
-            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            style={{ width: '100%' }}
-            defaultValue={ this.state.deviceName }
-            underlineStyle={{ borderColor: '#D1D2D3' }}
-            underlineFocusStyle={{
-              borderColor: Colors.amber700,
-              borderWidth: '2px',
-            }}
-            onChange={
-              (e) => {
-                this.setState({ deviceName: e.target.value });
+        <h3 style={ styles.panelTitle }>{ __('Account') }</h3>
+        <p style={ styles.panelContent }>root(default)</p>
+        <TextField
+          hintText={ __('Password') }
+          style={{ width: '100%', marginTop: '-40px' }}
+          underlineStyle={{ borderColor: '#D1D2D3' }}
+          defaultValue={ this.state.password }
+          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+          underlineFocusStyle={{ borderColor: Colors.amber700 }}
+          type={ textType }
+          errorStyle={{ borderColor: Colors.amber700 }}
+          errorText={ errorText }
+          onChange={
+            (e) => {
+              if (e.target.value.length < 6) {
+                this.setState({ notPassPassword: true, password: e.target.value });
+              } else {
+                this.setState({ password: e.target.value, notPassPassword: false });
               }
             }
-            floatingLabelText={ __('Device name') } />
-          <h3 style={ styles.panelTitle }>{ __('Current IP address') }</h3>
-          <p style={ styles.panelContent }>{ this.state.currentIp }</p>
-
-          <h3 style={ [styles.h3Top, { marginTop: '-15px' }] }>{ __('Account information') }</h3>
-
-          <h3 style={ styles.panelTitle }>{ __('Account') }</h3>
-          <p style={ styles.panelContent }>root(default)</p>
-          <TextField
-            hintText={ __('Password') }
-            style={{ width: '100%', marginTop: '-40px' }}
-            underlineStyle={{ borderColor: '#D1D2D3' }}
-            defaultValue={ this.state.password }
-            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            underlineFocusStyle={{ borderColor: Colors.amber700 }}
-            type={ textType }
-            errorStyle={{ borderColor: Colors.amber700 }}
-            errorText={ errorText }
-            onChange={
-              (e) => {
-                if (e.target.value.length < 6) {
-                  this.setState({ notPassPassword: true, password: e.target.value });
-                } else {
-                  this.setState({ password: e.target.value, notPassPassword: false });
-                }
+          }
+          floatingLabelText={
+            <div>
+              { __('Password') } <b style={{ color: 'red' }}>*</b>
+            </div>
+          } />
+        <div style={ showPasswordStyle }>
+          <a
+            onTouchTap={
+              () => {
+                this.setState({
+                  showPassword: !this.state.showPassword,
+                });
               }
             }
-            floatingLabelText={
-              <div>
-                { __('Password') } <b style={{ color: 'red' }}>*</b>
-              </div>
-            } />
-          <div style={ showPasswordStyle }>
-            <a
-              onTouchTap={
-                () => {
-                  this.setState({
-                    showPassword: !this.state.showPassword,
-                  });
-                }
-              }
-              style={{
-                textAlign: 'left',
-                color: Colors.amber700,
-                textDecoration: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-              }}>{ __('SHOW PASSWORD') }</a>
-          </div>
+            style={{
+              textAlign: 'left',
+              color: Colors.amber700,
+              textDecoration: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+            }}>{ __('SHOW PASSWORD') }</a>
+        </div>
 
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: '-40px',
-          }}>
-            <RaisedButton
-              linkButton
-              label={ __('Cancel') }
-              onTouchTap={ () => { this._editPlatformBlock(false); } }
-              backgroundColor="#EDEDED"
-              labelColor="#999A94"
-              style={{
-                width: '236px',
-                flexGrow: 1,
-                textAlign: 'center',
-                marginTop: '20px',
-                marginBottom: '20px',
-                marginRight: '10px',
-              }} />
-            <RaisedButton
+        <div style={{
+               display: 'flex',
+               flexDirection: 'row',
+               justifyContent: 'space-between',
+               marginTop: '-40px',
+             }}>
+          {/*<RaisedButton
+             linkButton
+             label={ __('Cancel') }
+             onTouchTap={ () => { this._editPlatformBlock(false); } }
+             backgroundColor="#EDEDED"
+             labelColor="#999A94"
+             style={{
+             width: '236px',
+             flexGrow: 1,
+             textAlign: 'center',
+             marginTop: '20px',
+             marginBottom: '20px',
+             marginRight: '10px',
+             }} />*/}
+          <RaisedButton
+            linkButton
+            secondary
+            label={ __('Configure & Restart') }
+            onTouchTap={
+              () => {
+                this._submitPlatformBlock(false);
+              }
+            }
+            backgroundColor={ Colors.amber700 }
+            style={{
+              width: '236px',
+              flexGrow: 1,
+              textAlign: 'center',
+              marginTop: '20px',
+              marginBottom: '20px',
+              marginLeft: '10px'}} />
+          { /*<RaisedButton
               linkButton
               secondary
-              label={ __('Configure & Restart') }
-              onTouchTap={
-                () => {
-                  this._submitPlatformBlock(false);
-                }
-              }
+              label={ __('Configure') }
+              fullWidth
               backgroundColor={ Colors.amber700 }
+              onTouchTap={() => { this._editPlatformBlock(true); } }
               style={{
-                width: '236px',
-                flexGrow: 1,
-                textAlign: 'center',
-                marginTop: '20px',
-                marginBottom: '20px',
-                marginLeft: '10px'}} />
+              width: '100%',
+              textAlign: 'center',
+              marginTop: '-20px',
+              marginBottom: '20px',
+              }} /> */ }
           </div>
-        </div>
-      );
-    }
+          </div>
+          );
+
+            /*
+            if (this.state.PlatformBlockIsEdit) {
+              PlatformBlock = (
+                <div style={ styles.content } key="PlatformBlockIsEdit">
+                  <h3 style={ styles.h3 }>{ __('Platform information') }</h3>
+                  <TextField
+                    hintText={ __('Device name') }
+                    floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+                    style={{ width: '100%' }}
+                    defaultValue={ this.state.deviceName }
+                    underlineStyle={{ borderColor: '#D1D2D3' }}
+                    underlineFocusStyle={{
+                      borderColor: Colors.amber700,
+                      borderWidth: '2px',
+                    }}
+                    onChange={
+                      (e) => {
+                        this.setState({ deviceName: e.target.value });
+                      }
+                    }
+                    floatingLabelText={ __('Device name') } />
+                  <h3 style={ styles.panelTitle }>{ __('Current IP address') }</h3>
+                  <p style={ styles.panelContent }>{ this.state.currentIp }</p>
+                  <h3 style={ [styles.h3Top, { marginTop: '-15px' }] }>{ __('Account information') }</h3>
+
+                  <h3 style={ styles.panelTitle }>{ __('Account') }</h3>
+                  <p style={ styles.panelContent }>root(default)</p>
+                  <TextField
+                    hintText={ __('Password') }
+                    style={{ width: '100%', marginTop: '-40px' }}
+                    underlineStyle={{ borderColor: '#D1D2D3' }}
+                    defaultValue={ this.state.password }
+                    floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+                    underlineFocusStyle={{ borderColor: Colors.amber700 }}
+                    type={ textType }
+                    errorStyle={{ borderColor: Colors.amber700 }}
+                    errorText={ errorText }
+                    onChange={
+                      (e) => {
+                        if (e.target.value.length < 6) {
+                          this.setState({ notPassPassword: true, password: e.target.value });
+                        } else {
+                          this.setState({ password: e.target.value, notPassPassword: false });
+                        }
+                      }
+                    }
+                    floatingLabelText={
+                      <div>
+                        { __('Password') } <b style={{ color: 'red' }}>*</b>
+                      </div>
+                    } />
+                  <div style={ showPasswordStyle }>
+                    <a
+                      onTouchTap={
+                        () => {
+                          this.setState({
+                            showPassword: !this.state.showPassword,
+                          });
+                        }
+                      }
+                      style={{
+                        textAlign: 'left',
+                        color: Colors.amber700,
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                      }}>{ __('SHOW PASSWORD') }</a>
+                  </div>
+
+                  <div style={{
+                         display: 'flex',
+                         flexDirection: 'row',
+                         justifyContent: 'space-between',
+                         marginTop: '-40px',
+                       }}>
+                    <RaisedButton
+                      linkButton
+                      label={ __('Cancel') }
+                      onTouchTap={ () => { this._editPlatformBlock(false); } }
+                      backgroundColor="#EDEDED"
+                      labelColor="#999A94"
+                      style={{
+                        width: '236px',
+                        flexGrow: 1,
+                        textAlign: 'center',
+                        marginTop: '20px',
+                        marginBottom: '20px',
+                        marginRight: '10px',
+                      }} />
+                    <RaisedButton
+                      linkButton
+                      secondary
+                      label={ __('Configure & Restart') }
+                      onTouchTap={
+                        () => {
+                          this._submitPlatformBlock(false);
+                        }
+                      }
+                      backgroundColor={ Colors.amber700 }
+                      style={{
+                        width: '236px',
+                        flexGrow: 1,
+                        textAlign: 'center',
+                        marginTop: '20px',
+                        marginBottom: '20px',
+                        marginLeft: '10px'}} />
+                  </div>
+                </div>
+              );
+            }
+    */
 
     let softwareBlock = (
       <div style={ styles.content } key="softwareBlock">
