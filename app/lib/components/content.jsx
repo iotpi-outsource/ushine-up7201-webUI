@@ -92,11 +92,11 @@ export default class contentComponent extends React.Component {
       <div key="mainBlock" style={ styles.block }>
         <header style={ styles.header }>
           <p style={ styles.welcomeTitle } key="welcome">{ __('Welcome to') } <b>Ushine UP7201</b></p>
-          <p style={[ styles.welcomeTitle, styles.welcomeTitleLine ]} key="advanced">
+          {/*<p style={[ styles.welcomeTitle, styles.welcomeTitleLine ]} key="advanced">
             {
               __('For advanced network configuration, go to ')
             }<a style={{ color: '#00a1de', textDecoration: 'none' }} href="/cgi-bin/luci">OpenWrt</a>.
-          </p>
+            </p>*/}
         </header>
         <Tabs
           valueLink={{ value: this.state.tabsValue }}

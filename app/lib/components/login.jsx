@@ -227,14 +227,14 @@ export default class loginComponent extends React.Component {
                 className="muidocs-icon-custom-github" />
             </RaisedButton>
           </div>
-          <div style={{width: '100%'}}>
+          {/*<div style={{width: '100%'}}>
             <p style={{
               marginTop: '80px',
               borderTop: '1px solid rgba(0,0,0,0.12)',
               paddingTop: '10px',
               textAlign: 'center',
             }} >{ __('For advanced network configuration, go to ') }<a style={{ color: '#00a1de', textDecoration: 'none' }} href="/cgi-bin/luci">OpenWrt</a>.</p>
-          </div>
+            </div>*/}
         </div>
         { dialogMsg }
       </div>
