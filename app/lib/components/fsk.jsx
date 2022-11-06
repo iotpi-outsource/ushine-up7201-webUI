@@ -339,7 +339,7 @@ export default class networkComponent extends React.Component {
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
             floatingLabelText={
               <div>
-                { __("Uplink channel #1 frequency)") } <b style={{ color: 'red' }}>*</b>
+                { __("Uplink channel #1 frequency") } <b style={{ color: 'red' }}>*</b>
               </div>
             } />
           <TextField
@@ -364,7 +364,7 @@ export default class networkComponent extends React.Component {
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
             floatingLabelText={
               <div>
-                { __("Uplink channel #2 frequency)") } <b style={{ color: 'red' }}>*</b>
+                { __("Uplink channel #2 frequency") } <b style={{ color: 'red' }}>*</b>
               </div>
             } />
         </div>
