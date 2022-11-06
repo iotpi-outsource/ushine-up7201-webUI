@@ -82,8 +82,6 @@
   "Beacon Channel Frequency(in HZ)": "Beacon Channel Frequency(in HZ)",
   "in ms, 50ms, 100ms or 200ms": "in ms, 50ms, 100ms or 200ms",
   "Beacon TX Interval(in ms)": "Beacon TX Interval(in ms)",
-  "Beacon uplink channel #1 frequency)": "Beacon uplink channel #1 frequency)",
-  "Beacon uplink channel #2 frequency)": "Beacon uplink channel #2 frequency)",
   "Devices": "Devices",
   "Select 1, 5, 10(Hz)": "Select 1, 5, 10(Hz)",
   "Sensor sampling rate": "Sensor sampling rate",
