@@ -251,7 +251,7 @@ export default class networkComponent extends React.Component {
           <p style={{ color: '#999A94', marginTop: '-20px' }}>{ this.state.errorMsg }</p>
         </Dialog>
         <Card>
-          <div style={ styles.content }>
+          <div style={ styles.content } key="card1">
           <h3>{__("Nodes List")}</h3>
             <TextField
               type="text"
@@ -378,25 +378,27 @@ export default class networkComponent extends React.Component {
           </div>
         </Card>
         <Card>
-          <div style={{
-                 display: 'flex',
-                 flexDirection: 'row',
-                 justifyContent: 'space-between',
-               }}>
-            <RaisedButton
-              linkButton
-              secondary
-              label={__('Save Devices to file')}
-              backgroundColor={ Colors.amber700 }
-              onTouchTap={ this._handleSaveDevices }
-              style={{
-                width: '236px',
-                flexGrow: 1,
-                textAlign: 'center',
-                marginTop: '20px',
-                marginBottom: '20px',
-                marginLeft: '10px',
-              }} />
+          <div style={ styles.content } key="card2">
+            <div style={{
+                   display: 'flex',
+                   flexDirection: 'row',
+                   justifyContent: 'space-between',
+                 }}>
+              <RaisedButton
+                linkButton
+                secondary
+                label={__('Save Devices to file')}
+                backgroundColor={ Colors.amber700 }
+                onTouchTap={ this._handleSaveDevices }
+                style={{
+                  width: '236px',
+                  flexGrow: 1,
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                  marginLeft: '10px',
+                }} />
+            </div>
           </div>
         </Card>
       </div>
