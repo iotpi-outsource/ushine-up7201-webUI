@@ -325,9 +325,9 @@ export default class sysinfoComponent extends React.Component {
 
         <h3 style={ [styles.h3Top, { marginTop: '-15px' }] }>{ __('Account information') }</h3>
 
-        {/*<h3 style={ styles.panelTitle }>{ __('Account') }</h3>
-           <p style={ styles.panelContent }>root(default)</p>*/}
-        <TextField
+        <h3 style={ styles.panelTitle }>{ __('Account') }</h3>
+           <p style={ styles.panelContent }>admin(default)</p>
+        { /*<TextField
           hintText={ __('Account') }
           style={{ width: '100%', marginTop: '-15px' }}
           underlineStyle={{ borderColor: '#D1D2D3' }}
@@ -348,7 +348,7 @@ export default class sysinfoComponent extends React.Component {
             <div>
               { __('Account') } <b style={{ color: 'red' }}>*</b>
             </div>
-          } />
+            } /> */ }
         <TextField
           hintText={ __('Password') }
           style={{ width: '100%', marginTop: '0px' }}

@@ -106,7 +106,7 @@ export default class resetPasswordComponent extends React.Component {
             fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif',
           }}>{__('Welcome to')} <b>Ushine UP7201</b></p>
           <p style={{ color: '#69BE28', marginTop: '-10px' }}>{__('Please set a password.')}</p>
-          <TextField
+          { /*<TextField
             hintText={ __('Input your Account') }
             ref="password"
             value={ this.state.account }
@@ -122,7 +122,8 @@ export default class resetPasswordComponent extends React.Component {
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
             required
             minLength="6"
-            floatingLabelText={__('Account')} />
+            floatingLabelText={__('Account')} /> */ }
+          <p style={ styles.panelContent }>admin(default)</p>
           <TextField
             hintText={ __('Please set a password') }
             type={ textType }
@@ -189,7 +190,8 @@ export default class resetPasswordComponent extends React.Component {
       return false;
     }
 
-    return appAction.resetPassword(account, password, window.session)
+    // return appAction.resetPassword(account, password, window.session)
+    return appAction.resetPassword('admin', password, window.session)
     .then(() => {
       return AppDispatcher.dispatch({
         APP_PAGE: 'LOGIN',

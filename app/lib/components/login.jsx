@@ -160,7 +160,7 @@ export default class loginComponent extends React.Component {
               marginTop: '40px',
               fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif',
             }}><span style={{fontFamily: 'RionaSansLight,Arial,Helvetica,sans-serif'}}>{__('Welcome to')}</span> <b style={{ fontFamily: 'RionaSansMedium,Arial,Helvetica,sans-serif' }}>Ushine UP7201</b>.</p>
-            <TextField
+            { /*<TextField
               hintText={ __('Please enter your account') }
               type="text"
               floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
@@ -178,7 +178,8 @@ export default class loginComponent extends React.Component {
                   <div>
                     {__('Account')} <b style={{ color: 'red' }}>*</b>
                   </div>
-                } />
+                } /> */ }
+            <p style={ styles.panelContent }>admin(default)</p>
             <TextField
               hintText={ __('Please enter your password') }
               type={ textType }
@@ -243,7 +244,8 @@ export default class loginComponent extends React.Component {
 
   _handleLogin() {
     const password = this.state.password;
-    return AppActions.login(this.state.account, password);
+    // return AppActions.login(this.state.account, password);
+    return AppActions.login('admin', password);
   }
 }
 
