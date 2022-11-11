@@ -372,7 +372,7 @@ export default class networkComponent extends React.Component {
     return (
       <div>
         <Card>
-          <div style={ styles.content }>
+          <div style={ styles.content } key="card1">
             <h3>{__('Channel Setting')}</h3>
             { elem }
             <div style={{
@@ -401,25 +401,27 @@ export default class networkComponent extends React.Component {
         <FskDevices />
         <FskMqtt />
         <Card>
-          <div style={{
-                 display: 'flex',
-                 flexDirection: 'row',
-                 justifyContent: 'space-between',
-               }}>
-            <RaisedButton
-              linkButton
-              secondary
-              label={__('Reboot')}
-              backgroundColor={ Colors.amber700 }
-              onTouchTap={ this._handleReboot }
-              style={{
-                width: '236px',
-                flexGrow: 1,
-                textAlign: 'center',
-                marginTop: '20px',
-                marginBottom: '20px',
-                marginLeft: '10px',
-              }} />
+          <div style={ styles.content } key="card2">
+            <div style={{
+                   display: 'flex',
+                   flexDirection: 'row',
+                   justifyContent: 'space-between',
+                 }}>
+              <RaisedButton
+                linkButton
+                secondary
+                label={__('Reboot')}
+                backgroundColor={ Colors.amber700 }
+                onTouchTap={ this._handleReboot }
+                style={{
+                  width: '236px',
+                  flexGrow: 1,
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                  marginLeft: '10px',
+                }} />
+            </div>
           </div>
         </Card>
       </div>
