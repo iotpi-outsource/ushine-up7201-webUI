@@ -87,7 +87,7 @@
   "Sensor sampling rate": "Sensor sampling rate",
   "Select 0, 1, 2, 4(min)": "Select 0, 1, 2, 4(min)",
   "Sensor sleep time": "Sensor sleep time",
-  "Beacon": "Beacon",
+  "Channel Setting": "Channel Setting",
   "MQTT": "MQTT",
   "tx topic": "tx topic",
   "rx topic": "rx topic",

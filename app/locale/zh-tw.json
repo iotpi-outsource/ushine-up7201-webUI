@@ -87,7 +87,7 @@
   "Sensor sampling rate": "Sensor sampling rate",
   "Select 0, 1, 2, 4(min)": "Select 0, 1, 2, 4(min)",
   "Sensor sleep time": "Sensor sleep time",
-  "Beacon": "Beacon",
+  "Channel Setting": "信道设置",
   "MQTT": "MQTT",
   "tx topic": "tx topic",
   "rx topic": "rx topic",

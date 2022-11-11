@@ -373,7 +373,7 @@ export default class networkComponent extends React.Component {
       <div>
         <Card>
           <div style={ styles.content }>
-            <h3>{__('Beacon')}</h3>
+            <h3>{__('Channel Setting')}</h3>
             { elem }
             <div style={{
               display: 'flex',
