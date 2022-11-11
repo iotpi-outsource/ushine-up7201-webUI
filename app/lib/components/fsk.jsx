@@ -315,7 +315,7 @@ export default class networkComponent extends React.Component {
             }
             underlineFocusStyle={{ borderColor: Colors.amber700 }}
             floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-            floatingLabelText={ __("TX Interval(in ms)") }
+            floatingLabelText={ __("Beacon TX Interval(in ms)") }
           />
           <TextField
             hintText={__("in HZ, 902000000 for 902Mhz")}
