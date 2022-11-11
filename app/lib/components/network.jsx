@@ -577,7 +577,7 @@ export default class networkComponent extends React.Component {
                 }}
                 label={__('AP mode')}
                 onTouchTap={() => this._onRadioButtonClick('ap')}/>
-              <RadioButton
+              { /*<RadioButton
                 value="sta"
                 label={__('Station mode')}
                 onTouchTap={() => this._onRadioButtonClick('sta')}
@@ -586,7 +586,7 @@ export default class networkComponent extends React.Component {
                   marginBottom: 16,
                   width: '170px',
                 }}/>
-              {/*<RadioButton
+              <RadioButton
                 value="apsta"
                 label={__('Repeater mode')}
                 onTouchTap={() => this._onRadioButtonClick('apsta')}
