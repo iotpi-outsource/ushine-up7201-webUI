@@ -109,7 +109,7 @@ export default class contentComponent extends React.Component {
           }}
           style={ styles.content }>
           <Tab
-            label={ __('FSK') }
+            label={ __('Equipment Setting') }
             value="fsk"
             onClick={ ::this._handleTabsChangeFsk }>
             <Fsk boardInfo={ this.props.boardInfo } />

@@ -76,7 +76,7 @@
   "This action will remove all your data and settings from the device. You cannot undo this action.": "這個動作會移除您在設備上的資料和設定, 您將不可恢復。",
   "System information": "系統資訊",
   "Network": "網路",
-  "FSK": "FSK",
+  "Equipment Setting": "設備設定",
   "FSK setting": "FSK設定",
   "in HZ, 902000000 for 902Mhz": "以HZ为单位, 例如902000000为902Mhz",
   "Beacon Channel Frequency(in HZ)": "Beacon Channel Frequency(in HZ)",
