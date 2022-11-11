@@ -117,6 +117,19 @@ export default class networkComponent extends React.Component {
     this._returnToIndex = ::this._returnToIndex;
     this._cancelErrorMsgDialog = ::this._cancelErrorMsgDialog;
     this._cancelBoardMsgDialog = ::this._cancelBoardMsgDialog;
+
+    this._handleSelectIpMode = ::this._handleSelectIpMode;
+
+    this.state.wanIp = '';
+    const wan = this.props.boardInfo.wan;
+    if(wan) {
+      if(wan['ipv4-address'] && wan['ipv4-address'].length > 0) {
+        if(wan['ipv4-address'][0].address) {
+          this.state.wanIp = wan['ipv4-address'][0].address;
+        }
+      }
+    }
+    this.state.ipMode = 'dhcp';
   }
 
   componentWillMount() {
@@ -161,6 +174,7 @@ export default class networkComponent extends React.Component {
     };
     let elem;
     let staPassword;
+    let ipelem;
 
     if (this.state.showPassword) {
       textType = 'text';
@@ -528,6 +542,25 @@ export default class networkComponent extends React.Component {
       boardImg = icon7688;
     }
 
+    if(this.state.ipMode === 'static') {
+      ipelem = (
+        <TextField
+          style={{ width: '100%' }}
+          value={ this.state.wanIp }
+          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+          underlineFocusStyle={{ borderColor: Colors.amber700 }}
+          type="text"
+          onChange={
+            (e) => {
+              this.setState({
+                wanIp: e.target.value,
+              });
+            }
+          }
+          floatingLabelText={__('LAN IP address')} />
+      );
+    }
+
     return (
       <div>
         <Card>
@@ -565,7 +598,7 @@ export default class networkComponent extends React.Component {
             modal={ this.state.modal }>
             <p style={{ color: '#999A94', marginTop: '-20px' }}>{ this.state.errorMsg }</p>
           </Dialog>
-          <div style={ styles.content }>
+          <div style={ styles.content } key="card1">
             <h3>{__('Network setting')}</h3>
             <RadioButtonGroup name="mode" defaultSelected={ this.state.mode } style={{ display: 'flex', paddingTop: '20px' }} >
               <RadioButton
@@ -616,6 +649,51 @@ export default class networkComponent extends React.Component {
                 }}
                 backgroundColor="#EDEDED"
                 labelColor="#999A94" />
+              <RaisedButton
+                linkButton
+                secondary
+                label={__('Configure & Restart')}
+                backgroundColor={ Colors.amber700 }
+                onTouchTap={ this._handleSettingMode }
+                style={{
+                  width: '236px',
+                  flexGrow: 1,
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                  marginLeft: '10px',
+                }} />
+            </div>
+          </div>
+        </Card>
+        <Card>
+          <div style={ styles.content } key="card2">
+            <RadioButtonGroup name="ipmode" defaultSelected={ this.state.ipMode } style={{ display: 'flex', paddingTop: '20px' }} >
+              <RadioButton
+                value="dhcp"
+                style={{
+                  color: Colors.amber700,
+                  marginBottom: 16,
+                  width: '150px',
+                }}
+                label={__('DHCP')}
+                onTouchTap={() => this._handleSelectIpMode('dhcp') }/>
+              <RadioButton
+                value="static"
+                label={__('Static IP')}
+                onTouchTap={() => this._handleSelectIpMode('static') }
+                style={{
+                  color: Colors.amber700,
+                  marginBottom: 16,
+                  width: '170px',
+                }}/>
+            </RadioButtonGroup>
+            { ipelem }
+            <div style={{
+                   display: 'flex',
+                   flexDirection: 'row',
+                   justifyContent: 'space-between',
+                 }}>
               <RaisedButton
                 linkButton
                 secondary
@@ -725,6 +803,13 @@ export default class networkComponent extends React.Component {
     change.apstaContent.repeaterKey = this.state.apstaContent.repeaterKey;
     this.setState(change);
   }
+
+              _handleSelectIpMode(mode) {
+                this.setState({
+                  ipMode: mode,
+                });
+              }
+
 
   _handleSettingMode() {
     const this$ = this;
