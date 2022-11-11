@@ -122,7 +122,20 @@ export default class networkComponent extends React.Component {
     this._handleSettingIpMode = ::this._handleSettingIpMode;
     this.state.wanIp = '192.168.50.1';
     this.state.netmask = '255.255.255.0';
-    this.state.ipMode = 'dhcp';
+
+    const wan = this.props.boardInfo.wan;
+    if(wan) {
+      this.state.ipMode = wan.proto;
+      if(this.state.ipMode == "static") {
+        if(wan['ipv4-address'] && wan['ipv4-address'].length > 0) {
+          if(wan['ipv4-address'][0].address) {
+            this.state.wanIp = wan['ipv4-address'][0].address;
+          }
+        }
+      }
+    } else {
+      this.state.ipMode = 'dhcp';
+    }
   }
 
   componentWillMount() {
