@@ -566,6 +566,52 @@ const rpcAPI = {
     };
     return this.request(config);
   },
+  setWanNetworkStatic: function(ipaddr, netmask, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'set',
+        {
+          config: 'network',
+          section: 'wan',
+          values: {
+            proto: 'static',
+            ipaddr: ipaddr,
+            netmask: netmask,
+          },
+        },
+      ],
+    };
+    return this.request(config);
+  },
+  setWanNetworkDhcp: function(session) {
+    console.log("rpc set wan network dhcp");
+
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'set',
+        {
+          config: 'network',
+          section: 'wan',
+          values: {
+            proto: 'dhcp',
+            ipaddr: '',
+            netmask: '',
+          },
+        },
+      ],
+    };
+    return this.request(config);
+  },
 };
 
 export default rpcAPI;

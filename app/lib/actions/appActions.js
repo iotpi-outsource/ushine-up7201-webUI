@@ -239,6 +239,13 @@ const appActions = {
   loadNetInterfaceAddress: (name, session) => {
     return rpc.loadNetInterfaceAddress(name, session);
   },
+  setWanNetworkStatic: (ipaddr, netmask, session) => {
+    return rpc.setWanNetworkStatic(ipaddr, netmask, session);
+  },
+  setWanNetworkDhcp: (session) => {
+    console.log("set wan network dhcp");
+    return rpc.setWanNetworkDhcp(session);
+  },
   getQuery: (name) => {
     let match;
     const pl = /\+/g; /* Regex for replacing addition symbol with a space */

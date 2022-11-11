@@ -119,16 +119,9 @@ export default class networkComponent extends React.Component {
     this._cancelBoardMsgDialog = ::this._cancelBoardMsgDialog;
 
     this._handleSelectIpMode = ::this._handleSelectIpMode;
-
-    this.state.wanIp = '';
-    const wan = this.props.boardInfo.wan;
-    if(wan) {
-      if(wan['ipv4-address'] && wan['ipv4-address'].length > 0) {
-        if(wan['ipv4-address'][0].address) {
-          this.state.wanIp = wan['ipv4-address'][0].address;
-        }
-      }
-    }
+    this._handleSettingIpMode = ::this._handleSettingIpMode;
+    this.state.wanIp = '192.168.50.1';
+    this.state.netmask = '255.255.255.0';
     this.state.ipMode = 'dhcp';
   }
 
@@ -544,6 +537,7 @@ export default class networkComponent extends React.Component {
 
     if(this.state.ipMode === 'static') {
       ipelem = (
+        <div>
         <TextField
           style={{ width: '100%' }}
           value={ this.state.wanIp }
@@ -558,9 +552,24 @@ export default class networkComponent extends React.Component {
             }
           }
           floatingLabelText={__('LAN IP address')} />
+        <TextField
+          style={{ width: '100%' }}
+          value={ this.state.netmask }
+          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+          underlineFocusStyle={{ borderColor: Colors.amber700 }}
+          type="text"
+          onChange={
+            (e) => {
+              this.setState({
+                wanIp: e.target.value,
+              });
+            }
+          }
+          floatingLabelText={__('LAN IP netmask')} />
+        </div>
       );
     }
-
+    
     return (
       <div>
         <Card>
@@ -582,7 +591,7 @@ export default class networkComponent extends React.Component {
               lineHeight: '18.54px',
               marginTop: '-15px',
             }}>{ __('See the Wi-Fi LED, it will light on steadily and start to blink or turn off afterwards. When the LED starts to blink or turn off, reload this webpage to sign in again.')}</p>
-            <p style={{
+              <p style={{
               fontSize: '16px',
               color: '#999A94',
               lineHeight: '18.54px',
@@ -611,109 +620,109 @@ export default class networkComponent extends React.Component {
                 label={__('AP mode')}
                 onTouchTap={() => this._onRadioButtonClick('ap')}/>
               { /*<RadioButton
-                value="sta"
-                label={__('Station mode')}
-                onTouchTap={() => this._onRadioButtonClick('sta')}
-                style={{
+                  value="sta"
+                  label={__('Station mode')}
+                  onTouchTap={() => this._onRadioButtonClick('sta')}
+                  style={{
                   color: Colors.amber700,
                   marginBottom: 16,
                   width: '170px',
-                }}/>
-              <RadioButton
-                value="apsta"
-                label={__('Repeater mode')}
-                onTouchTap={() => this._onRadioButtonClick('apsta')}
-                style={{
+                  }}/>
+                  <RadioButton
+                  value="apsta"
+                  label={__('Repeater mode')}
+                  onTouchTap={() => this._onRadioButtonClick('apsta')}
+                  style={{
                   color: Colors.amber700,
                   marginBottom: 16,
                   width: '200px',
-                }}/>
-               */}
-            </RadioButtonGroup>
-            { elem }
-            <div style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-              <RaisedButton
-                linkButton
-                label={__('Cancel')}
-                style={{
-                  width: '236px',
-                  flexGrow: 1,
-                  textAlign: 'center',
-                  marginTop: '20px',
-                  marginBottom: '20px',
-                  marginRight: '10px',
-                }}
-                backgroundColor="#EDEDED"
-                labelColor="#999A94" />
-              <RaisedButton
-                linkButton
-                secondary
-                label={__('Configure & Restart')}
-                backgroundColor={ Colors.amber700 }
-                onTouchTap={ this._handleSettingMode }
-                style={{
-                  width: '236px',
-                  flexGrow: 1,
-                  textAlign: 'center',
-                  marginTop: '20px',
-                  marginBottom: '20px',
-                  marginLeft: '10px',
-                }} />
-            </div>
-          </div>
-        </Card>
-        <Card>
-          <div style={ styles.content } key="card2">
-            <RadioButtonGroup name="ipmode" defaultSelected={ this.state.ipMode } style={{ display: 'flex', paddingTop: '20px' }} >
-              <RadioButton
-                value="dhcp"
-                style={{
-                  color: Colors.amber700,
-                  marginBottom: 16,
-                  width: '150px',
-                }}
-                label={__('DHCP')}
-                onTouchTap={() => this._handleSelectIpMode('dhcp') }/>
-              <RadioButton
-                value="static"
-                label={__('Static IP')}
-                onTouchTap={() => this._handleSelectIpMode('static') }
-                style={{
-                  color: Colors.amber700,
-                  marginBottom: 16,
-                  width: '170px',
-                }}/>
-            </RadioButtonGroup>
-            { ipelem }
-            <div style={{
-                   display: 'flex',
-                   flexDirection: 'row',
-                   justifyContent: 'space-between',
-                 }}>
-              <RaisedButton
-                linkButton
-                secondary
-                label={__('Configure & Restart')}
-                backgroundColor={ Colors.amber700 }
-                onTouchTap={ this._handleSettingMode }
-                style={{
-                  width: '236px',
-                  flexGrow: 1,
-                  textAlign: 'center',
-                  marginTop: '20px',
-                  marginBottom: '20px',
-                  marginLeft: '10px',
-                }} />
-            </div>
-          </div>
-        </Card>
-      </div>
-    );
-  }
+                  }}/>
+                */}
+              </RadioButtonGroup>
+              { elem }
+              <div style={{
+                     display: 'flex',
+                     flexDirection: 'row',
+                     justifyContent: 'space-between',
+                   }}>
+                <RaisedButton
+                  linkButton
+                  label={__('Cancel')}
+                  style={{
+                    width: '236px',
+                    flexGrow: 1,
+                    textAlign: 'center',
+                    marginTop: '20px',
+                    marginBottom: '20px',
+                    marginRight: '10px',
+                  }}
+                  backgroundColor="#EDEDED"
+                  labelColor="#999A94" />
+                <RaisedButton
+                  linkButton
+                  secondary
+                  label={__('Configure & Restart')}
+                  backgroundColor={ Colors.amber700 }
+                  onTouchTap={ this._handleSettingMode }
+                  style={{
+                    width: '236px',
+                    flexGrow: 1,
+                    textAlign: 'center',
+                    marginTop: '20px',
+                    marginBottom: '20px',
+                    marginLeft: '10px',
+                  }} />
+              </div>
+              </div>
+              </Card>
+              <Card>
+                <div style={ styles.content } key="card2">
+                  <RadioButtonGroup name="ipmode" defaultSelected={ this.state.ipMode } style={{ display: 'flex', paddingTop: '20px' }} >
+                    <RadioButton
+                      value="dhcp"
+                      style={{
+                        color: Colors.amber700,
+                        marginBottom: 16,
+                        width: '150px',
+                      }}
+                      label={__('DHCP')}
+                      onTouchTap={() => this._handleSelectIpMode('dhcp') }/>
+                    <RadioButton
+                      value="static"
+                      label={__('Static IP')}
+                      onTouchTap={() => this._handleSelectIpMode('static') }
+                      style={{
+                        color: Colors.amber700,
+                        marginBottom: 16,
+                        width: '170px',
+                      }}/>
+                  </RadioButtonGroup>
+                  { ipelem }
+                  <div style={{
+                         display: 'flex',
+                         flexDirection: 'row',
+                         justifyContent: 'space-between',
+                       }}>
+                    <RaisedButton
+                      linkButton
+                      secondary
+                      label={__('Configure & Restart')}
+                      backgroundColor={ Colors.amber700 }
+                      onTouchTap={ this._handleSettingIpMode }
+                      style={{
+                        width: '236px',
+                        flexGrow: 1,
+                        textAlign: 'center',
+                        marginTop: '20px',
+                        marginBottom: '20px',
+                        marginLeft: '10px',
+                      }} />
+                  </div>
+                </div>
+              </Card>
+              </div>
+              );
+              }
   _scanWifi() {
     const this$ = this;
     return AppActions.scanWifi(window.session)
@@ -803,7 +812,7 @@ export default class networkComponent extends React.Component {
     change.apstaContent.repeaterKey = this.state.apstaContent.repeaterKey;
     this.setState(change);
   }
-
+              
               _handleSelectIpMode(mode) {
                 this.setState({
                   ipMode: mode,
@@ -842,6 +851,46 @@ export default class networkComponent extends React.Component {
       }
       alert('[' + err + '] Please try again!');
     });
+  }
+
+ _handleSettingIpMode() {
+   const this$ = this;
+
+   console.log("ipMode");
+   let resp;
+   if(this.state.ipMode == 'dhcp') {
+     console.log("set dhcp");
+     resp = AppActions.setWanNetworkDhcp(window.session);
+   } else if(this.state.ipMode == 'static') {
+     resp = AppActions.setWanNetworkStatic(this.state.wanIp, this.state.netmask, window.session);
+   } else {
+     console.log("not supported mode: ", this.state.ipMode);
+   }
+
+   if(resp !== undefined) {
+     resp.then(() => {
+       return AppActions.commitAndReboot(window.session)
+         .catch((err) => {
+           if (err === 'no data') {
+             return false;
+           }
+           return err;
+         });
+     })
+       .then(() => {
+         return this$._returnToIndex(__('Configuration saved. You can sign in to the console after your device has restarted.'));
+       })
+       .catch((err) => {
+         if (err === 'Access denied') {
+           this$.setState({
+             errorMsgTitle: __('Access denied'),
+             errorMsg: __('Your token was expired, please sign in again.'),
+           });
+           return this$.refs.errorMsg.show();
+         }
+         alert('[' + err + '] Please try again!');
+       });
+   }
   }
 
   _cancelBoardMsgDialog() {
