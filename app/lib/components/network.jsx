@@ -890,7 +890,7 @@ export default class networkComponent extends React.Component {
      console.log("set dhcp");
      resp = AppActions.setWanNetworkDhcp(window.session);
    } else if(this.state.ipMode == 'static') {
-     resp = AppActions.setWanNetworkStatic(this.state.wanIp, this.state.netmask, window.session);
+     resp = AppActions.setWanNetworkStatic(this.state.wanIp, this.state.gateway, this.state.netmask, window.session);
    } else {
      console.log("not supported mode: ", this.state.ipMode);
    }
