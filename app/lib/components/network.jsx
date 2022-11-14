@@ -593,7 +593,7 @@ export default class networkComponent extends React.Component {
               });
             }
           }
-          floatingLabelText={__('LAN IP address')} />
+          floatingLabelText={__('LAN Gateway IP address')} />
         </div>
       );
     }
