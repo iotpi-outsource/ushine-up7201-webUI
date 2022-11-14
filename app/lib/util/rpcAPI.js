@@ -566,7 +566,7 @@ const rpcAPI = {
     };
     return this.request(config);
   },
-  setWanNetworkStatic: function(ipaddr, netmask, session) {
+  setWanNetworkStatic: function(ipaddr, gateway, netmask, session) {
     const config = {
       jsonrpc: '2.0',
       id: id++,
@@ -581,6 +581,7 @@ const rpcAPI = {
           values: {
             proto: 'static',
             ipaddr: ipaddr,
+            gateway: gateway,
             netmask: netmask,
           },
         },

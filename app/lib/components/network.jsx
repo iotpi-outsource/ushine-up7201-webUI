@@ -120,8 +120,9 @@ export default class networkComponent extends React.Component {
 
     this._handleSelectIpMode = ::this._handleSelectIpMode;
     this._handleSettingIpMode = ::this._handleSettingIpMode;
-    this.state.wanIp = '192.168.50.1';
+    this.state.wanIp = '192.168.50.10';
     this.state.netmask = '255.255.255.0';
+    this.state.gateway = '192.168.50.1';
 
     const wan = this.props.boardInfo.wan;
     if(wan) {
@@ -579,6 +580,20 @@ export default class networkComponent extends React.Component {
             }
           }
           floatingLabelText={__('LAN IP netmask')} />
+        <TextField
+          style={{ width: '100%' }}
+          value={ this.state.gateway }
+          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+          underlineFocusStyle={{ borderColor: Colors.amber700 }}
+          type="text"
+          onChange={
+            (e) => {
+              this.setState({
+                gateway: e.target.value,
+              });
+            }
+          }
+          floatingLabelText={__('LAN IP address')} />
         </div>
       );
     }
@@ -735,7 +750,7 @@ export default class networkComponent extends React.Component {
               </Card>
               </div>
               );
-              }
+  }
   _scanWifi() {
     const this$ = this;
     return AppActions.scanWifi(window.session)
