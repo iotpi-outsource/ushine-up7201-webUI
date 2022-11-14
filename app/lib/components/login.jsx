@@ -245,7 +245,7 @@ export default class loginComponent extends React.Component {
   _handleLogin() {
     const password = this.state.password;
     // return AppActions.login(this.state.account, password);
-    return AppActions.login('admin', password);
+    return AppActions.login('root', password);
   }
 }
 

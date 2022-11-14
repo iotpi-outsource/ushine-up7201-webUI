@@ -186,12 +186,12 @@ export default class resetPasswordComponent extends React.Component {
       return false;
     }
 
-    if (account.length < 0) {
+    /*if (account.length < 0) {
       return false;
-    }
+    }*/
 
     // return appAction.resetPassword(account, password, window.session)
-    return appAction.resetPassword('admin', password, window.session)
+    return appAction.resetPassword('root', password, window.session)
     .then(() => {
       return AppDispatcher.dispatch({
         APP_PAGE: 'LOGIN',
