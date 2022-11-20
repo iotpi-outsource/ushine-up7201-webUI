@@ -892,9 +892,14 @@ export default class networkComponent extends React.Component {
    } else if(this.state.ipMode == 'static') {
      resp = AppActions.setWanNetworkStatic(this.state.wanIp, this.state.gateway, this.state.netmask, window.session)
        .then(() => {
+         console.log("commit network");
+         return AppActions.uciCommit("network", window.session);
+       })
+       .then(() => {
          console.log("reloadNetworkConfig");
          return AppActions.reloadNetworkConfig(window.session);
        })
+       .delay(1000)
        .then(() => {
          console.log("set static default route");
          return AppActions.setWanNetworkStaticDefaultRoute(window.session);

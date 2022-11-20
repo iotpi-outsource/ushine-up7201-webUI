@@ -615,7 +615,7 @@ const rpcAPI = {
         'add_host_route',
         {
           target: '0.0.0.0',
-          interface: 'wan',
+          interface: 'eth0',
         },
       ],
     };

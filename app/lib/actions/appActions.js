@@ -28,6 +28,9 @@ const appActions = {
       return rpc.reboot(session);
     });
   },
+  uciCommit: (config, session) => {
+    return rpc.uciCommit(config, session);
+  },
   loadModel: (session) => {
     return rpc.loadModel(session);
   },
