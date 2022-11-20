@@ -239,8 +239,14 @@ const appActions = {
   loadNetInterfaceAddress: (name, session) => {
     return rpc.loadNetInterfaceAddress(name, session);
   },
+  reloadNetworkConfig: (session) => {
+    return rpc.reloadNetworkConfig(session);
+  },
   setWanNetworkStatic: (ipaddr, gateway, netmask, session) => {
     return rpc.setWanNetworkStatic(ipaddr, gateway, netmask, session);
+  },
+  setWanNetworkStaticDefaultRoute: (session) => {
+    return rpc.setWanNetworkStaticDefaultRoute(session);
   },
   setWanNetworkDhcp: (session) => {
     console.log("set wan network dhcp");

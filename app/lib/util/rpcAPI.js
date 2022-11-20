@@ -566,6 +566,21 @@ const rpcAPI = {
     };
     return this.request(config);
   },
+  reloadNetworkConfig: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'network',
+        'reload',
+        {},
+      ],
+    };
+
+    return this.request(config);
+  },
   setWanNetworkStatic: function(ipaddr, gateway, netmask, session) {
     const config = {
       jsonrpc: '2.0',
@@ -584,6 +599,23 @@ const rpcAPI = {
             gateway: gateway,
             netmask: netmask,
           },
+        },
+      ],
+    };
+    return this.request(config);
+  },
+  setWanNetworkStaticDefaultRoute: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'network',
+        'add_host_route',
+        {
+          target: '0.0.0.0',
+          interface: 'wan',
         },
       ],
     };
