@@ -123,6 +123,7 @@ export default class networkComponent extends React.Component {
     this.state.wanIp = '192.168.50.10';
     this.state.netmask = '255.255.255.0';
     this.state.gateway = '192.168.50.1';
+    this.state.dns = '192.168.50.1';
 
     const wan = this.props.boardInfo.wan;
     if(wan) {
@@ -131,6 +132,14 @@ export default class networkComponent extends React.Component {
         if(wan['ipv4-address'] && wan['ipv4-address'].length > 0) {
           if(wan['ipv4-address'][0].address) {
             this.state.wanIp = wan['ipv4-address'][0].address;
+          }
+        }
+
+        if(wan['route'] && wan['route'].length > 0) {
+          let dns = wan['route'][0]['nexthop'];
+          if(dns) {
+            this.state.dns = dns;
+            this.state.gateway = dns;
           }
         }
       }
@@ -594,6 +603,20 @@ export default class networkComponent extends React.Component {
             }
           }
           floatingLabelText={__('LAN Gateway IP address')} />
+        <TextField
+          style={{ width: '100%' }}
+          value={ this.state.dns }
+          floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+          underlineFocusStyle={{ borderColor: Colors.amber700 }}
+          type="text"
+          onChange={
+            (e) => {
+              this.setState({
+                dns: e.target.value,
+              });
+            }
+          }
+          floatingLabelText={__('LAN DNS Server IP address')} />
         </div>
       );
     }
@@ -888,7 +911,10 @@ export default class networkComponent extends React.Component {
    let resp;
    if(this.state.ipMode == 'dhcp') {
      console.log("set dhcp");
-     resp = AppActions.setWanNetworkDhcp(window.session);
+     resp = AppActions.setWanNetworkDhcp(window.session)
+       .then(() => {
+         return AppActions.removeWanDnsServer(window.session);
+       });
    } else if(this.state.ipMode == 'static') {
      resp = AppActions.setWanNetworkStatic(this.state.wanIp, this.state.gateway, this.state.netmask, window.session)
        .then(() => {
@@ -903,6 +929,9 @@ export default class networkComponent extends React.Component {
        .then(() => {
          console.log("set static default route");
          return AppActions.setWanNetworkStaticDefaultRoute(window.session);
+       })
+       .then(() => {
+         return AppActions.setWanDnsServer(this.state.dns, window.session);
        })
      ;
    } else {

@@ -621,6 +621,44 @@ const rpcAPI = {
     };
     return this.request(config);
   },
+  setWanDnsServer: function(dns, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'set',
+        {
+          config: 'dhcp',
+          type: 'dnsmasq',
+          values: {
+            server: [dns],
+          },
+        },
+      ],
+    };
+    return this.request(config);
+  },
+  removeWanDnsServer: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'delete',
+        {
+          config: 'dhcp',
+          type: 'dnsmasq',
+          options: ["server"],
+        },
+      ],
+    };
+    return this.request(config);
+  },
   setWanNetworkDhcp: function(session) {
     console.log("rpc set wan network dhcp");
 

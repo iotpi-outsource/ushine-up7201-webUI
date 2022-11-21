@@ -251,6 +251,14 @@ const appActions = {
   setWanNetworkStaticDefaultRoute: (session) => {
     return rpc.setWanNetworkStaticDefaultRoute(session);
   },
+  setWanDnsServer: (dns, session) => {
+    console.log("set wan dns server");
+    return rpc.setWanDnsServer(dns, session);
+  },
+  removeWanDnsServer: (session) => {
+    console.log("remove wan dns server");
+    return rpc.removeWanDnsServer(session);
+  },
   setWanNetworkDhcp: (session) => {
     console.log("set wan network dhcp");
     return rpc.setWanNetworkDhcp(session);
