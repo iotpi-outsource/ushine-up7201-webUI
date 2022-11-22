@@ -136,7 +136,7 @@ export default class networkComponent extends React.Component {
         });
         return this.refs.errorDialog.show();
     } else {
-      if(!/^[0-9a-fA-F]{1,8}$/g.test(device.addr)) {
+      if(!/^[0-9a-fA-F]{8}$/g.test(device.addr)) {
         this.setState({
           errorMsgTitle: __('Error'),
           errorMsg: __("Node Addr is should be 8 hex digits"),
