@@ -153,10 +153,10 @@ export default class networkComponent extends React.Component {
       });
       return this$.refs.errorDialog.show();
     } else {
-      if(!/^[0-9]+$/g.test(this.state.beacon.freq)) {
+      if(!/^[0-9]{9}$/g.test(this.state.beacon.freq)) {
         this$.setState({
           errorMsgTitle: __('Error'),
-          errorMsg: __("Beacon Channel Frequency should be interger in Hz, like 902000000"),
+          errorMsg: __("Beacon Channel Frequency should be 9 digits integer in Hz, like 902000000"),
         });
         return this$.refs.errorDialog.show();
       }
@@ -169,10 +169,10 @@ export default class networkComponent extends React.Component {
       });
       return this$.refs.errorDialog.show();
     } else {
-      if(!/^[0-9]+$/g.test(this.state.beacon.ch1_uplink_freq)) {
+      if(!/^[0-9]{9}$/g.test(this.state.beacon.ch1_uplink_freq)) {
         this$.setState({
           errorMsgTitle: __('Error'),
-          errorMsg: __("Uplink Channel #1 Frequency should be interger in Hz, like 902000000"),
+          errorMsg: __("Uplink Channel #1 Frequency should be 9 digits integer in Hz, like 902000000"),
         });
         return this$.refs.errorDialog.show();
       }
@@ -185,10 +185,10 @@ export default class networkComponent extends React.Component {
       });
       return this$.refs.errorDialog.show();
     } else {
-      if(!/^[0-9]+$/g.test(this.state.beacon.ch2_uplink_freq)) {
+      if(!/^[0-9]{9}$/g.test(this.state.beacon.ch2_uplink_freq)) {
         this$.setState({
           errorMsgTitle: __('Error'),
-          errorMsg: __("Uplink Channel #2 Frequency should be interger in Hz, like 902000000"),
+          errorMsg: __("Uplink Channel #2 Frequency should be 9 digits integer in Hz, like 902000000"),
         });
         return this$.refs.errorDialog.show();
       }
