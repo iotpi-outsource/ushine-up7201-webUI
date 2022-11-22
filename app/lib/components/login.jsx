@@ -188,7 +188,9 @@ export default class loginComponent extends React.Component {
               style={{ marginTop: '-10px', ...styles.basicWidth}}
               onChange={
                 (e)=> {
-                  this.setState({ password: e.target.value });
+                  if(e.target.value <= 32) {
+                    this.setState({ password: e.target.value });
+                  }
                 }
               }
               floatingLabelText=

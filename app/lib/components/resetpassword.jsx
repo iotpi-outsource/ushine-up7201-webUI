@@ -137,7 +137,7 @@ export default class resetPasswordComponent extends React.Component {
               (e) => {
                 if (e.target.value.length < 6) {
                   this.setState({ notPassPassword: true, password: e.target.value });
-                } else {
+                } else if(e.target.value <= 32) {
                   this.setState({ password: e.target.value, notPassPassword: false });
                 }
               }
