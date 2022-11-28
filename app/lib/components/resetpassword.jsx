@@ -91,7 +91,7 @@ export default class resetPasswordComponent extends React.Component {
         </div>
       );
       showPasswordStyle = {
-        marginTop: '20px',
+        marginTop: '30px',
         width: '100%',
         marginBottom: '44px',
       };
