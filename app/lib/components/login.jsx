@@ -70,6 +70,7 @@ export default class loginComponent extends React.Component {
     this.state = {
       account: '',
       password: '',
+      greaterThan32: false,
       showPassword: false,
       autoHideDuration: 3000,
       successMsg: this.props.successMsg,
@@ -108,10 +109,33 @@ export default class loginComponent extends React.Component {
 
   render() {
     let textType = 'password';
+    let errorText;
+    let showPasswordStyle = {
+      width: '100%',
+      marginBottom: '44px',
+    };
+
     if (this.state.showPassword) {
       textType = 'text';
     }
     let dialogMsg;
+    if (this.state.greaterThan32) {
+      showPasswordStyle = {
+        marginTop: '30px',
+        width: '100%',
+        marginBottom: '44px',
+      };
+      errorText = (
+        <div>
+          <p style={{
+               color: '#69BE28',
+               textAlign: 'left',
+               marginTop: '2px',
+               marginBottom: '5px',
+             }}>{ __('Please use at least 6 and less or equal than 32 alphanumeric characters.') }</p>
+        </div>
+      );
+    }
     if (this.state.successMsg) {
       dialogMsg = (
         <div style={{
@@ -188,18 +212,17 @@ export default class loginComponent extends React.Component {
               style={{ marginTop: '-10px', ...styles.basicWidth}}
               onChange={
                 (e)=> {
-                  if(e.target.value <= 32) {
-                    this.setState({ password: e.target.value });
-                  }
+                  this.setState({ password: e.target.value, greaterThan32: e.target.value.length <= 32 ? false : true });
                 }
               }
+              errorText={ errorText }
               floatingLabelText=
                 {
                   <div>
                     {__('Password')} <b style={{ color: 'red' }}>*</b>
                   </div>
                 } />
-            <div style={{ width: '100%', marginBottom: '24px' }}>
+            <div style={ showPasswordStyle }>
               <a
                 onTouchTap={
                   ()=> {
@@ -246,6 +269,10 @@ export default class loginComponent extends React.Component {
 
   _handleLogin() {
     const password = this.state.password;
+    if(this.state.greaterThan32) {
+      return false;
+    }
+
     // return AppActions.login(this.state.account, password);
     return AppActions.login('root', password);
   }
