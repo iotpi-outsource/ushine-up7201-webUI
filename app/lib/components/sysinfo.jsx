@@ -296,11 +296,11 @@ export default class sysinfoComponent extends React.Component {
             color: '#69BE28',
             textAlign: 'left',
             marginTop: '2px',
-          }}>{ __('Please use at least 6 alphanumeric characters.') }</p>
+          }}>{ __('Please use at least 6 and less or equal than 32 alphanumeric characters.') }</p>
         </div>
       );
       showPasswordStyle = {
-        marginTop: '20px',
+        marginTop: '30px',
         width: '100%',
         marginBottom: '44px',
       };
@@ -361,11 +361,8 @@ export default class sysinfoComponent extends React.Component {
           errorText={ errorText }
           onChange={
             (e) => {
-              if (e.target.value.length < 6) {
-                this.setState({ notPassPassword: true, password: e.target.value });
-              } else {
-                this.setState({ password: e.target.value, notPassPassword: false });
-              }
+              this.setState({ notPassPassword: (e.target.value.length >= 6 && e.target.value.length <= 32) ? false : true,
+                              password: e.target.value });
             }
           }
           floatingLabelText={
@@ -484,11 +481,8 @@ export default class sysinfoComponent extends React.Component {
                     errorText={ errorText }
                     onChange={
                       (e) => {
-                        if (e.target.value.length < 6) {
-                          this.setState({ notPassPassword: true, password: e.target.value });
-                        } else {
-                          this.setState({ password: e.target.value, notPassPassword: false });
-                        }
+                        this.setState({ notPassPassword: (e.target.value.length >= 6 && e.target.value.length <= 32) ? false : true,
+                                        password: e.target.value });
                       }
                     }
                     floatingLabelText={
@@ -796,6 +790,10 @@ export default class sysinfoComponent extends React.Component {
     if (password.length < 6) {
       return false;
     }
+    if (this.state.notPassPassword) {
+      return false;
+    }
+
     return AppActions.resetHostName(this$.state.deviceName, window.session)
     .then(() => {
       return AppActions.resetPassword('root', this$.state.password, window.session);
