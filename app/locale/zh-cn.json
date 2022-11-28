@@ -62,7 +62,7 @@
   "Refresh": "重新整理",
   "AP mode": "AP 模式",
   "Station mode": "Station 模式",
-  "Please use at least 6 alphanumeric characters.": "请输入至少6 个字母",
+  "Please use at least 6 and less or equal than 32 alphanumeric characters.": "请输入至少6最多32个数字或字母",
   "Please set a password": "请设定一组密码",
   "Submit": "送出",
   "Input your Password": "请输入您的密码",

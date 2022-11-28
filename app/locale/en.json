@@ -62,7 +62,7 @@
   "Refresh": "Refresh",
   "AP mode": "AP mode",
   "Station mode": "Station mode",
-  "Please use at least 6 alphanumeric characters.": "Please use at least 6 alphanumeric characters.",
+  "Please use at least 6 and less or equal than 32 alphanumeric characters.": "Please use at least 6 and less or equal than 32 alphanumeric characters.",
   "Please set a password": "Please set a password",
   "Submit": "Submit",
   "Input your Password": "Input your Password",

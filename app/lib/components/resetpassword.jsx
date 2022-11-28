@@ -87,7 +87,7 @@ export default class resetPasswordComponent extends React.Component {
             color: '#69BE28',
             textAlign: 'left',
             marginTop: '2px',
-          }}>{ __('Please use at least 6 alphanumeric characters.') }</p>
+          }}>{ __('Please use at least 6 and less or equal than 32 alphanumeric characters.') }</p>
         </div>
       );
       showPasswordStyle = {
@@ -137,8 +137,8 @@ export default class resetPasswordComponent extends React.Component {
               (e) => {
                 if (e.target.value.length < 6) {
                   this.setState({ notPassPassword: true, password: e.target.value });
-                } else if(e.target.value <= 32) {
-                  this.setState({ password: e.target.value, notPassPassword: false });
+                } else {
+                  this.setState({ password: e.target.value, notPassPassword: e.target.value.length <= 32 ? false : true });
                 }
               }
             }
@@ -186,6 +186,9 @@ export default class resetPasswordComponent extends React.Component {
       return false;
     }
 
+    if(this.state.notPassPassword) {
+      return false;
+    }
     /*if (account.length < 0) {
       return false;
     }*/
