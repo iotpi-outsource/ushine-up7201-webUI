@@ -70,7 +70,7 @@ export default class loginComponent extends React.Component {
     this.state = {
       account: '',
       password: '',
-      greaterThan32: false,
+      notPassPassword: false,
       showPassword: false,
       autoHideDuration: 3000,
       successMsg: this.props.successMsg,
@@ -119,7 +119,7 @@ export default class loginComponent extends React.Component {
       textType = 'text';
     }
     let dialogMsg;
-    if (this.state.greaterThan32) {
+    if (this.state.notPassPassword) {
       showPasswordStyle = {
         marginTop: '30px',
         width: '100%',
@@ -212,7 +212,8 @@ export default class loginComponent extends React.Component {
               style={{ marginTop: '-10px', ...styles.basicWidth}}
               onChange={
                 (e)=> {
-                  this.setState({ password: e.target.value, greaterThan32: e.target.value.length <= 32 ? false : true });
+                  this.setState({ password: e.target.value,
+                                  notPassPassword: (e.target.value.length >= 6 && e.target.value.length <= 32) ? false : true });
                 }
               }
               errorText={ errorText }
@@ -269,7 +270,7 @@ export default class loginComponent extends React.Component {
 
   _handleLogin() {
     const password = this.state.password;
-    if(this.state.greaterThan32) {
+    if(this.state.notPassPassword) {
       return false;
     }
 
