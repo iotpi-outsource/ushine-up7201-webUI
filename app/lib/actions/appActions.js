@@ -219,10 +219,7 @@ const appActions = {
     });
   },
   setFskMqtt: (user, pass, txtopic, rxtopic, session) => {
-    return rpc.setFskMqtt('user', user, session)
-      .then(() => {
-        return rpc.setFskMqtt('passwd', pass, session);
-      })
+    return rpc.setFskMosquitto(user, pass, session)
       .then(() => {
         return rpc.setFskMqtt('txpk', txtopic, session);
       })

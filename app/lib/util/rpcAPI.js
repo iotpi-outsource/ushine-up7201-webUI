@@ -506,6 +506,26 @@ const rpcAPI = {
     };
     return this.request(config);
   },
+  setFskMosquitto: function(user, pass, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'file',
+        'write',
+        {
+          path: '/IoT/etc/mosquitto_passwd',
+          data: "" + user + ":" + pass,
+          append: false,
+          base64: false,
+          mode: 0o644,
+        },
+      ],
+    };
+    return this.request(config);
+  },
   loadFskDevices: function(session) {
     const config = {
       jsonrpc: '2.0',
