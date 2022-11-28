@@ -37,6 +37,24 @@ const styles = {
     width: '100%',
     textAlign: 'center',
   },
+  panelTitle: {
+    width: '100%',
+    tapHighlightColor: 'rgba(0,0,0,0)',
+    color: 'rgba(0, 0, 0, 0.498039)',
+    fontSize: '16px',
+    transform: 'perspective(1px) scale(0.75) translate3d(0px, -28px, 0)',
+    transformOrigin: 'left top',
+    marginBottom: '0px',
+    marginTop: '40px',
+  },
+
+  panelContent: {
+    width: '100%',
+    borderBottom: '1px solid #D1D2D3',
+    fontSize: '16px',
+    marginTop: '-15px',
+    paddingBottom: '5px',
+  },
 
 };
 
@@ -123,7 +141,8 @@ export default class resetPasswordComponent extends React.Component {
             required
             minLength="6"
             floatingLabelText={__('Account')} /> */ }
-          <p style={ styles.panelContent }>admin(default)</p>
+        <h3 style={ styles.panelTitle }>{ __('Account') }</h3>
+        <p style={ styles.panelContent }>admin(default)</p>
           <TextField
             hintText={ __('Please set a password') }
             type={ textType }
