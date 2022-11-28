@@ -203,6 +203,7 @@ export default class loginComponent extends React.Component {
                     {__('Account')} <b style={{ color: 'red' }}>*</b>
                   </div>
                 } /> */ }
+            <h3 style={ styles.panelTitle }>{ __('Account') }</h3>
             <p style={ styles.panelContent }>admin(default)</p>
             <TextField
               hintText={ __('Please enter your password') }
