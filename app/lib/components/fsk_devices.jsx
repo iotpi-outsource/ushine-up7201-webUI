@@ -58,7 +58,7 @@ export default class networkComponent extends React.Component {
 
     this.state.input = {
       addr: null,
-      no: null,
+      // no: null,
       chan: null,
     };
     this.state.devices = [];
@@ -100,8 +100,8 @@ export default class networkComponent extends React.Component {
             let i = value.split(/,/);
             return {
               addr: i[0],
-              no: i[1],
-              chan: i[2],
+              // no: i[1],
+              chan: i[1],
               checked: false,
             }
         });
@@ -124,7 +124,7 @@ export default class networkComponent extends React.Component {
 
     let device = {
       addr: this.state.input.addr,
-      no: this.state.input.no,
+      // no: this.state.input.no,
       chan: this.state.input.chan,
       checked: false,
     };
@@ -150,7 +150,8 @@ export default class networkComponent extends React.Component {
         return this$.refs.errorDialog.show();
       }*/
     }
-    
+
+    /*
     if(null == device.no || device.no.length == 0) {
         this.setState({
           errorMsgTitle: __('Error'),
@@ -174,7 +175,7 @@ export default class networkComponent extends React.Component {
         return this.refs.errorDialog.show();
       }
     }
-
+    */
     if(null == device.chan) {
         this.setState({
           errorMsgTitle: __('Error'),
@@ -184,15 +185,15 @@ export default class networkComponent extends React.Component {
     }      
     
     let devices = this.state.devices;
-    let found = devices.find(d => d.addr == device.addr || d.no == device.no);
+    let found = devices.find(d => d.addr == device.addr/* || d.no == device.no*/);
     if(found != undefined) {
-        alert(__("Device Addr or No. should be unique"));
+        alert(__("Device Addr should be unique"));
         return;
     }
     devices.push(device);
-    devices.sort((d1, d2) => {
+    /*devices.sort((d1, d2) => {
       return d1.no > d2.no;
-    });
+    });*/
 
     devices = this.resetSelectedDevices(devices);
   }
@@ -262,7 +263,7 @@ export default class networkComponent extends React.Component {
                   this.setState({
                     input: {
                       addr: e.target.value,
-                      no: this.state.input.no,
+                      // no: this.state.input.no,
                       chan: this.state.input.chan,
                     }
                   });
@@ -275,7 +276,7 @@ export default class networkComponent extends React.Component {
                   { __("Device Address") } <b style={{ color: 'red' }}>*</b>
                 </div>
               } />
-            <TextField
+            {/*<TextField
               type="text"
               value={ this.state.input.no }
               style={{ width: '100%' }}
@@ -296,7 +297,7 @@ export default class networkComponent extends React.Component {
                 <div>
                   { __("Device No.") } <b style={{ color: 'red' }}>*</b>
                 </div>
-              } />
+                } />*/}
           <SelectField
             value={ this.state.input.chan }
             menuItems={ channels }
@@ -306,7 +307,7 @@ export default class networkComponent extends React.Component {
                   this.setState({
                     input: {
                       addr: this.state.input.addr,
-                      no: this.state.input.no,
+                      // no: this.state.input.no,
                       chan: e.target.value,
                     }
                   });
@@ -351,7 +352,7 @@ export default class networkComponent extends React.Component {
                                          onCheck={ (e, checked) => { this._handleOnCheck(checked, index) }}
                                          checked = { device.checked }/>
                                      }
-                                     primaryText={`${device.addr}, ${device.no}, ${device.chan}`}></ListItem>
+                                     primaryText={`${device.addr},${device.chan}`}></ListItem>
               )
             }
           </List>

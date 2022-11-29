@@ -545,7 +545,7 @@ const rpcAPI = {
   },
   setFskDevices: function(devices, session) {
     let data = devices.map((device) =>
-      device.addr + "," + device.no + "," + device.chan
+      device.addr + ","/* + device.no + "," */+ device.chan
     );
     data = data.join("\n");
     console.log("save devices: ", data);
