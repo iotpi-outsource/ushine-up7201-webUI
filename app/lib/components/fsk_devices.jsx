@@ -243,7 +243,10 @@ export default class networkComponent extends React.Component {
         return false;
       } else {
         console.log("setFskDevices: ", res);
-        return AppActions.setFskDevices(res, window.session);
+        AppActions.setFskDevices(res, window.session);
+        this$.setState({
+          devices: res,
+        });
       }
     })
     .catch((err) => {
