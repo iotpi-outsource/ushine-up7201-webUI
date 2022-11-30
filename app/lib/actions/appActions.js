@@ -202,7 +202,34 @@ const appActions = {
       return rpc.uciCommit('fsk', session);
     });
   },
+  loadFskMosquitto: (session) => {
+    return rpc.loadFskMosquittoPasswd(session)
+      .then((data)=> {
+        auth = data.trim().split(':');
+        return {
+          username: auth[0],
+          password: auth[1],
+        };
+      });
+  },
   loadFskMqtt: (session) => {
+    return promise.all([
+        rpc.loadFskMosquittoPasswd(session),
+        rpc.loadFskMqttUci(session),
+    ]).spread((auth_data, mqtt_sect) => {
+      console.log("loadFskMqtt: ", auth_data.body.result[1].data, mqtt_sect.body.result[1].values);
+      let mqtt = {};
+
+      let auth = auth_data.body.result[1].data.trim().split(':');
+
+      mqtt.username = auth[0];
+      mqtt.password = auth[1];
+      mqtt.tx_topic = mqtt_sect.body.result[1].values.tx_topic;
+      mqtt.rx_topic = mqtt_sect.body.result[1].values.rx_topic;
+      return mqtt;
+    });
+  },
+  /*loadFskMqtt: (session) => {
     return promise.all([
         rpc.loadFskMqtt('user', session),
         rpc.loadFskMqtt('passwd', session),
@@ -217,7 +244,7 @@ const appActions = {
       mqtt.rxtopic = rx.body.result[1].data.trim();
       return mqtt;
     });
-  },
+  },*/
   setFskMqtt: (user, pass, txtopic, rxtopic, session) => {
     return rpc.setFskMosquitto(user, pass, session)
       .then(() => {

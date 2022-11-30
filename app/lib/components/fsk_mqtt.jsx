@@ -70,15 +70,18 @@ export default class networkComponent extends React.Component {
         checkedColor: '#00a1de',
       },
     });
+
     AppActions.loadFskMqtt(window.session)
       .then((mqtt) => {
+        console.log("mqtt: ", mqtt);
         return this$.setState({ mqtt: {
           username: mqtt.username,
           password: mqtt.password,
-          tx_topic: mqtt.txtopic,
-          rx_topic: mqtt.rxtopic,
+          tx_topic: mqtt.tx_topic,
+          rx_topic: mqtt.rx_topic,
         }});
     });
+
   }
 
   componentDidMount() {

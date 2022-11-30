@@ -42,9 +42,8 @@ export default class networkComponent extends React.Component {
     errorMsg: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     successMsg: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     boardInfo: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  }
+  };
 
-  
   constructor(props) {
     super(props);
 
@@ -86,7 +85,8 @@ export default class networkComponent extends React.Component {
       .then((data) => {
         let r = data.body.result[1].values;
         // console.log(r);
-        return this$.setState({ beacon: {
+        return this$.setState({
+          beacon: {
           // addr: this$.state.beacon.addr,
           freq: r.beacon.freq,
           interval: r.beacon.interval,
