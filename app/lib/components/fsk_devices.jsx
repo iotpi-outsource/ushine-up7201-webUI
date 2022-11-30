@@ -3,6 +3,7 @@ import Radium from 'radium';
 import mui from 'material-ui';
 import AppActions from '../actions/appActions';
 import AppDispatcher from '../dispatcher/appDispatcher';
+import Dropzone from 'react-dropzone';
 
 const {
   Checkbox,
@@ -56,6 +57,8 @@ export default class networkComponent extends React.Component {
       errorMsg: null,
     };
 
+    this.state.files = [{ name: '' }];
+
     this.state.input = {
       addr: null,
       // no: null,
@@ -66,8 +69,10 @@ export default class networkComponent extends React.Component {
     this._handleAddDevice = ::this._handleAddDevice;
     this._handleDeleteDevice = ::this._handleDeleteDevice;
     this._handleSaveDevices = ::this._handleSaveDevices;
+    this._handleUploadDevicesList = ::this._handleUploadDevicesList;
     this._handleOnCheck = ::this._handleOnCheck;
     this._cancelErrorMsgDialog = ::this._cancelErrorMsgDialog;
+    this._onDrop = ::this._onDrop;
   }
 
   componentWillMount() {
@@ -209,6 +214,48 @@ export default class networkComponent extends React.Component {
     this.resetSelectedDevices(devices);
   }
 
+  _handleUploadDevicesList(file) {
+    console.log("file: ", file);
+    const this$ = this;
+    this.setState({
+      uploadDevices: true,
+    });
+    this.refs.uploadDialog.show();
+    return AppActions.uploadDevicesList(file, window.session)
+    .then(() => {
+      return AppActions.checkDevicesList(window.session);
+    })
+    .then((res) => {
+      console.log("upload devices list reply: ", res);
+      this$.refs.uploadDialog.dismiss();
+      if(res.length == 1) {
+        return res[0];
+      } else if(res.length == 2) {
+        let devices = res[0];
+        let index = res[1];
+        this$.setState({ errorMsgTitle: __('Invalid Devices List'), errorMsg: 'Line: ' + index + ' has incorrect format(' + devices[index] + ')'});
+        this$.refs.errorDialog.show();
+        return false;
+      }
+    })
+    .then((res) => {
+      if(res == false) {
+        return false;
+      } else {
+        console.log("setFskDevices: ", res);
+        return AppActions.setFskDevices(res, window.session);
+      }
+    })
+    .catch((err) => {
+      this$.refs.uploadDialog.dismiss();
+      if (err === 'Access denied') {
+        this$.setState({ errorMsgTitle: __('Access denied'), errorMsg: __('Your token was expired, please sign in again.') });
+        return this$.refs.errorDialog.show();
+      }
+      alert(err);
+    });
+  }
+
   _handleOnCheck(checked, index) {
     console.log("onCheck: ", index, " checked:", checked, " d: ", this.state.devices[index].checked);
     let devices = this.state.devices;
@@ -232,7 +279,34 @@ export default class networkComponent extends React.Component {
     this.refs.errorDialog.dismiss();
   }
 
+  _onDrop(files) {
+    console.log("onDrop: ", files);
+    this.setState({
+      files: files,
+    });
+  }
+
   render() {
+
+    let DropzoneContent = (
+      <div>
+        <h3 style={{
+              tapHighlightColor: 'rgba(0,0,0,0)',
+              color: 'rgba(0,0,0,0.5)',
+              fontSize: '16px',
+              transform: 'perspective(1px) scale(0.75) translate3d(2px, -28px, 0)',
+              transformOrigin: 'left top',
+              marginBottom: '0px',
+              marginTop: '40px'}}>{__("Devices List File")}</h3>
+        <p style={{
+             borderBottom: '1px solid #D1D2D3',
+             fontSize: '16px',
+             marginTop: '-10px',
+             paddingBottom: '5px',
+           }}>{ this.state.files[0].name || __('Choose the file') }</p>
+      </div>
+    );
+
     const errMsgActions = [
       <FlatButton
         label={__('Dismiss')}
@@ -250,6 +324,12 @@ export default class networkComponent extends React.Component {
           ref="errorDialog"
           modal={ this.state.modal }>
           <p style={{ color: '#999A94', marginTop: '-20px' }}>{ this.state.errorMsg }</p>
+        </Dialog>
+        <Dialog
+          title={ __('Upload Devices') }
+          ref="uploadDialog"
+          modal={ this.state.uploadDevices }>
+          <p>{ __('Uploading ...') }</p>
         </Dialog>
         <Card>
           <div style={ styles.content } key="card1">
@@ -391,6 +471,37 @@ export default class networkComponent extends React.Component {
                 label={__('Save Devices to file')}
                 backgroundColor={ Colors.amber700 }
                 onTouchTap={ this._handleSaveDevices }
+                style={{
+                  width: '236px',
+                  flexGrow: 1,
+                  textAlign: 'center',
+                  marginTop: '40px',
+                  marginBottom: '20px',
+                  marginLeft: '10px',
+                }} />
+            </div>
+          </div>
+        </Card>
+        <Card>
+          <div style={ styles.content } key="cardUploadDevicesList">
+            <Dropzone onDrop={ this._onDrop } style={{ width: '100%', cursor: 'pointer' }}>
+              { DropzoneContent }
+            </Dropzone>
+            <div style={{
+                   display: 'flex',
+                   flexDirection: 'row',
+                   justifyContent: 'space-between',
+                 }}>
+              <RaisedButton
+                linkButton
+                secondary
+                label={__('Upload Devices List file')}
+                backgroundColor={ Colors.amber700 }
+                onTouchTap={
+                  () => {
+                    this._handleUploadDevicesList(this.state.files[0]);
+                  }
+                }
                 style={{
                   width: '236px',
                   flexGrow: 1,

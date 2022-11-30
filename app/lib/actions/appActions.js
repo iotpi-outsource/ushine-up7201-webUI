@@ -303,6 +303,43 @@ const appActions = {
 
     return urlParams[name];
   },
+  uploadDevicesList: (file, session) => {
+    return rpc.uploadDevicesList(file, session);
+  },
+  checkDevicesList: (session) => {
+    return rpc.loadTempDevicesList(session)
+      .then((data) => {
+        console.log("temp devices list: ", data.body.result[1].data);
+        let list_data = data.body.result[1].data;
+        let devices = list_data.split("\n");
+
+        let foundIndex;
+        let rgx = /^[0-9a-fA-F]{8},[12]$/;
+        let filteredDevices = [];
+        for(let i = 0; i < devices.length; i ++) {
+          let device = devices[i].trim();
+          console.log("device: ", device);
+          if(device.length == 0) {
+            continue;
+          }
+          if(!rgx.test(device)) {
+            foundIndex = i;
+            console.log("found device idx: ", i);
+            break;
+          }
+          let parts = device.split(',');
+          let d = {
+            addr: parts[0],
+            chan: parts[1],
+          };
+          filteredDevices.push(d);
+        }          
+        if(foundIndex == null) {
+          return [filteredDevices];
+        }
+        return [devices, foundIndex];
+      });      
+  },
 };
 
 export default appActions;

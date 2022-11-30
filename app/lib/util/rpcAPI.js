@@ -27,6 +27,7 @@ const rpcAPI = {
           return reject('Connection failed');
         }
 
+        console.log(res.body);
         if (res.body && res.body.error) {
           console.log(res.body.error.message);
           return reject(res.body.error.message);
@@ -556,7 +557,7 @@ const rpcAPI = {
     };
     return this.request(config);
   },
-  loadFskDevices: function(session) {
+  loadFile: function(path, session) {
     const config = {
       jsonrpc: '2.0',
       id: id++,
@@ -566,12 +567,15 @@ const rpcAPI = {
         'file',
         'read',
         {
-          path: '/IoT/etc/devices.txt',
+          path: path,
           base64: false,
         },
       ],
     };
     return this.request(config);
+  },
+  loadFskDevices: function(session) {
+    return this.loadFile('/IoT/etc/devices.txt', session);
   },
   setFskDevices: function(devices, session) {
     let data = devices.map((device) =>
@@ -732,6 +736,26 @@ const rpcAPI = {
       ],
     };
     return this.request(config);
+  },
+  uploadDevicesList: function(file, session) {
+    const uploadUrl = RPCurl.replace('/ubus', '/cgi-bin/cgi-upload');
+    return new Promise((resolve, reject) => {
+      request
+      .post(uploadUrl)
+      .field('sessionid', session)
+      .field('filemode', '0600')
+      .field('filename', '/tmp/devices.txt')
+      .attach('filedata', file, file.name)
+      .end((err, res) => {
+        if (!res.ok) {
+          return reject('Connection failed');
+        }
+        return resolve(res);
+      });
+    });
+  },
+  loadTempDevicesList: function(session) {
+    return this.loadFile('/tmp/devices.txt', session);
   },
 };
 
