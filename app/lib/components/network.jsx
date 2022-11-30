@@ -205,7 +205,7 @@ export default class networkComponent extends React.Component {
             color: '#69BE28',
             textAlign: 'left',
             marginTop: '2px',
-          }}>{ __('Please use at least 8 alphanumeric characters.') }</p>
+          }}>{ __('Please use at least 8 and less or equal than 32 alphanumeric characters.') }</p>
         </div>
       );
       showPasswordStyle = {
@@ -353,7 +353,7 @@ export default class networkComponent extends React.Component {
             value={ this.state.apContent.key }
             onChange={
               (e) => {
-                if ( e.target.value.length > 0 && e.target.value.length < 8) {
+                if ( (e.target.value.length > 0 && e.target.value.length < 8) || (e.target.value.length > 32)) {
                   this.setState({
                     apContent: {
                       ssid: this.state.apContent.ssid,
