@@ -335,7 +335,7 @@ const appActions = {
             chan: parts[1],
           };
           filteredDevices.push(d);
-        }          
+        }
         if(foundIndex == null) {
           return [filteredDevices];
         }
