@@ -316,6 +316,8 @@ const appActions = {
         let foundIndex;
         let rgx = /^[0-9a-fA-F]{8},[12]$/;
         let filteredDevices = [];
+
+        // check invalid data format lines
         for(let i = 0; i < devices.length; i ++) {
           let device = devices[i].trim();
           console.log("device: ", device);
