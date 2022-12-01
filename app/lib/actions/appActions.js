@@ -319,7 +319,7 @@ const appActions = {
     let devices = data.split("\n");
 
     let foundIndex;
-    let rgx = /^[0-9a-fA-F]{8},[12]$/;
+    let rgx = /^\s*[0-9a-fA-F]{8}\s*,\s*[12]\s*$/;
     let filteredDevices = [];
 
     // check invalid data format lines
@@ -336,8 +336,8 @@ const appActions = {
       }
       let parts = device.split(',');
       let d = {
-        addr: parts[0],
-        chan: parts[1],
+        addr: parts[0].trim(),
+        chan: parts[1].trim(),
       };
       filteredDevices.push(d);
     }
