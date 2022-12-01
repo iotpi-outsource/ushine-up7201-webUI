@@ -248,10 +248,10 @@ const appActions = {
   setFskMqtt: (user, pass, txtopic, rxtopic, session) => {
     return rpc.setFskMosquitto(user, pass, session)
       .then(() => {
-        return rpc.setFskMqtt('txpk', txtopic, session);
+        return rpc.setFskMqttUci(rxtopic, txtopic, session);
       })
       .then(() => {
-        return rpc.setFskMqtt('rxpk', rxtopic, session);
+        return rpc.uciCommit('fsk', session);
       });
   },
   loadFskDevices: (session) => {

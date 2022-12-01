@@ -537,6 +537,23 @@ const rpcAPI = {
 
     return this.request(config);
   },
+  setFskMqttUci: function(rx_topic, tx_topic, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [session, 'uci', 'set', {
+        config: 'fsk',
+        section: 'mqtt',
+        values: {
+          rx_topic: rx_topic,
+          tx_topic: tx_topic,
+        },
+      }],
+    };
+
+    return this.request(config);
+  },
   setFskMosquitto: function(user, pass, session) {
     const config = {
       jsonrpc: '2.0',
