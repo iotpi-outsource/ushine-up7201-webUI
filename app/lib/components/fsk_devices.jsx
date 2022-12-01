@@ -224,7 +224,10 @@ export default class networkComponent extends React.Component {
     this.refs.uploadDialog.show();
     return AppActions.uploadDevicesList(file, window.session)
     .then(() => {
-      return AppActions.checkDevicesList(window.session);
+      return AppActions.loadTempDevicesList(window.session);
+    })
+    .then((data) => {
+      return AppActions.checkDevicesList(data, window.session);
     })
     .then((res) => {
       console.log("upload devices list reply: ", res);
@@ -234,7 +237,25 @@ export default class networkComponent extends React.Component {
       } else if(res.length == 2) {
         let devices = res[0];
         let index = res[1];
-        this$.setState({ errorMsgTitle: __('Invalid Devices List'), errorMsg: 'Line: ' + index + ' has incorrect format(' + devices[index] + ')'});
+        this$.setState({ errorMsgTitle: __('Invalid Devices List'), errorMsg: 'Line: ' + index + ' has incorrect format(' + devices[index].addr + ')'});
+        this$.refs.errorDialog.show();
+        return false;
+      }
+    })
+    .then((res) => {
+      if(res == false) {
+        return false;
+      } else {
+        return AppActions.checkDuplicatedDevices(res, window.session);
+      }
+    })
+    .then((res) => {
+      if(res.length == 1) {
+        return res[0];
+      } else if(res.length == 2) {
+        let devices = res[0];
+        let index = res[1];
+        this$.setState({ errorMsgTitle: __('Invalid Devices List'), errorMsg: 'Line: ' + index + ' has duplicated device(' + devices[index].addr + ')'});
         this$.refs.errorDialog.show();
         return false;
       }
