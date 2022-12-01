@@ -65,6 +65,7 @@ export default class networkComponent extends React.Component {
       chan: null,
     };
     this.state.devices = [];
+    this.state.devicesFileSelected = false;
     
     this._handleAddDevice = ::this._handleAddDevice;
     this._handleDeleteDevice = ::this._handleDeleteDevice;
@@ -286,6 +287,7 @@ export default class networkComponent extends React.Component {
     console.log("onDrop: ", files);
     this.setState({
       files: files,
+      devicesFileSelected: true,
     });
   }
 
@@ -500,6 +502,7 @@ export default class networkComponent extends React.Component {
                 secondary
                 label={__('Upload Devices List file')}
                 backgroundColor={ Colors.amber700 }
+                disabled = { !this.state.devicesFileSelected }
                 onTouchTap={
                   () => {
                     this._handleUploadDevicesList(this.state.files[0]);
