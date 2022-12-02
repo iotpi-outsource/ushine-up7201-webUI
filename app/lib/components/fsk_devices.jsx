@@ -135,7 +135,7 @@ export default class networkComponent extends React.Component {
       checked: false,
     };
 
-    if(this.state.devices.length > 150) {
+    if(this.state.devices.length >= 150) {
       this.setState({
         errorMsgTitle: __('Error'),
         errorMsg: __("Device No. can not be greater than 150"),
