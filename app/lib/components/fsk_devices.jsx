@@ -135,6 +135,14 @@ export default class networkComponent extends React.Component {
       checked: false,
     };
 
+    if(this.state.devices.length > 150) {
+      this.setState({
+        errorMsgTitle: __('Error'),
+        errorMsg: __("Device No. can not be greater than 150"),
+      });
+      return this.refs.errorDialog.show();
+    }
+
     if(null == device.addr || device.addr.length == 0) {
         this.setState({
           errorMsgTitle: __('Error'),
@@ -264,11 +272,18 @@ export default class networkComponent extends React.Component {
       if(res == false) {
         return false;
       } else {
-        console.log("setFskDevices: ", res);
-        AppActions.setFskDevices(res, window.session);
-        this$.setState({
-          devices: res,
-        });
+        if(res.length > 150) {
+          this$.setState({ errorMsgTitle: __('Invalid Devices List'), errorMsg: __("Device No. can not be greater than 150")});
+          this$.refs.errorDialog.show();
+          return false;
+        } else {
+          console.log("setFskDevices: ", res);
+          AppActions.setFskDevices(res, window.session);
+          this$.setState({
+            devices: res,
+          });
+          return true;
+        }
       }
     })
     .catch((err) => {
