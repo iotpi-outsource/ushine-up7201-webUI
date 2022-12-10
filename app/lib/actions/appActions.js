@@ -358,6 +358,21 @@ const appActions = {
     }
     return [devices];
   },
+  loadFskHttp: (session) => {
+    return rpc.loadFskHttp(session).then((resp) => {
+      console.log("http:", resp);
+      let http = {
+        url: resp.body.result[1].values.url,
+      };
+      return http;
+    });
+  },
+  setFskHttp: (url, session) => {
+    return rpc.setFskHttp(url, session)
+      .then(() => {
+        return rpc.uciCommit('fsk', session);
+      });
+  },
 };
 
 export default appActions;

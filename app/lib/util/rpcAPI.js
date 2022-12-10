@@ -774,6 +774,35 @@ const rpcAPI = {
   loadTempDevicesList: function(session) {
     return this.loadFile('/tmp/devices.txt', session);
   },
+  loadFskHttp: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [session, 'uci', 'get', {
+        config: 'fsk',
+        section: 'http',
+      }],
+    };
+
+    return this.request(config);
+  },
+  setFskHttp: function(url, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [session, 'uci', 'set', {
+        config: 'fsk',
+        section: 'http',
+        values: {
+          url: url,
+        },
+      }],
+    };
+
+    return this.request(config);
+  },
 };
 
 export default rpcAPI;
