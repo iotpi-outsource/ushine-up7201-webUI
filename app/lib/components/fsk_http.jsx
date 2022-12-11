@@ -109,30 +109,29 @@ export default class networkComponent extends React.Component {
         <Card>
         <div style={ styles.content }>
           <h3>{__("HTTP")}</h3>
+          <TextField
+            type="text"
+            value={ this.state.http_url }
+            style={{ width: '100%' }}
+            onChange={
+              (e) => {
+                this.setState({
+                  http_url: e.target.value,
+                });
+              }
+            }
+            underlineFocusStyle={{ borderColor: Colors.amber700 }}
+            floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+            floatingLabelText={
+              <div>
+                { __("HTTP URL") } <b style={{ color: 'red' }}>*</b>
+              </div>
+            } />
           <div style={{
                  display: 'flex',
                  flexDirection: 'row',
                  justifyContent: 'space-between',
                }}>
-            <TextField
-              type="text"
-              value={ this.state.http_url }
-              style={{ width: '100%' }}
-              onChange={
-                (e) => {
-                  this.setState({
-                    http_url: e.target.value,
-                  });
-                }
-              }
-              underlineFocusStyle={{ borderColor: Colors.amber700 }}
-              floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
-              floatingLabelText={
-                <div>
-                  { __("HTTP URL") } <b style={{ color: 'red' }}>*</b>
-                </div>
-              } />
-          </div>
             <RaisedButton
               linkButton
               secondary
@@ -147,6 +146,7 @@ export default class networkComponent extends React.Component {
                 marginBottom: '20px',
                 marginLeft: '10px',
               }} />
+          </div>
         </div>
         </Card>
       </div>

@@ -21,8 +21,10 @@ const {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
+  TableFooter,
   List,
   ListItem,
+  Popover
 } = mui;
 
 const ThemeManager = new mui.Styles.ThemeManager();
@@ -55,10 +57,16 @@ export default class networkComponent extends React.Component {
       modal: true,
       errorMsgTitle: null,
       errorMsg: null,
+      udid_map: [],
+      udidMapPopOpen: false,
+      currentUdidMapDevice: {
+        addr: "",
+        udid: "",
+      },
     };
 
     this.state.files = [{ name: '' }];
-
+    
     this.state.input = {
       addr: null,
       // no: null,
@@ -113,7 +121,13 @@ export default class networkComponent extends React.Component {
         });
         console.log(devices);
         return this$.setState({ devices: devices });
-    });
+      });
+
+    AppActions.loadUdidMap(window.session)
+      .then((data) => {
+        console.log("udid_map array: ", data);
+        this$.setState({ udid_map: data });
+      });
   }
 
   resetSelectedDevices(devices) {
@@ -304,6 +318,11 @@ export default class networkComponent extends React.Component {
       devices: devices,
     });
   }
+  handleRequestClose = () => {
+    this.setState({
+      udidMapPopOpen: false,
+    });
+  };
 
   componentDidMount() {
     return true;
@@ -356,6 +375,7 @@ export default class networkComponent extends React.Component {
         hoverColor="none" />,
     ];
 
+    let this$ = this;
     return (
       <div>
         <Dialog
@@ -553,6 +573,41 @@ export default class networkComponent extends React.Component {
                   marginLeft: '10px',
                 }} />
             </div>
+          </div>
+        </Card>
+      {/*<Popover
+        open={this.state.udidMapPopOpen}
+        anchorEl={this.state.udidMapAnchorEl}
+        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        onRequestClose={this.handleUdidMapClose}
+      >
+        {
+          this.state.currentUdidMapDevice.udid
+        }
+        </Popover>*/}
+        <Card>
+          <div style={ styles.content } key="cardUdidMap">
+            <h3>{__("Nodes Udid Map")}</h3>
+            <List>
+            {
+              this.state.udid_map.map(
+                (device, index) => <ListItem
+                                     primaryText={device.addr}
+                                     secondaryText={`UDID: ${device.udid}`}
+                                   />
+              )
+            }
+              {/*onClick={(event) => {
+                 event.preventDefault();
+
+                 this$.setState({
+                 currentUdidMapDevice: device,
+                 udidMapPopOpen: true,
+                 udidMapAnchorEl: event.currentTarget,
+                 });
+                 }}*/}
+          </List>
           </div>
         </Card>
       </div>

@@ -803,6 +803,23 @@ const rpcAPI = {
 
     return this.request(config);
   },
+  loadUdidMap: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'file',
+        'read',
+        {
+          path: '/tmp/udid_map.txt',
+          base64: false,
+        },
+      ],
+    };
+    return this.request(config);
+  },
 };
 
 export default rpcAPI;

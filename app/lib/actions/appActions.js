@@ -373,6 +373,28 @@ const appActions = {
         return rpc.uciCommit('fsk', session);
       });
   },
+  loadUdidMap: (session) => {
+    return rpc.loadUdidMap(session)
+      .then((data) => {
+        let udid_map = [];
+        let list_data = data.body.result[1].data;
+        console.log("udid map: ", list_data);
+        let devices = list_data.split("\n");
+        for(let i = 0; i < devices.length; i ++) {
+          let device = devices[i].trim();
+          if(device.length == 0) {
+            continue;
+          }
+          let parts = device.split(',');
+          let d = {
+            addr: parts[0].trim(),
+            udid: parts[1].trim(),
+          };
+          udid_map.push(d);
+        }
+        return udid_map;
+      });
+  },
 };
 
 export default appActions;
