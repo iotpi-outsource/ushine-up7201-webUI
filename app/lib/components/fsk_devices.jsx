@@ -119,13 +119,13 @@ export default class networkComponent extends React.Component {
               checked: false,
             }
         });
-        console.log(devices);
+        // console.log(devices);
         return this$.setState({ devices: devices });
       });
 
     AppActions.loadUdidMap(window.session)
       .then((data) => {
-        console.log("udid_map array: ", data);
+        // console.log("udid_map array: ", data);
         this$.setState({ udid_map: data });
       });
   }
@@ -232,13 +232,13 @@ export default class networkComponent extends React.Component {
 
   _handleSaveDevices() {
     let devices = this.state.devices;
-    console.log(devices);
+    // console.log(devices);
     AppActions.setFskDevices(devices, window.session);
     this.resetSelectedDevices(devices);
   }
 
   _handleUploadDevicesList(file) {
-    console.log("file: ", file);
+    // console.log("file: ", file);
     const this$ = this;
     this.setState({
       uploadDevices: true,
@@ -252,7 +252,7 @@ export default class networkComponent extends React.Component {
       return AppActions.checkDevicesList(data, window.session);
     })
     .then((res) => {
-      console.log("upload devices list reply: ", res);
+      // console.log("upload devices list reply: ", res);
       this$.refs.uploadDialog.dismiss();
       if(res.length == 1) {
         return res[0];
@@ -291,7 +291,7 @@ export default class networkComponent extends React.Component {
           this$.refs.errorDialog.show();
           return false;
         } else {
-          console.log("setFskDevices: ", res);
+          // console.log("setFskDevices: ", res);
           AppActions.setFskDevices(res, window.session);
           this$.setState({
             devices: res,
@@ -311,7 +311,7 @@ export default class networkComponent extends React.Component {
   }
 
   _handleOnCheck(checked, index) {
-    console.log("onCheck: ", index, " checked:", checked, " d: ", this.state.devices[index].checked);
+    // console.log("onCheck: ", index, " checked:", checked, " d: ", this.state.devices[index].checked);
     let devices = this.state.devices;
     devices[index].checked = checked;
     this.setState({
@@ -339,7 +339,7 @@ export default class networkComponent extends React.Component {
   }
 
   _onDrop(files) {
-    console.log("onDrop: ", files);
+    // console.log("onDrop: ", files);
     this.setState({
       files: files,
       devicesFileSelected: true,

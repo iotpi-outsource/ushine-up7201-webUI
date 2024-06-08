@@ -395,6 +395,13 @@ const appActions = {
         return udid_map;
       });
   },
+  setServiceMode: (mode, session) => {
+    console.log("setServiceMode:", mode);
+    return rpc.setServiceMode(mode, session)
+      .then(() => {
+        return rpc.uciCommit('fsk', session);
+      });
+  },
 };
 
 export default appActions;
