@@ -114,7 +114,7 @@ export default class networkComponent extends React.Component {
         <Card>
         <div style={ styles.content }>
           <h3>{__("Service")}</h3>
-            <RadioButtonGroup name="mode" defaultSelected={ this.state.service_mode } style={{ display: 'flex', paddingTop: '20px' }} >
+            <RadioButtonGroup name="mode" valueSelected={ this.state.service_mode } style={{ display: 'flex', paddingTop: '20px' }} >
               <RadioButton
                 value="primary"
                 style={{
