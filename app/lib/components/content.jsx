@@ -82,7 +82,8 @@ export default class contentComponent extends React.Component {
   componentWillMount() {
     const this$ = this;
     AppActions.loadModel(window.session)
-    .then((data) => {
+      .then((data) => {
+        console.log("boardModel: ", data.body.result[1].model)
       return this$.setState({ boardModel: data.body.result[1].model });
     });
   }

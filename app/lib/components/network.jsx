@@ -113,6 +113,7 @@ export default class networkComponent extends React.Component {
     this._onRadioButtonClick = ::this._onRadioButtonClick;
     this._handleSelectValueChange = ::this._handleSelectValueChange;
     this._handleSettingMode = ::this._handleSettingMode;
+    this._handleSettingNTPServer = ::this._handleSettingNTPServer;
     this.selectWifiList = false;
     this._returnToIndex = ::this._returnToIndex;
     this._cancelErrorMsgDialog = ::this._cancelErrorMsgDialog;
@@ -124,6 +125,8 @@ export default class networkComponent extends React.Component {
     this.state.netmask = '255.255.255.0';
     this.state.gateway = '192.168.50.1';
     this.state.dns = '192.168.50.1';
+
+    this.state.ntpserver = '';
 
     const wan = this.props.boardInfo.wan;
     if(wan) {
@@ -166,6 +169,17 @@ export default class networkComponent extends React.Component {
     AppActions.loadModel(window.session)
     .then((data) => {
       return this$.setState({ boardModel: data.body.result[1].model });
+    });
+
+    AppActions.loadNtpServer(window.session)
+      .then((data) => {
+        console.log("ntp: ", data.body.result[1]);
+        let ntp = data.body.result[1].values.ntp;
+        if (ntp.server.length > 0) {
+          let server0 = ntp.server[0];
+          console.log("server0: ", server0);
+          return this$.setState({ ntpserver: server0 });
+        }
     });
   }
 
@@ -727,6 +741,44 @@ export default class networkComponent extends React.Component {
               </div>
               </Card>
               <Card>
+                <div style={ styles.content } key="cardNtp">
+                  <TextField
+                    style={{ width: '100%' }}
+                    value={ this.state.ntpserver }
+                    floatingLabelStyle={{ color: 'rgba(0, 0, 0, 0.498039)' }}
+                    underlineFocusStyle={{ borderColor: Colors.amber700 }}
+                    type="text"
+                    onChange={
+                      (e) => {
+                        this.setState({
+                          ntpserver: e.target.value,
+                        });
+                      }
+                    }
+                    floatingLabelText={__('NTP Server')} />
+                  <div style={{
+                         display: 'flex',
+                         flexDirection: 'row',
+                         justifyContent: 'space-between',
+                       }}>
+                  <RaisedButton
+                    linkButton
+                    secondary
+                    label={__('Configure & Restart')}
+                    backgroundColor={ Colors.amber700 }
+                    onTouchTap={ this._handleSettingNTPServer }
+                    style={{
+                      width: '236px',
+                      flexGrow: 1,
+                      textAlign: 'center',
+                      marginTop: '20px',
+                      marginBottom: '20px',
+                      marginLeft: '10px',
+                    }} />
+                  </div>
+                </div>
+              </Card>
+              <Card>
                 <div style={ styles.content } key="card2">
                   <RadioButtonGroup name="ipmode" defaultSelected={ this.state.ipMode } style={{ display: 'flex', paddingTop: '20px' }} >
                     <RadioButton
@@ -870,6 +922,35 @@ export default class networkComponent extends React.Component {
                 });
               }
 
+              
+              _handleSettingNTPServer() {
+                const this$ = this;
+                console.log("update ntp: ", this.state.ntpserver);
+                return AppActions.setNtpServer(this.state.ntpserver, window.session)
+                    .then(() => {
+                      return AppActions.reboot(window.session)
+                        .catch((err) => {
+                          if (err === 'no data') {
+                            return false;
+                          }
+                          return err;
+                        });
+                    })
+                  .then(() => {
+                    return this$._returnToIndex(__('Configuration saved. You can sign in to the console after your device has restarted.'));
+                  })
+                  .catch((err) => {
+                    if (err === 'Access denied') {
+                      this$.setState({
+                        errorMsgTitle: __('Access denied'),
+                        errorMsg: __('Your token was expired, please sign in again.'),
+                      });
+                      return this$.refs.errorMsg.show();
+                    }
+                    alert('[' + err + '] Please try again!');
+                  });
+
+              }
 
   _handleSettingMode() {
     const this$ = this;
@@ -877,9 +958,9 @@ export default class networkComponent extends React.Component {
       return false;
     }
     return AppActions.setWifi(this.state.mode, this.state[ this.state.mode + 'Content'], window.session)
-    .then(() => {
-      return AppActions.setWifiMode(this.state.mode, window.session);
-    })
+      .then(() => {
+        return AppActions.setWifiMode(this.state.mode, window.session);
+      })
     .then(() => {
       return AppActions.commitAndReboot(window.session)
       .catch((err) => {

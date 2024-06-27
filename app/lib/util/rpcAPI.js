@@ -11,6 +11,7 @@ if (window.location.hostname === '127.0.0.1') {
 const rpcAPI = {
   request: function(config) {
     return new Promise((resolve, reject) => {
+      // console.log("requesting: ", config);
       request
       .post(RPCurl)
       .send(config)
@@ -27,7 +28,7 @@ const rpcAPI = {
           return reject('Connection failed');
         }
 
-        console.log(res.body);
+        // console.log("rpcAPI: ", res);
         if (res.body && res.body.error) {
           console.log(res.body.error.message);
           return reject(res.body.error.message);
@@ -300,6 +301,45 @@ const rpcAPI = {
         {
           config: 'system',
           type: 'system',
+        },
+      ],
+    };
+    return this.request(config);
+  },
+  loadNtpServer: function(session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'get',
+        {
+          config: 'system',
+          type: 'timeserver',
+          sname: 'ntp',
+        },
+      ],
+    };
+    return this.request(config);
+  },
+  setNtpServer: function(ntpserver, session) {
+    const config = {
+      jsonrpc: '2.0',
+      id: id++,
+      method: 'call',
+      params: [
+        session,
+        'uci',
+        'set',
+        {
+          config: 'system',
+          type: 'timeserver',
+          sname: 'ntp',
+          values: {
+            'server': [ ntpserver ],
+          },
         },
       ],
     };

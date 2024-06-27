@@ -92,6 +92,15 @@ const appActions = {
   loadSystem: (session) => {
     return rpc.loadSystem(session);
   },
+  loadNtpServer: (session) => {
+    return rpc.loadNtpServer(session);
+  },
+  setNtpServer: (ntpserver, session) => {
+    return rpc.setNtpServer(ntpserver, session)
+      .then(() => {
+        return rpc.uciCommit('system', session);
+      });
+  },
   initialFetchData: (session) => {
     return promise.delay(10).then(() => {
       return [
